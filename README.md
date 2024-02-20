@@ -9,9 +9,9 @@ PNF EN INFORMATICA TRAYECTO III 2023-2024
 
 DIVISION DE MODULOS:
 
-Registro - Jose Escalona
-Login - Gisel Martinez
-Recuperar contraseña - manuel Gonzalez
-Citas - Sabrina Colmenarez | Henderson patiño
-HOME -  Henderson patiño
+- Registro - Jose Escalona
+- Login - Gisel Martinez
+- Recuperar contraseña - manuel Gonzalez
+- Citas - Sabrina Colmenarez
+- Home/Chat -  Henderson patiño
 
