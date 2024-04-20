@@ -6,8 +6,8 @@ import { useNavigation } from '@react-navigation/native'
 import { CommonActions } from '@react-navigation/native';
 
 import Home from '../../../assets/icons/home.svg';
-import Request from '../../../assets/icons/requests.svg';
-import Ticket from '../../../assets/icons/ticket.svg';
+import Help from '../../../assets/icons/help.svg';
+import Film from '../../../assets/icons/film.svg';
 import News from '../../../assets/icons/news.svg';
 import Chat from '../../../assets/icons/chat.svg';
 
@@ -28,28 +28,28 @@ function BottomNavbar( {active, screen,} ) {
                 />
                 <Text style={ [styles.text, {color: (active == 1) ? '#E31734' : 'grey'}] }>Inicio</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('AskDates')} } >
-                <Request 
+            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('Chat')} } >
+                <Chat 
                     height={ wp('5%') } 
                     width={ hp('5%') } 
                     fill={ (active == 2) ? '#E31734' : 'grey' }
                 />
-                <Text style={ [styles.text, {color: (active == 2) ? '#E31734' : 'grey'}] }>Citas</Text>
+                <Text style={ [styles.text, {color: (active == 2) ? '#E31734' : 'grey'}] }>Chat</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate(/*'BoxOffice'*/'Home')} }>
+            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('Cartelera')} }>
                 <LinearGradient 
                     colors={  ['#E31734', '#E31744',  '#710014'] }
                     start={ { x: 0, y: 0 } }
                     end={ { x: 0, y: 1 } }
                     style={ styles.circle }
                 >
-                    <Ticket 
+                    <Film 
                         height={ wp('6%') } 
                         width={ hp('6%') } 
-                        fill={ (active == 3) ? '#0d6efd' : 'white' }
+                        fill={ (active == 3) ? '#fafafa' : 'white' }
                     />
                 </LinearGradient>
-                <Text style={ [styles.text, {color: (active == 3) ? '#E31734' : 'grey'}] }>Boleteria</Text>
+                <Text style={ [styles.text, {color: (active == 3) ? '#E31734' : 'grey'}] }>Eventos</Text>
             </TouchableOpacity>
             <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate(/*'News'*/'Home')} }>
                 <News 
@@ -59,13 +59,13 @@ function BottomNavbar( {active, screen,} ) {
                 />
                 <Text style={ [styles.text, {color: (active == 4) ? '#E31734' : 'grey'}] }>Noticias</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('Chat')} } >
-                <Chat 
+            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('Home')} } >
+                <Help 
                     height={ wp('5%') } 
                     width={ hp('5%') } 
                     fill={ (active == 5) ? '#E31734' : 'grey' }
                 />
-                <Text style={ [styles.text, {color: (active == 5) ? '#E31734' : 'grey'}] }>Chat</Text>
+                <Text style={ [styles.text, {color: (active == 5) ? '#E31734' : 'grey'}] }>Ayuda</Text>
             </TouchableOpacity>
         </View>
     );
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     text:{
         color: 'grey',
         fontWeight:'600',
-        fontSize: hp('1.5%'),
+        fontSize: hp('1.4%'),
         textAlign: 'center',
         textAlignVertical: 'bottom',
     },
