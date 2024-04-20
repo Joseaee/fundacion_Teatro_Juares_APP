@@ -21,10 +21,11 @@ const styles = StyleSheet.create({
 
     button:{
         backgroundColor: '#CB2139',
-        height: hp('5%'),
-        width: hp('25%'),
+        height: hp('6%'),
+        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 20
     },
     text:{
         color: '#fdfdfd',
