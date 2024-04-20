@@ -16,6 +16,7 @@ import AskDates from "../views/dates/askdates";
 import MakeDate from "../views/dates/makeDate";
 import SuccessDate from "../views/dates/successDate";
 import Chat from "../views/chat/chat";
+import Cartelera from "../views/boleteria/cartelera";
 
 function Routes(){
 
@@ -25,7 +26,7 @@ function Routes(){
             <Stack.Navigator screenOptions={ {headerShown: false,} }>
 
             <Stack.Screen name="Login" component={ Login } options={ {animation: 'fade'} }/>
-            <Stack.Screen name="Register" component={ Register } options={ {animation: 'slide_from_left'} }/>
+            <Stack.Screen name="Register" component={ Register } options={ {animation: 'slide_from_right'} }/>
             <Stack.Screen name="MakePassword" component={ MakePassword } options={ {animation: 'slide_from_right'} }/>
             <Stack.Screen name="SuccessSession" component={ SuccessSession } options={ {animation: 'slide_from_left'} }/>
             <Stack.Screen name="ForgetPassword" component={ ForgetPassword } options={ {animation: 'slide_from_right'} }/>
@@ -33,6 +34,8 @@ function Routes(){
             <Stack.Screen name="ChangePassword" component={ ChangePassword } options={ {animation: 'slide_from_right'} }/>
 
             <Stack.Screen name="Home" component={ Home } options={ {animation: 'fade',} }/>
+
+            <Stack.Screen name="Cartelera" component={ Cartelera } options={ {animation: 'fade_from_bottom',} }/>
             
             <Stack.Screen name="DataUser" component={ DataUser } options={ {animation: 'fade'} }/>
 
