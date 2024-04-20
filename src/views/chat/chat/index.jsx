@@ -88,7 +88,7 @@ function Chat({ navigation }) {
                 </View>
                 <View style = { { flex: 0, justifyContent: 'flex-end'} }>
                     <BottomNavbar
-                        active={ 5 }
+                        active={ 2 }
                     />
                 </View>
             </View>
