@@ -1,7 +1,7 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 
-export default function ButtonTab({ children, isSelected, rowSeparation }) {
+export default function ButtonTab({ children, isSelected, rowSeparation, onPress }) {
   return (
     <TouchableOpacity
       style={[
@@ -9,6 +9,7 @@ export default function ButtonTab({ children, isSelected, rowSeparation }) {
         { marginHorizontal: rowSeparation },
         { backgroundColor: isSelected ? "#E31734" : "#dfdfdf" },
       ]}
+      onPress={onPress}
     >
       <Text style={[styles.text, { color: isSelected ? "#eee" : "#333" }]}>
         {children}
