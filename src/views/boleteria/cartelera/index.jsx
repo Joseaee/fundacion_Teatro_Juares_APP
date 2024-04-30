@@ -1,56 +1,59 @@
+import {useState} from 'react'
 import {View, Text, StyleSheet, FlatList, ImageBackground, TextInput, ScrollView} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
+import { useAppSelector, useAppDispatch } from '../../../hooks/store';
+import StyleText from '../../../components/StyleText'
 import Navbar from '../../../components/navbar';
 import BottomNavbar from '../../../components/bottomNavbar';
 import CardButton from '../../../components/CardButton';
 import ButtonTab from '../../../components/ButtonTab';
 import Search from '../../../../assets/icons/search.svg'
+import { changeFilterCategory } from '../../../store/boleteria/slice';
 
 const renderCard = ({item})=>{
   return <CardButton source={item.poster} title={item.nombre} subtitle={item.categoria} />
 }
 
-export default function Cartelera(){
-    const eventos = [
-      {
-        id: '1',
-        nombre: 'Eventito',
-        categoria: 'Obra Teatral',
-        poster: require('../../../../assets/img/Servicios/obras.jpg')
-      },
-      {
-        id: '2',
-        nombre: 'Eventito 2',
-        categoria: 'Concierto',
-        poster: require('../../../../assets/img/Servicios/conciertos.jpg')
-      },
-      {
-        id: '3',
-        nombre: 'Evento 3',
-        categoria: 'Concierto',
-        poster: require('../../../../assets/img/Servicios/belleza.jpg')
-      }
-    ]
+const categorias = [
+  {
+    id: '1',
+    nombre: 'Obra Teatral'
+  },
+  {
+    id: '2',
+    nombre: 'Concierto'
+  },
+  {
+    id: '3',
+    nombre: 'Danza'
+  },
+  {
+    id: '4',
+    nombre: 'Todo Público'
+  },
+]
 
-    const categorias = [
-      {
-        id: '1',
-        nombre: 'Obra Teatral'
-      },
-      {
-        id: '2',
-        nombre: 'Concierto'
-      },
-      {
-        id: '3',
-        nombre: 'Danza'
-      },
-      {
-        id: '4',
-        nombre: 'Todo Público'
-      },
-    ]
+export default function Cartelera(){
+    const eventos = useAppSelector((state)=> state.boleteria.eventos)
+    const categoriaFiltro = useAppSelector((state)=> state.boleteria.filtros.categoria)
+    const [eventSearch, setEventSearch] = useState('')
+    const dispatch = useAppDispatch()
+
+    const handleChangeCategory = (category)=>{
+      dispatch(changeFilterCategory(category))
+    }
+
+    const filterEvents = (events)=>{
+      return events.filter(event=>{
+        return categoriaFiltro === 'all' || event.categoria === categoriaFiltro
+      })
+    }
+
+    const filteredEvents = filterEvents(eventos)
+
+    const isSelected = (category)=> categoriaFiltro === category
+
     return (
         <SafeAreaView style={{flex:1}}>
             <Navbar title='' loggedIn={true} />
@@ -62,19 +65,19 @@ export default function Cartelera(){
               <Text style={styles.title}>Cartelera de Eventos</Text>
               </ImageBackground>
             </View>
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <View style={styles.input}>
                 <Search height={wp('5%')} width={hp('5%')} fill='gray' />
-                <TextInput placeholder='Buscar Eventos...' style={{flex: 1}}/>
+                <TextInput placeholder='Buscar Eventos...' style={{flex: 1}} onChange={(e)=> setEventSearch(e.target.value)} value={eventSearch}/>
               </View>
-              <ScrollView style={{marginHorizontal: hp('2%'), marginBottom: hp('0.8%'), height: 52}} horizontal={true} showsHorizontalScrollIndicator={false}>
-                <ButtonTab isSelected={true}> 
+              <ScrollView style={{marginHorizontal: hp('2%'), marginBottom: hp('0.8%'), height: 52,}} horizontal={true} showsHorizontalScrollIndicator={false}>
+                <ButtonTab isSelected={isSelected('all')} onPress={()=> handleChangeCategory('all')}> 
                   Todos
                 </ButtonTab>
-                {categorias.map(item => <ButtonTab rowSeparation={8} key={item.id}>{item.nombre}</ButtonTab>)}
+                {categorias.map(item => <ButtonTab isSelected={isSelected(item.nombre)} rowSeparation={8} key={item.id} onPress={()=> handleChangeCategory(item.nombre)}>{item.nombre}</ButtonTab>)}
               </ScrollView>
-              <FlatList data={eventos} renderItem={renderCard} keyExtractor={(item)=> item.id}/>
-              
+              {(filteredEvents.length === 0) ? <StyleText tag="eventos">No se encontraron</StyleText> : <FlatList style={{width: wp('100%')}} data={filteredEvents} renderItem={renderCard} keyExtractor={(item)=> item.id}/>}
+
             </View>
 
               <BottomNavbar
