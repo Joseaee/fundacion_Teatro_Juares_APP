@@ -17,6 +17,7 @@ import MakeDate from "../views/dates/makeDate";
 import SuccessDate from "../views/dates/successDate";
 import Chat from "../views/chat/chat";
 import Cartelera from "../views/boleteria/cartelera";
+import Notification from "../views/profile/notification";
 
 function Routes(){
 
@@ -38,6 +39,7 @@ function Routes(){
             <Stack.Screen name="Cartelera" component={ Cartelera } options={ {animation: 'fade_from_bottom',} }/>
             
             <Stack.Screen name="DataUser" component={ DataUser } options={ {animation: 'fade'} }/>
+            <Stack.Screen name="Notification" component={ Notification } options={ {animation: 'slide_from_right'} }/>
 
             <Stack.Screen name="AskDates" component={ AskDates } options={ {animation: 'fade_from_bottom'} }/>
             <Stack.Screen name="MakeDate" component={ MakeDate } options={ {animation: 'slide_from_right'} }/>
