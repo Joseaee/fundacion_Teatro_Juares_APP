@@ -22,7 +22,8 @@ const initialState = {
         }
       ],
       filtros: {
-        categoria: 'all'
+        categoria: 'all',
+        nombre: ''
       }
 }
 
@@ -34,12 +35,21 @@ export const boleteriaSlice = createSlice({
             const categoria = action.payload
 
             return {...state, filtros: {
+                ...state.filtros,
                 categoria
             }}
+        },
+        setFilterEvent: (state, action)=>{
+          const nombre = action.payload
+
+          return {...state, filtros: {
+            ...state.filtros,
+            nombre
+          }}
         }
     }
 })
 
 export default boleteriaSlice.reducer
 
-export const {changeFilterCategory} = boleteriaSlice.actions  
+export const {changeFilterCategory, setFilterEvent} = boleteriaSlice.actions  
