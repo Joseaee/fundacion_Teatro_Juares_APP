@@ -1,8 +1,8 @@
 import { Text, StyleSheet, View } from "react-native";
 
-export default function StyleText({children, tag}){
+export default function StyleText({children, tag, style}){
     return (
-        <View style={{flex: 5, flexDirection: 'row'}}>
+        <View style={[{flexDirection: 'row'}, style]}>
             <Text style={styles.text}>
                 {children} 
             </Text>
