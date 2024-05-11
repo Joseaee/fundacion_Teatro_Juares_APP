@@ -8,7 +8,7 @@ import { CommonActions } from '@react-navigation/native';
 import BackArrow from '../../../assets/icons/goback-arrow.svg';
 import UserCircle from '../../../assets/icons/userCircle.svg';
 
-function Navbar( {title, screen, back, loggedIn, inverted, transparent} ) {
+function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, inverted, transparent} ) {
 
     const navigation = useNavigation();
     const [activeMenu, setActiveMenu] = useState(false);
@@ -30,7 +30,7 @@ function Navbar( {title, screen, back, loggedIn, inverted, transparent} ) {
                     <BackArrow 
                         height={ wp('8%') } 
                         width={ hp('5%') } 
-                        fill={ (transparent) ? '#E31734' :'white' }
+                        fill={ backArrowColor}
                         onPress={ () => {screen ? navigation.navigate(screen) : navigation.dispatch(CommonActions.goBack());} } 
                     /> : null}
                 </View>
