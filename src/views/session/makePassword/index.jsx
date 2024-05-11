@@ -44,7 +44,7 @@ function MakePassword({ navigation }) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fafafa" }}>
-      <Navbar back={true} title={""} transparent={true} />
+      <Navbar back={true} backArrowColor="#E31734" title={""} transparent={true} />
       <KeyboardAwareScrollView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
