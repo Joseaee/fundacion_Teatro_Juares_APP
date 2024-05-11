@@ -4,16 +4,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 import { useAppSelector, useAppDispatch } from '../../../hooks/store';
 import StyleText from '../../../components/StyleText'
-import Navbar from '../../../components/navbar';
+import Banner from '../../../components/Banner';
 import BottomNavbar from '../../../components/bottomNavbar';
 import CardButton from '../../../components/CardButton';
 import ButtonTab from '../../../components/ButtonTab';
 import Search from '../../../../assets/icons/search.svg'
-import { changeFilterCategory } from '../../../store/boleteria/slice';
-
-const renderCard = ({item})=>{
-  return <CardButton source={item.poster} title={item.nombre} subtitle={item.categoria} />
-}
+import { changeFilterCategory, setFilterEvent } from '../../../store/boleteria/slice';
+import { useNavigation } from '@react-navigation/native';
 
 const categorias = [
   {
@@ -35,18 +32,29 @@ const categorias = [
 ]
 
 export default function Cartelera(){
+    const navigation = useNavigation();
     const eventos = useAppSelector((state)=> state.boleteria.eventos)
     const categoriaFiltro = useAppSelector((state)=> state.boleteria.filtros.categoria)
-    const [eventSearch, setEventSearch] = useState('')
+    const filtroNombreEvento = useAppSelector((state)=> state.boleteria.filtros.nombre)
     const dispatch = useAppDispatch()
+
+    const ItemCard = ({item})=>{
+      return <CardButton source={item.poster} title={item.nombre} subtitle={item.categoria} onPress={()=> navigation.navigate('EventDetails', {
+        id: item.id
+      })}/>
+    }
 
     const handleChangeCategory = (category)=>{
       dispatch(changeFilterCategory(category))
     }
 
+    const handleChangeFilterEvent = (name)=>{
+      dispatch(setFilterEvent(name))
+    }
+
     const filterEvents = (events)=>{
       return events.filter(event=>{
-        return categoriaFiltro === 'all' || event.categoria === categoriaFiltro
+        return (filtroNombreEvento === '' || event.nombre.startsWith(filtroNombreEvento)) && (categoriaFiltro === 'all' || event.categoria === categoriaFiltro)
       })
     }
 
@@ -56,19 +64,13 @@ export default function Cartelera(){
 
     return (
         <SafeAreaView style={{flex:1}}>
-            <Navbar title='' loggedIn={true} />
-            <View style={{height: 120, }}>
-              <ImageBackground
-                source={require('.:/../../assets/img/banner-cartelera.jpg')} 
-                style={styles.backgroundImage}
-              >
-              <Text style={styles.title}>Cartelera de Eventos</Text>
-              </ImageBackground>
-            </View>
+            <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={true}>
+                <Text style={styles.title}>Cartelera de Eventos</Text>
+            </Banner>
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <View style={styles.input}>
                 <Search height={wp('5%')} width={hp('5%')} fill='gray' />
-                <TextInput placeholder='Buscar Eventos...' style={{flex: 1}} onChange={(e)=> setEventSearch(e.target.value)} value={eventSearch}/>
+                <TextInput placeholder='Buscar Eventos...' style={{flex: 1}} onChangeText={(text)=> handleChangeFilterEvent(text)} value={filtroNombreEvento}/>
               </View>
               <ScrollView style={{marginHorizontal: hp('2%'), marginBottom: hp('0.8%'), height: 52,}} horizontal={true} showsHorizontalScrollIndicator={false}>
                 <ButtonTab isSelected={isSelected('all')} onPress={()=> handleChangeCategory('all')}> 
@@ -76,7 +78,7 @@ export default function Cartelera(){
                 </ButtonTab>
                 {categorias.map(item => <ButtonTab isSelected={isSelected(item.nombre)} rowSeparation={8} key={item.id} onPress={()=> handleChangeCategory(item.nombre)}>{item.nombre}</ButtonTab>)}
               </ScrollView>
-              {(filteredEvents.length === 0) ? <StyleText tag="eventos">No se encontraron</StyleText> : <FlatList style={{width: wp('100%')}} data={filteredEvents} renderItem={renderCard} keyExtractor={(item)=> item.id}/>}
+              {(filteredEvents.length === 0) ? <StyleText tag="eventos">No se encontraron</StyleText> : <FlatList style={{width: wp('100%')}} data={filteredEvents} renderItem={ItemCard} keyExtractor={(item)=> item.id}/>}
 
             </View>
 
@@ -96,16 +98,11 @@ export default function Cartelera(){
       color: '#fff',
       fontSize: 22,
       textAlign: 'center',
+      marginTop: 8
     },
     buttonContainer: {
       width: 200,
       height: 100,
-    },
-    backgroundImage: {
-      flex: 1,
-      resizeMode: 'cover',
-      justifyContent: 'center',
-      alignItems: 'center',
     },
     buttonText: {
       color: 'white',
