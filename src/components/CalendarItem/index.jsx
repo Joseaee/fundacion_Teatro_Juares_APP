@@ -16,14 +16,14 @@ const meses = [
   "Dic",
 ];
 
-export default function CalendarItem({ date, title, children }) {
-  const fecha = new Date(date);
+export default function CalendarItem({ date, title, children, onPress }) {
+  const fecha = new Date(`${date} 00:00:00`);
   const semana = diasSemana[fecha.getDay()];
   const mes = meses[fecha.getMonth()];
   const dia = fecha.getDate();
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.eventItem}>
         <View style={styles.dateContainer}>
           <Text style={styles.dateText}>{mes}</Text>
