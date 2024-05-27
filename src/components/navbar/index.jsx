@@ -5,19 +5,22 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-nati
 import { useNavigation } from '@react-navigation/native'
 import { CommonActions } from '@react-navigation/native';
 
-import BackArrow from '../../../assets/icons/backArrow.svg';
+import BackArrow from '../../../assets/icons/goback-arrow.svg';
 import UserCircle from '../../../assets/icons/userCircle.svg';
 
-function Navbar( {title, screen, back, loggedIn, inverted} ) {
+function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, inverted, transparent} ) {
 
     const navigation = useNavigation();
     const [activeMenu, setActiveMenu] = useState(false);
     const [onSelected, setOnSelected] = useState([0,0, 0]);
 
+    const colorGradient = (transparent) ? ['transparent', 'transparent'] : 
+    (inverted) ? ['#E31734', '#E31744',  '#710014'] : ['#710014', '#E31744',  '#E31734']
+
     return(
         <>
             <LinearGradient 
-                colors={ inverted ? ['#E31734', '#E31744',  '#710014'] : ['#710014', '#E31744',  '#E31734'] }
+                colors={ colorGradient }
                 start={ { x: 0, y: 0 } }
                 end={ { x: 1, y: 0 } }
                 style={ styles.container }
@@ -25,9 +28,9 @@ function Navbar( {title, screen, back, loggedIn, inverted} ) {
                 <View style={ {flex: 1} }>
                     {back ? 
                     <BackArrow 
-                        height={ wp('10%') } 
+                        height={ wp('8%') } 
                         width={ hp('5%') } 
-                        fill={ 'white' }
+                        fill={ backArrowColor}
                         onPress={ () => {screen ? navigation.navigate(screen) : navigation.dispatch(CommonActions.goBack());} } 
                     /> : null}
                 </View>

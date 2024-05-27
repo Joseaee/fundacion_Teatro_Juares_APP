@@ -1,10 +1,14 @@
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image, FlatList, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
-import Swiper from 'react-native-swiper'
+import Swiper from 'react-native-swiper';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import Navbar from '../../components/navbar';
 import BottomNavbar from '../../components/bottomNavbar';
+import Masks from '../../../assets/icons/masks.svg';
+import Star from '../../../assets/icons/star.svg';
+import Eye from '../../../assets/icons/eye.svg';
 
 function Home( {} ) {
 
@@ -43,30 +47,66 @@ function Home( {} ) {
 
     return(
         
-        <SafeAreaView style={ {flex: 1,} }>
+        <SafeAreaView style={ {flex: 1, backgroundColor: "#fafafa"} }>
             <Navbar
-                title={ 'Inicio' }
+                title={ 'Teatro Juares' }
                 loggedIn={ true }
             />
+            <ScrollView>
             <View style={ {flex: 1,} }>
-                <View style={ {flex: 1, flexDirection: 'row', marginHorizontal: wp('5%')} }>
-                    <View style={ {flex: 1, alignItems: 'center', justifyContent: 'center'} }>
-                        <Text style={ [styles.text, {fontSize: hp('3%')}] }>Con la <Text style={ styles.title }>mejor experiencia</Text> </Text>
-                        <Text style={ [styles.text, {textAlign: 'justify'}] }>
+                <View style={ {flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 8} }>
+                    <Image style = { styles.image }source={ require('../../../assets/img/logo.png') }/>
+                </View>
+
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <Text style={styles.subtitles}>Conoce un poco sobre la </Text>
+                    <Text style={styles.textSpan}>Fundación</Text>
+                </View>
+                <View style={styles.cardInfo}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Masks height={wp("5%")} width={hp("5%")} fill="#E31734"/> 
+                        <Text style={{fontSize: 16, fontWeight: 'bold'}}>Sobre Nosotros:</Text>
+                    </View>
+                    <View style={{paddingHorizontal: 12}}>
+                        <Text style={{textAlign: 'justify'}}>
                             Somos una institución que ofrece servicios y productos en el área de entretenimiento al público barquisimetano y larense, siendo reconocidos a nivel nacional e internacional por sus grandes obras de teatro y escenificaciones.
                         </Text>
-                    </View>
-                    <View style={ {flex: 1, alignItems: 'center', justifyContent: 'center'} }>
-                        <Image
-                            style = { styles.image }
-                            source={ require('../../../assets/img/logo.png') }
-                        />
-                    </View>
+                    </View> 
                 </View>
+
+                <View style={styles.cardInfo}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Star height={wp("5%")} width={hp("5%")} fill="#EB8D0B"/> 
+                        <Text style={{fontSize: 16, fontWeight: 'bold'}}>Misión</Text>
+                    </View>
+                    <View style={{paddingHorizontal: 12}}>
+                        <Text style={{textAlign: 'justify'}}>
+                            Promover, difundir y proyectar las acciones artístico cultural de la Fundación Teatro Juares, mediante una política de características socialistas, con sostenibilidad en el tiempo, que logre dimensionar la máxima expresión de las obras escénicas que presente y así elevar el potencial artístico.
+                        </Text>
+                    </View> 
+                </View>
+
+                <View style={styles.cardInfo}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Eye height={wp("5%")} width={hp("5%")} fill="#2B9F3B"/> 
+                        <Text style={{fontSize: 16, fontWeight: 'bold'}}>Visión</Text>
+                    </View>
+                    <View style={{paddingHorizontal: 12}}>
+                        <Text style={{textAlign: 'justify'}}>
+                        Contamos con una política de sala abierta, de amplio alcance, que atiende eficazmente las necesidades de promoción, difusión y proyección de la obra escénica que exhiba. Basándose en los valores socialistas de la inclusión, la cooperación y la participación.
+                        </Text>
+                    </View> 
+                </View>
+
+                <View style={{flexDirection: 'row', justifyContent: 'center', marginVertical: 4, marginBottom: 8}}>
+                    <Text style={styles.subtitles}>Servicios que ofrece la </Text>
+                    <Text style={styles.textSpan}>Fundación</Text>
+                </View>
+
                 <View style={ {flex: 1,} }>
                     <Swiper 
                         style={ styles.wrapper } 
-                        showsButtons={ true }
+                        showsButtons={ false }
                         autoplay={ true }
                         showsPagination={ false }
                     >
@@ -92,7 +132,14 @@ function Home( {} ) {
                         })}
                     </Swiper>
                 </View>
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <Text style={styles.subtitles}>¿Necesitas ayuda?</Text>
+                    <Text style={styles.textSpan}>Contactanos</Text>
+                </View>
+
+                
             </View>
+            </ScrollView>
             <BottomNavbar
                 title={ 'Inicio' }
                 loggedIn={ true }
@@ -103,8 +150,9 @@ function Home( {} ) {
 }
 
 const styles = StyleSheet.create({
-    wrapper:{
-
+    wrapper: {
+        height: hp('45%'),
+        marginVertical: 14
     },
     slide: {
         flex: 1,
@@ -113,8 +161,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: wp('5%')
     },
     image: {
-        width: wp('30%'),
-        height: hp('15%'),
+        width: 120,
+        height: 140,
     },
     imageCircle:{
         backgroundColor: '#0D0060',
@@ -133,9 +181,32 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#2f2f2f',
-        fontSize: hp('1.8%'),
+        fontSize: hp('2%'),
         textAlign: 'justify',
-        fontWeight: 'bold',
+    },
+    subtitles: {
+        fontSize: hp('2.2%'),
+        textAlign: 'center',
+        color: '#2f2f2f',
+        fontWeight: 'bold'
+    },
+    textSpan: {
+        marginStart: 2,
+        fontSize: hp('2.2%'),
+        textAlign: 'center',
+        color: '#E31734',
+        fontWeight: 'bold'
+    },
+    cardInfo: {
+        marginVertical: 12,
+        paddingHorizontal: 8,
+        paddingVertical: 10,
+        borderWidth: 2,
+        borderColor: '#fff',
+        backgroundColor: '#fff',
+        marginHorizontal: 12,
+        borderRadius: 10,
+        elevation: 6
     }
 })
 
