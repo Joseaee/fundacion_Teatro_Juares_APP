@@ -97,7 +97,7 @@ export default function CarritoCompra() {
       <FixedFooter>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 16}}>
           <StyleText tag={`${total} Ref`} size='small'>Total:</StyleText>
-          <CustomButton text={'Siguiente'} width={125} height={36}/>
+          <CustomButton text={'Siguiente'} width={125} height={36} screen='SeleccionAsientos'/>
         </View>
       </FixedFooter>
       <BottomNavbar title={"Cartelera"} loggedIn={true} active={3} />
