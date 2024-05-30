@@ -17,8 +17,11 @@ import MakeDate from "../views/dates/makeDate";
 import SuccessDate from "../views/dates/successDate";
 import Chat from "../views/chat/chat";
 import Cartelera from "../views/boleteria/cartelera";
+
 import DetallesEvento from "../views/boleteria/detallesEvento";
 import CarritoCompra from "../views/boleteria/carritoCompra";
+
+import Notification from "../views/profile/notification";
 
 function Routes(){
 
@@ -41,6 +44,7 @@ function Routes(){
             <Stack.Screen name="EventDetails" component={ DetallesEvento } options={ {animation: 'slide_from_right',} }/>
             <Stack.Screen name="CarritoCompra" component={ CarritoCompra } options={ {animation: 'slide_from_right',} }/>
             <Stack.Screen name="DataUser" component={ DataUser } options={ {animation: 'fade'} }/>
+            <Stack.Screen name="Notification" component={ Notification } options={ {animation: 'slide_from_right'} }/>
 
             <Stack.Screen name="AskDates" component={ AskDates } options={ {animation: 'fade_from_bottom'} }/>
             <Stack.Screen name="MakeDate" component={ MakeDate } options={ {animation: 'slide_from_right'} }/>
