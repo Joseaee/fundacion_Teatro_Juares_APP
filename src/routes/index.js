@@ -19,6 +19,7 @@ import Chat from "../views/chat/chat";
 import Cartelera from "../views/boleteria/cartelera";
 import DetallesEvento from "../views/boleteria/detallesEvento";
 import CarritoCompra from "../views/boleteria/carritoCompra";
+import EditUser from "../views/profile/editUser";
 
 function Routes(){
 
@@ -27,6 +28,8 @@ function Routes(){
         <NavigationContainer>
             <Stack.Navigator screenOptions={ {headerShown: false,} }>
 
+            <Stack.Screen name="Home" component={ Home } options={ {animation: 'fade',} }/>
+
             <Stack.Screen name="Login" component={ Login } options={ {animation: 'fade'} }/>
             <Stack.Screen name="Register" component={ Register } options={ {animation: 'slide_from_right'} }/>
             <Stack.Screen name="MakePassword" component={ MakePassword } options={ {animation: 'slide_from_right'} }/>
@@ -34,8 +37,6 @@ function Routes(){
             <Stack.Screen name="ForgetPassword" component={ ForgetPassword } options={ {animation: 'slide_from_right'} }/>
             <Stack.Screen name="CodePassword" component={ CodePassword } options={ {animation: 'slide_from_left'} }/>
             <Stack.Screen name="ChangePassword" component={ ChangePassword } options={ {animation: 'slide_from_right'} }/>
-
-            <Stack.Screen name="Home" component={ Home } options={ {animation: 'fade',} }/>
 
             <Stack.Screen name="Cartelera" component={ Cartelera } options={ {animation: 'fade_from_bottom',} }/>
             <Stack.Screen name="EventDetails" component={ DetallesEvento } options={ {animation: 'slide_from_right',} }/>
@@ -47,6 +48,7 @@ function Routes(){
             <Stack.Screen name="SuccessDate" component={ SuccessDate } options={ {animation: 'slide_from_right'} }/>
 
             <Stack.Screen name="Chat" component={ Chat } options={ {animation: 'fade_from_bottom'} }/>
+            <Stack.Screen name="EditUser" component={EditUser} options={ {animation: 'slide_from_bottom'} }/>
             </Stack.Navigator>
         </NavigationContainer>
     );

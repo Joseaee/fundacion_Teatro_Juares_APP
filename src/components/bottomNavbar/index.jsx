@@ -11,7 +11,7 @@ import Film from '../../../assets/icons/film.svg';
 import News from '../../../assets/icons/news.svg';
 import Chat from '../../../assets/icons/chat.svg';
 
-function BottomNavbar( {active, screen,} ) {
+function BottomNavbar( {active, screen} ) {
 
     const navigation = useNavigation();
 
