@@ -20,6 +20,8 @@ import Cartelera from "../views/boleteria/cartelera";
 import DetallesEvento from "../views/boleteria/detallesEvento";
 import CarritoCompra from "../views/boleteria/carritoCompra";
 import SeleccionarAsientos from "../views/boleteria/seleccionarAsientos";
+import FormasPago from "../views/boleteria/formasPago";
+import ForoNoticias from "../views/noticias/foroNoticias";
 
 function Routes(){
 
@@ -27,7 +29,7 @@ function Routes(){
     return(
         <NavigationContainer>
             <Stack.Navigator screenOptions={ {headerShown: false,} }>
-
+            
             <Stack.Screen name="Login" component={ Login } options={ {animation: 'fade'} }/>
             <Stack.Screen name="Register" component={ Register } options={ {animation: 'slide_from_right'} }/>
             <Stack.Screen name="MakePassword" component={ MakePassword } options={ {animation: 'slide_from_right'} }/>
@@ -42,6 +44,8 @@ function Routes(){
             <Stack.Screen name="EventDetails" component={ DetallesEvento } options={ {animation: 'slide_from_right',} }/>
             <Stack.Screen name="CarritoCompra" component={ CarritoCompra } options={ {animation: 'slide_from_right',} }/>
             <Stack.Screen name="SeleccionAsientos" component={ SeleccionarAsientos } options={ {animation: 'slide_from_right',} }/>
+            <Stack.Screen name="FormasPago" component={ FormasPago } options={ {animation: 'slide_from_right',} }/>
+            <Stack.Screen name="ForoNoticias" component={ ForoNoticias } options={ {animation: 'fade'} }/>
             <Stack.Screen name="DataUser" component={ DataUser } options={ {animation: 'fade'} }/>
 
             <Stack.Screen name="AskDates" component={ AskDates } options={ {animation: 'fade_from_bottom'} }/>
@@ -50,6 +54,7 @@ function Routes(){
 
             <Stack.Screen name="Chat" component={ Chat } options={ {animation: 'fade_from_bottom'} }/>
             </Stack.Navigator>
+
         </NavigationContainer>
     );
 }
