@@ -22,6 +22,11 @@ import DetallesEvento from "../views/boleteria/detallesEvento";
 import CarritoCompra from "../views/boleteria/carritoCompra";
 
 import Notification from "../views/profile/notification";
+import Help from "../views/profile/help";
+import HelpDetailsUser from "../views/profile/help/HelpDetailsUser";
+import HelpDetailsChat from "../views/profile/help/HelpDetailsChat";
+import HelpDetailsEvent from "../views/profile/help/HelpDetailsEvent";
+import HelpDetailsNoticias from "../views/profile/help/HelpDetailsNoticias";
 
 function Routes(){
 
@@ -30,6 +35,7 @@ function Routes(){
         <NavigationContainer>
             <Stack.Navigator screenOptions={ {headerShown: false,} }>
 
+            <Stack.Screen name="Home" component={ Home } options={ {animation: 'fade',} }/>
             <Stack.Screen name="Login" component={ Login } options={ {animation: 'fade'} }/>
             <Stack.Screen name="Register" component={ Register } options={ {animation: 'slide_from_right'} }/>
             <Stack.Screen name="MakePassword" component={ MakePassword } options={ {animation: 'slide_from_right'} }/>
@@ -38,13 +44,17 @@ function Routes(){
             <Stack.Screen name="CodePassword" component={ CodePassword } options={ {animation: 'slide_from_left'} }/>
             <Stack.Screen name="ChangePassword" component={ ChangePassword } options={ {animation: 'slide_from_right'} }/>
 
-            <Stack.Screen name="Home" component={ Home } options={ {animation: 'fade',} }/>
 
             <Stack.Screen name="Cartelera" component={ Cartelera } options={ {animation: 'fade_from_bottom',} }/>
             <Stack.Screen name="EventDetails" component={ DetallesEvento } options={ {animation: 'slide_from_right',} }/>
             <Stack.Screen name="CarritoCompra" component={ CarritoCompra } options={ {animation: 'slide_from_right',} }/>
             <Stack.Screen name="DataUser" component={ DataUser } options={ {animation: 'fade'} }/>
             <Stack.Screen name="Notification" component={ Notification } options={ {animation: 'slide_from_right'} }/>
+            <Stack.Screen name="Help" component={ Help } options={ {animation: 'slide_from_right'} }/>
+            <Stack.Screen name="HelpDetailsUser" component={ HelpDetailsUser } options={ {animation: 'slide_from_right'} }/>
+            <Stack.Screen name="HelpDetailsChat" component={ HelpDetailsChat } options={ {animation: 'slide_from_right'} }/>
+            <Stack.Screen name="HelpDetailsEvent" component={ HelpDetailsEvent } options={ {animation: 'slide_from_right'} }/>
+            <Stack.Screen name="HelpDetailsNoticias" component={ HelpDetailsNoticias } options={ {animation: 'slide_from_right'} }/>
 
             <Stack.Screen name="AskDates" component={ AskDates } options={ {animation: 'fade_from_bottom'} }/>
             <Stack.Screen name="MakeDate" component={ MakeDate } options={ {animation: 'slide_from_right'} }/>

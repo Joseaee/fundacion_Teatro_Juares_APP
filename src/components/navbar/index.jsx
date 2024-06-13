@@ -23,68 +23,6 @@ function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, invert
     ? ["#E31734", "#E31744", "#710014"]
     : ["#710014", "#E31744", "#E31734"];
 
-    return(
-        <>
-            <LinearGradient 
-                colors={ colorGradient }
-                start={ { x: 0, y: 0 } }
-                end={ { x: 1, y: 0 } }
-                style={ styles.container }
-            >  
-                <View style={ {flex: 1} }>
-                    {back ? 
-                    <BackArrow 
-                        height={ wp('8%') } 
-                        width={ hp('5%') } 
-                        fill={ backArrowColor}
-                        onPress={ () => {screen ? navigation.navigate(screen) : navigation.dispatch(CommonActions.goBack());} } 
-                    /> : null}
-                </View>
-                <View style={ {flex: 1, justifyContent: 'center', alignItems: 'center',} }>
-                    <Text style={ styles.title }>{ title }</Text>
-                </View>
-                <View style={ {flex: 1, justifyContent: 'center', alignItems: 'flex-end'} }>
-                    {loggedIn ?
-                    <UserCircle 
-                        height={ wp('10%') } 
-                        width={ hp('5%') } 
-                        fill={ 'white' }
-                        onPress={ () => {activeMenu ? setActiveMenu(false) : setActiveMenu(true); setOnSelected([0, 0, 0]);} } 
-                    /> : null}
-                </View>
-            </LinearGradient>
-            {activeMenu ? 
-            <View style={ {alignItems: 'flex-end', marginEnd: wp('1%'),} }>
-                <View style={ styles.containerMenu }>
-                    <TouchableOpacity 
-                        style={ [styles.itemMenu,  onSelected[0] ? { backgroundColor: '#DBDAD1',} : null] }
-                        onPressIn={ () =>{setOnSelected([1, 0, 0]);} }
-                        onPressOut={ () =>{setOnSelected([0, 0, 0]);} }
-                        onPress={ () => {navigation.navigate('DataUser');} } 
-                    >
-                        <Text style={ [styles.text, onSelected[0] ? { color: '#710014',} : null] }>Mi perfil</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={ [styles.itemMenu,  onSelected[1] ? { backgroundColor: '#DBDAD1',} : null] }
-                        onPressIn={ () =>{setOnSelected([0, 1, 0]);} }
-                        onPressOut={ () =>{setOnSelected([0, 0, 0]);} }
-                        onPress={ () => {navigation.navigate('Help');} } 
-                    >
-                        <Text style={ [styles.text, onSelected[1] ? { color: '#710014',} : null] }>Ayuda</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={ [styles.itemMenu,  onSelected[2] ? { backgroundColor: '#DBDAD1',} : null] }
-                        onPressIn={ () =>{setOnSelected([0, 0, 1]);} }
-                        onPressOut={ () =>{setOnSelected([0, 0, 0]);} }
-                        onPress={ () => {navigation.navigate('Login')} } 
-                    >
-                        <Text style={ [styles.text, onSelected[2] ? { color: '#710014',} : null] }>Cerra Sesión</Text>
-                    </TouchableOpacity>
-                </View>
-            </View> : null}
-        </>
-    );
-
   return (
     <>
       <LinearGradient

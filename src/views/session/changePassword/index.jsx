@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image, TextInput,Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { LinearGradient } from 'expo-linear-gradient';

@@ -59,7 +59,7 @@ function BottomNavbar( {active, screen,} ) {
                 />
                 <Text style={ [styles.text, {color: (active == 4) ? '#E31734' : 'grey'}] }>Noticias</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('Home')} } >
+            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('Help')} } >
                 <Help 
                     height={ wp('5%') } 
                     width={ hp('5%') } 
