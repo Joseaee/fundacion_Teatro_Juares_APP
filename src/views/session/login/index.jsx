@@ -1,38 +1,29 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  Platform,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, Platform, } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { useForm, Controller } from "react-hook-form";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-native-responsive-screen";
+import { useForm } from "react-hook-form";
+import InputForm from "../../../components/InputForm";
+
 import Cedula from "../../../../assets/icons/cedula.svg";
 import Password from "../../../../assets/icons/lock.svg";
-import CustomButton from "../../../components/customButton/";
+import CustomButton from "../../../components/CustomButton";
 
 function Login({ navigation }) {
-  const [inputId, setInputId] = useState(false);
-  const [inputPassword, setInputPassword] = useState(false);
+    const [inputId, setInputId] = useState(false);
+    const [inputPassword, setInputPassword] = useState(false);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      matricula: "",
-      email: "",
-    },
-  });
+    const {
+      control,
+      handleSubmit,
+      formState: { errors },
+    } = useForm({
+        defaultValues: {
+        cedula: "",
+        password: "",
+      },
+    });
 
   const onSubmit = () => {
     navigation.navigate("Home");
@@ -59,93 +50,19 @@ function Login({ navigation }) {
               />
               <Text style={styles.title}>¡Iniciar Sesión!</Text>
             </View>
-            <View
-              style={{ flex: 1, justifyContent: "center", marginTop: hp("2%") }}
-            >
-              <View
-                style={[
-                  styles.input,
-                  {
-                    marginTop: hp("0.5%"),
-                    borderColor: inputId ? "#CB2139" : "#656565",
-                  },
-                ]}
-              >
-                <Cedula height={wp("5%")} width={hp("5%")} fill="#555" />
-                <Controller
-                  control={control}
-                  rules={{
-                    required: true,
-                    pattern: {
-                      value: /^[0-9]{7,9}$/,
-                      message: "Ingrese una cedula valida",
-                    },
-                  }}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                      style={{ flex: 1 }}
-                      placeholder="Cedula"
-                      placeholderTextColor="#656565"
-                      keyboardType="number-pad"
-                      onFocus={() => {
-                        setInputId(true);
-                      }}
-                      onBlur={() => {
-                        onBlur;
-                        setInputId(false);
-                      }}
-                      onChangeText={onChange}
-                      value={value}
-                    />
-                  )}
-                  name="cedula"
-                />
-              </View>
+
+            <View style={{ flex: 1, justifyContent: "center", marginTop: hp("2%") }}>
+              <InputForm Icon={Cedula} regExp={/^[0-9]{7,8}$/} placeholder='Cedula' msjError='Cédula Invalida' control={control} value='' name='cedula'/>
               {errors.cedula && (
-                <Text style={styles.error}>Error en la cedula.</Text>
+                <Text style={styles.error}>Error en la Cedula.</Text>
               )}
-              <View
-                style={[
-                  styles.input,
-                  {
-                    marginTop: hp("0.5%"),
-                    borderColor: inputPassword ? "#CB2139" : "#656565",
-                  },
-                ]}
-              >
-                <Password height={wp("5%")} width={hp("5%")} fill="#555" />
-                <Controller
-                  control={control}
-                  rules={{
-                    required: true,
-                    pattern: {
-                      value: /^[a-zA-Z0-9_\.\-]{8}$/,
-                      message: "Ingrese una contraseña valida",
-                    },
-                  }}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                      style={{ flex: 1 }}
-                      placeholder="Contraseña (8 caracteres)"
-                      placeholderTextColor="#656565"
-                      onFocus={(e) => {
-                        setInputPassword(true);
-                      }}
-                      onBlur={(e) => {
-                        onBlur;
-                        setInputPassword(false);
-                      }}
-                      onChangeText={onChange}
-                      value={value}
-                    />
-                  )}
-                  name="inputPassword"
-                />
-              </View>
-              {errors.inputPassword && (
-                <Text style={styles.error}>Error en la contraseña.</Text>
+              
+              <InputForm Icon={Password} regExp={/^[a-zA-Z0-9_\.\-]{8}$/} placeholder='Contraseña' msjError='Contraseña Invalida' control={control} value='' name='password'/>
+              {errors.password && (
+                <Text style={styles.error}>Error en la Contraseña.</Text>
               )}
             </View>
+
             <View style={{ marginTop: hp("1%") }}>
               <CustomButton
                 text={"Iniciar Sesión"}

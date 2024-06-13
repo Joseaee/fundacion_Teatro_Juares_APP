@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 
 import Navbar from '../../../components/navbar';
-import CustomButton from '../../../components/customButton';
+import CustomButton from '../../../components/CustomButton';
 
 function SuccessDate( {route} ) {
 

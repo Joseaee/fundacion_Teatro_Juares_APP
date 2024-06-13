@@ -1,24 +1,20 @@
 import { useState } from "react";
-import { View, Text, StyleSheet, Image, TextInput, Platform } from "react-native";
+import { View, Text, StyleSheet, Image, TextInput, Platform, TouchableOpacity, } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { LinearGradient } from "expo-linear-gradient";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { widthPercentageToDP as wp,heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { useForm, Controller } from "react-hook-form";
-import Navbar from '../../../components/navbar'
-import CustomButton from "../../../components/customButton";
-import InputForm from "../../../components/inputForm";
+import Navbar from "../../../components/navbar";
+import CustomButton from "../../../components/CustomButton";
+import InputForm from "../../../components/InputForm";
 
-import User from '../../../../assets/icons/user.svg'
-import UserGroup from '../../../../assets/icons/user-group.svg'
-import Cedula from '../../../../assets/icons/cedula.svg'
-import Correo from '../../../../assets/icons/envelope.svg'
+import User from "../../../../assets/icons/user.svg";
+import UserGroup from "../../../../assets/icons/user-group.svg";
+import Cedula from "../../../../assets/icons/cedula.svg";
+import Correo from "../../../../assets/icons/envelope.svg";
 
 function Register({ navigation }) {
-
   const {
     control,
     handleSubmit,
@@ -38,7 +34,7 @@ function Register({ navigation }) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fafafa" }}>
-        <Navbar title={''} back={true} loggedIn={false} transparent={true}/>
+      <Navbar title={""} back={true} backArrowColor="#E31734" loggedIn={false} transparent={true} />
       <KeyboardAwareScrollView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -57,33 +53,104 @@ function Register({ navigation }) {
           <View
             style={{ flex: 1, justifyContent: "center", marginTop: hp("3%") }}
           >
-            <InputForm Icon={Cedula} regExp={/^[0-9]{7,8}$/} placeholder='Cedula' msjError='Cédula Invalida' control={control} value='' name='cedula'/>
+            <InputForm
+              Icon={Cedula}
+              regExp={/^[0-9]{7,8}$/}
+              placeholder="Cedula"
+              msjError="Cédula Invalida"
+              control={control}
+              value=""
+              name="cedula"
+            />
             {errors.cedula && (
               <Text style={styles.error}>Error en la Cedula.</Text>
             )}
 
-            <InputForm Icon={User} regExp={/^[a-zA-ZÀ-ÿ\u00f1\ \u00d1\ ]{3,30}$/} placeholder='Nombre(s)' msjError='Nombre(s) Invalido' control={control} value='' name='nombres'/>
+            <InputForm
+              Icon={User}
+              regExp={/^[a-zA-ZÀ-ÿ\u00f1\ \u00d1\ ]{3,30}$/}
+              placeholder="Nombre(s)"
+              msjError="Nombre(s) Invalido"
+              control={control}
+              value=""
+              name="nombres"
+            />
             {errors.nombres && (
               <Text style={styles.error}>Error en el Nombre(s).</Text>
             )}
-            
-            <InputForm Icon={UserGroup} regExp={/^[a-zA-ZÀ-ÿ\u00f1\ \u00d1\ ]{3,30}$/} placeholder='Apellido(s)' msjError='Apellido(s) Invalido' control={control} value='' name='apellidos'/>
+
+            <InputForm
+              Icon={UserGroup}
+              regExp={/^[a-zA-ZÀ-ÿ\u00f1\ \u00d1\ ]{3,30}$/}
+              placeholder="Apellido(s)"
+              msjError="Apellido(s) Invalido"
+              control={control}
+              value=""
+              name="apellidos"
+            />
             {errors.apellidos && (
               <Text style={styles.error}>Error en los Apellido(s).</Text>
             )}
 
-            <InputForm Icon={Correo} regExp={/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/} placeholder='Correo Electrónico' msjError='Correo Invalido' control={control} value='' name='correo'/>
+            <InputForm
+              Icon={Correo}
+              regExp={/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/}
+              placeholder="Correo Electrónico"
+              msjError="Correo Invalido"
+              control={control}
+              value=""
+              name="correo"
+            />
             {errors.correo && (
               <Text style={styles.error}>Error en el Correo.</Text>
             )}
           </View>
           <View style={{ marginTop: hp("1%") }}>
-              <CustomButton
-                text={"Continuar"}
-                screen={"MakePassword"}
-                onPress={handleSubmit(onSubmit)}
-              />
-            </View>
+            <CustomButton
+              text={"Continuar"}
+              screen={"MakePassword"}
+              onPress={handleSubmit(onSubmit)}
+            />
+          </View>
+
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-around",
+              height: 40,
+              marginVertical: 12,
+            }}
+          >
+            <View style={styles.line} />
+            <Text style={styles.other}>Más Opciones</Text>
+            <View style={styles.line} />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={{ color: "#333" }}>¿Ya tienes una cuenta?</Text>
+            <TouchableOpacity style={{ marginStart: 4 }}>
+              <Text
+                style={styles.textLink}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigation.navigate("Login");
+                }}
+                onPress={(e) => {
+                  e.stopPropagation();
+                  navigation.navigate("Login");
+                }}
+              >
+                Inicia Sesión
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
@@ -124,10 +191,27 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: hp("2.5%"),
   },
+  textLink: {
+    color: "#0d6efd",
+    fontSize: hp("2%"),
+    fontWeight: "bold",
+  },
+  other: {
+    marginHorizontal: 12,
+    color: "#2f2f2f",
+    opacity: 0.7,
+    fontWeight: "bold",
+  },
+  line: {
+    backgroundColor: "#2f2f2f",
+    opacity: 0.4,
+    flex: 1,
+    height: 3,
+  },
   error: {
     color: "red",
     textAlign: "center",
-    marginBottom: 4
+    marginBottom: 4,
   },
 });
 
