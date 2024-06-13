@@ -1,18 +1,17 @@
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image, FlatList, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
-import Swiper from 'react-native-swiper';
-import { LinearGradient } from 'expo-linear-gradient';
-
+import Carousel from '../../components/Carousel';
 import Navbar from '../../components/navbar';
 import BottomNavbar from '../../components/bottomNavbar';
 import Masks from '../../../assets/icons/masks.svg';
 import Star from '../../../assets/icons/star.svg';
 import Eye from '../../../assets/icons/eye.svg';
+import CardButton from '../../components/CardButton';
 
 function Home( {} ) {
 
-    const services = [
+    const servicios = [
         {
             id: "1",
             title: "Obra Teatrales",
@@ -104,33 +103,11 @@ function Home( {} ) {
                 </View>
 
                 <View style={ {flex: 1,} }>
-                    <Swiper 
-                        style={ styles.wrapper } 
-                        showsButtons={ false }
-                        autoplay={ true }
-                        showsPagination={ false }
-                    >
-                        {services.map((item) => {
-
-                            return( 
-                                <View 
-                                        style={styles.slide}
-                                        key={`service-item-${item.id}`}
-                                    >
-                                        <Image
-                                            style = { styles.imageCircle }
-                                            source={ item.img }
-                                        />
-                                        <Text style={ styles.title }>{ item.title }</Text>
-                                        <ScrollView  style={ {flex: 1,} }>
-                                            <Text style={ styles.text }>
-                                                { item.text }
-                                            </Text>
-                                        </ScrollView>
-                                </View>
-                            )
-                        })}
-                    </Swiper>
+                    <Carousel data={servicios} renderItem={(item)=>{
+                        return  (
+                            <CardButton key={item.id} title={item.title} source={item.img} />
+                        )
+                    }}/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                     <Text style={styles.subtitles}>¿Necesitas ayuda?</Text>
