@@ -39,9 +39,12 @@ export default function Cartelera(){
     const dispatch = useAppDispatch()
 
     const ItemCard = ({item})=>{
-      return <CardButton source={item.poster} title={item.nombre} subtitle={item.categoria} onPress={()=> navigation.navigate('EventDetails', {
-        id: item.id
-      })}/>
+      return <View style={{marginHorizontal: 14, marginVertical: 6}}>
+          <CardButton source={item.poster} title={item.nombre} subtitle={item.categoria} onPress={()=> navigation.navigate('EventDetails', {
+          id: item.id
+        })}/>
+      </View>
+
     }
 
     const handleChangeCategory = (category)=>{
@@ -78,7 +81,8 @@ export default function Cartelera(){
                 </ButtonTab>
                 {categorias.map(item => <ButtonTab isSelected={isSelected(item.nombre)} rowSeparation={8} key={item.id} onPress={()=> handleChangeCategory(item.nombre)}>{item.nombre}</ButtonTab>)}
               </ScrollView>
-              {(filteredEvents.length === 0) ? <StyleText tag="eventos">No se encontraron</StyleText> : <FlatList style={{width: wp('100%')}} data={filteredEvents} renderItem={ItemCard} keyExtractor={(item)=> item.id}/>}
+
+                  {(filteredEvents.length === 0) ? <StyleText tag="eventos" >No se encontraron</StyleText> : <FlatList style={{width: wp('100%')}} data={filteredEvents} renderItem={ItemCard} keyExtractor={(item)=> item.id}/>}
 
             </View>
 
@@ -98,7 +102,8 @@ export default function Cartelera(){
       color: '#fff',
       fontSize: 22,
       textAlign: 'center',
-      marginTop: 8
+      marginTop: 8,
+      letterSpacing: 1,
     },
     buttonContainer: {
       width: 200,
