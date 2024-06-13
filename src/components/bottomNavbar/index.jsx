@@ -51,7 +51,7 @@ function BottomNavbar( {active, screen,} ) {
                 </LinearGradient>
                 <Text style={ [styles.text, {color: (active == 3) ? '#E31734' : 'grey'}] }>Eventos</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate(/*'News'*/'Home')} }>
+            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('ForoNoticias')} }>
                 <News 
                     height={ wp('5%') } 
                     width={ hp('5%') } 
