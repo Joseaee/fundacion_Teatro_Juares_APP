@@ -22,6 +22,7 @@
     "react-native-element-dropdown": "^2.10.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modern-datepicker": "^1.0.0-beta.91",
+    "react-native-paper": "^5.12.3",
     "react-native-reanimated-carousel": "^3.5.1",
     "react-native-responsive-screen": "^1.4.2",
     "react-native-shadow-2": "^7.0.8",

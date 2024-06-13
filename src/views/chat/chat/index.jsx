@@ -1,4 +1,4 @@
-import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -15,7 +15,7 @@ function Chat({ navigation }) {
     
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([{user: true, text: 'Dígame en que puedo ayudarle'}]);
-   
+
 
     const handleNavigateScreens = (screen) =>
     {
@@ -49,12 +49,13 @@ function Chat({ navigation }) {
             />
         ));
     }
-   
+ 
     return (
         <SafeAreaView style = { styles.container }>
             <Navbar
                 title={ 'Chat de soporte' }
                 loggedIn={ true }
+               
             />
             <View style = { { flex: 1 } }>
                 <View style = { styles.chatContainer }>      

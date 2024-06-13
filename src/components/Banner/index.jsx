@@ -13,7 +13,7 @@ export default function Banner({children, image, goBack, darkOverlay = false}){
                 <View style={{flexDirection: 'row'}}>
                 <Navbar title='' loggedIn={true} transparent={true} back={goBack}/>
                 </View>
-                <View>
+                <View style={{flexDirection: 'row'}}>
                     {children}
                 </View>
               </ImageBackground>
