@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomNavbar from '../../../components/bottomNavbar'
 import Navbar from '../../../components/navbar'
 import StyleText from '../../../components/StyleText'
-import CustomButton from '../../../components/customButton'
+import CustomButton from '../../../components/CustomButton'
 import MoneyTransfer from '../../../../assets/icons/money-transfer.svg'
 import Edit from '../../../../assets/icons/edit.svg'
 import Xmark from '../../../../assets/icons/xmark.svg'
