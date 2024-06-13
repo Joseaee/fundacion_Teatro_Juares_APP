@@ -4,7 +4,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 
 import CustomButton from '../../../components/CustomButton';
-import CheckIcon from '../../../../assets/icons/CheckIcon.svg';
+import CheckIcon from '../../../../assets/icons/check.svg';
 
 function SuccessSession( {route} ) {
 
