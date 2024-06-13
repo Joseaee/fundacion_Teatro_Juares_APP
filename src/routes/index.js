@@ -22,6 +22,7 @@ import CarritoCompra from "../views/boleteria/carritoCompra";
 import SeleccionarAsientos from "../views/boleteria/seleccionarAsientos";
 import FormasPago from "../views/boleteria/formasPago";
 import ForoNoticias from "../views/noticias/foroNoticias";
+import DetalleNoticia from "../views/noticias/detalleNoticia";
 
 function Routes(){
 
@@ -33,9 +34,9 @@ function Routes(){
             <Stack.Screen name="Login" component={ Login } options={ {animation: 'fade'} }/>
             <Stack.Screen name="Register" component={ Register } options={ {animation: 'slide_from_right'} }/>
             <Stack.Screen name="MakePassword" component={ MakePassword } options={ {animation: 'slide_from_right'} }/>
-            <Stack.Screen name="SuccessSession" component={ SuccessSession } options={ {animation: 'slide_from_left'} }/>
+            <Stack.Screen name="SuccessSession" component={ SuccessSession } options={ {animation: 'slide_from_right'} }/>
             <Stack.Screen name="ForgetPassword" component={ ForgetPassword } options={ {animation: 'slide_from_right'} }/>
-            <Stack.Screen name="CodePassword" component={ CodePassword } options={ {animation: 'slide_from_left'} }/>
+            <Stack.Screen name="CodePassword" component={ CodePassword } options={ {animation: 'slide_from_right'} }/>
             <Stack.Screen name="ChangePassword" component={ ChangePassword } options={ {animation: 'slide_from_right'} }/>
 
             <Stack.Screen name="Home" component={ Home } options={ {animation: 'fade',} }/>
@@ -45,7 +46,10 @@ function Routes(){
             <Stack.Screen name="CarritoCompra" component={ CarritoCompra } options={ {animation: 'slide_from_right',} }/>
             <Stack.Screen name="SeleccionAsientos" component={ SeleccionarAsientos } options={ {animation: 'slide_from_right',} }/>
             <Stack.Screen name="FormasPago" component={ FormasPago } options={ {animation: 'slide_from_right',} }/>
+            
             <Stack.Screen name="ForoNoticias" component={ ForoNoticias } options={ {animation: 'fade'} }/>
+            <Stack.Screen name="DetalleNoticia" component={ DetalleNoticia } options={ {animation: 'fade'} }/>
+            
             <Stack.Screen name="DataUser" component={ DataUser } options={ {animation: 'fade'} }/>
 
             <Stack.Screen name="AskDates" component={ AskDates } options={ {animation: 'fade_from_bottom'} }/>
