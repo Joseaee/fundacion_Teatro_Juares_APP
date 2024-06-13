@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native'
 import {View, Text, StyleSheet, FlatList, ImageBackground, TextInput, ScrollView, TouchableOpacity} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
@@ -7,13 +6,23 @@ import BottomNavbar from '../../../components/bottomNavbar';
 import Search from '../../../../assets/icons/search.svg';
 import Carousel from '../../../components/Carousel';
 import CardButton from '../../../components/CardButton';
+import { useNavigation } from '@react-navigation/native';
 
 const noticiasRelevantes = [
-    {id: '1', img: require("../../../../assets/img/Noticias/Peka.jpg"), title: 'Pekka Mata a Todos'},
-    {id: '2', img: require("../../../../assets/img/Noticias/Peka.jpg"), title: 'Pekka Mata a Todos'}
+    {id: '1', banner: require("../../../../assets/img/Servicios/graduaciones.jpg"), title: 'Las mejores graduaciones', text: 'Desde obras de ballet, danza y urbano hasta circo, comedia y obras infantiles hemos tenido el honor de organizar, al tener un espacio amplio y una gran capacidad, nuestras instalaciones son perfectas para llevar a cabo tu producción, contamos con un excelente equipo de área técnica que no te va a fallar al montar la obra que tú sueñas.', images: [require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg")]},
+
+    {id: '2', banner: require("../../../../assets/img/Servicios/conciertos.jpg"), title: 'Conciertos geniales' , text: 'Si buscas un espacio donde tu voz se escuche armoniosa y perfecta nuestro escenario es perfecto para ti, el mismo cuenta con una estructura basada en los Teatros Italianos que tienen la característica de proyectar e intensificar el sonido, además nuestras instalaciones cuenta con un excelente equipo de sonido y los especialistas capacitados para su manejo.', images: [require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg")]}
+]
+
+const otrasNoticias = [
+    {id: '1', banner: require("../../../../assets/img/Servicios/obras.jpg"), title: 'Obras de teatro', text: 'Desde obras de ballet, danza y urbano hasta circo, comedia y obras infantiles hemos tenido el honor de organizar, al tener un espacio amplio y una gran capacidad, nuestras instalaciones son perfectas para llevar a cabo tu producción, contamos con un excelente equipo de área técnica que no te va a fallar al montar la obra que tú sueñas.', images: [require("../../../../assets/img/Servicios/obras.jpg"), require("../../../../assets/img/Servicios/obras.jpg"), require("../../../../assets/img/Servicios/obras.jpg"), require("../../../../assets/img/Servicios/obras.jpg")]},
+
+    {id: '2', banner: require("../../../../assets/img/Servicios/belleza.jpg"), title: 'Concursos de belleza', text: 'Desde obras de ballet, danza y urbano hasta circo, comedia y obras infantiles hemos tenido el honor de organizar, al tener un espacio amplio y una gran capacidad, nuestras instalaciones son perfectas para llevar a cabo tu producción, contamos con un excelente equipo de área técnica que no te va a fallar al montar la obra que tú sueñas.', images: [require("../../../../assets/img/Servicios/belleza.jpg"), require("../../../../assets/img/Servicios/belleza.jpg"), require("../../../../assets/img/Servicios/belleza.jpg"), require("../../../../assets/img/Servicios/belleza.jpg")]},
 ]
 
 export default function Noticias(){
+    const navigation = useNavigation();
+
     return (
         <SafeAreaView style={{flex: 1}}>
             <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={true}>
@@ -31,53 +40,28 @@ export default function Noticias(){
                         <View style={styles.redBlock}></View><Text style={styles.text}>Noticias Relevantes</Text>
                     </View>
 
-                <Carousel data={noticiasRelevantes} renderItem={(item)=> {
-                    return (
-                        <CardButton key={item.id} title={item.title} source={item.img} />
-                    )
-                }}/>
+                    <View style={{marginHorizontal: 14}}>
+                        <Carousel data={noticiasRelevantes} loop={true} renderItem={(item)=> {
+                            return (
+                                <CardButton key={item.id} title={item.title} source={item.banner} alignContent='bottom' onPress={()=> navigation.navigate('DetalleNoticia', {
+                                    ...item
+                                })}/>
+                            )
+                        }}/>
+                    </View>
                     
-
                     <View style={styles.parrafo}>
-                        <View style={styles.redBlock}></View><Text style={styles.text}>Más Noticias</Text>
+                        <View style={styles.redBlock}></View><Text style={styles.text}>Otras Noticias</Text>
                     </View>
 
                     <View style={{flexDirection: 'row', gap: 5, flexWrap: 'wrap', marginHorizontal: 14, marginBottom: 20, justifyContent: 'center'}}>
-                        <TouchableOpacity style={styles.noticia}>
-                            <ImageBackground reziseMode='cover' source={require('../../../../assets/img/Servicios/graduaciones.jpg')} style={styles.img}>
-                                <View style={styles.darkOverlay}/>
-                                <Text style={styles.titleNoticia}>
-                                    Noticia
-                                </Text>
-                            </ImageBackground>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.noticia}>
-                            <ImageBackground reziseMode='cover' source={require('../../../../assets/img/Servicios/obras.jpg')} style={styles.img}>
-                                <View style={styles.darkOverlay}/>
-                                <Text style={styles.titleNoticia}>
-                                    Noticia Prueba
-                                </Text>
-                            </ImageBackground>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.noticia}>
-                            <ImageBackground reziseMode='cover' source={require('../../../../assets/img/Servicios/conciertos.jpg')} style={styles.img}>
-                                <View style={styles.darkOverlay}/>
-                                <Text style={styles.titleNoticia}>
-                                    Noticia
-                                </Text>
-                            </ImageBackground>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.noticia}>
-                            <ImageBackground reziseMode='cover' source={require('../../../../assets/img/Servicios/belleza.jpg')} style={styles.img}>
-                                <View style={styles.darkOverlay}/>
-                                <Text style={styles.titleNoticia}>
-                                    Noticia
-                                </Text>
-                            </ImageBackground>
-                        </TouchableOpacity>
+                        {otrasNoticias.map((item, index) => {
+                            return (
+                                <CardButton key={index} title={item.title} source={item.banner} alignContent='bottom' width={160} titleSize='small' onPress={()=> navigation.navigate('DetalleNoticia', {
+                                    ...item
+                                })}/>
+                            )
+                        })}
                     </View>
 
                 </View>
@@ -99,7 +83,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 8,
         letterSpacing: 1,
-        textTransform: 'uppercase'
     },
     input: {
         flexDirection: 'row',
@@ -138,35 +121,5 @@ const styles = StyleSheet.create({
         marginHorizontal: hp('2%'), 
         marginVertical: hp('1%'),
         overflow: 'hidden'
-    },
-    imgBanner: {
-        height: 200, 
-        borderRadius: 10,
-        padding: hp('2.5%'),
-        justifyContent: 'center'
-    },
-    img: {
-        height: 200, 
-        borderRadius: 10,
-        padding: hp('2.5%'),
-        justifyContent: 'flex-end',
-        alignItems: 'center'
-    },
-    noticia: {
-        width: 160,
-    },
-    darkOverlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(0,0,0,0.4)'
-    },
-    titleNoticiaR: {
-        fontWeight: 'bold',
-        fontSize: 20,
-        color: '#fefefe',
-    },
-    titleNoticia: {
-        fontWeight: 'bold',
-        fontSize: 16,
-        color: '#fefefe',
     },
 });
