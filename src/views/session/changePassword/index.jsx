@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image, TextInput, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { LinearGradient } from 'expo-linear-gradient';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import InputForm from "../../../components/InputForm";
 
 import Navbar from '../../../components/navbar';

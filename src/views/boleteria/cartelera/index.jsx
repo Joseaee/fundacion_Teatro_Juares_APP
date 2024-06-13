@@ -1,5 +1,4 @@
-import {useState} from 'react'
-import {View, Text, StyleSheet, FlatList, ImageBackground, TextInput, ScrollView} from 'react-native'
+import {View, Text, StyleSheet, FlatList, TextInput, ScrollView} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 import { useAppSelector, useAppDispatch } from '../../../hooks/store';

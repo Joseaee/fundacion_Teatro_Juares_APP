@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image, TextInput, ScrollView, Button} from 'react-native';
+import { View, Text, StyleSheet, TextInput} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
-import DatePicker from 'react-native-modern-datepicker';
 import { Dropdown } from 'react-native-element-dropdown';
 
 import Navbar from '../../../components/navbar';
