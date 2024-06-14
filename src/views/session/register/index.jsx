@@ -4,8 +4,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { widthPercentageToDP as wp,heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { useForm, Controller } from "react-hook-form";
 import Navbar from "../../../components/navbar";
-import CustomButton from "../../../components/CustomButton";
-import InputForm from "../../../components/InputForm";
+import CustomButton from "../../../components/customButton";
+import InputForm from "../../../components/inputForm";
 
 import User from "../../../../assets/icons/user.svg";
 import UserGroup from "../../../../assets/icons/user-group.svg";

@@ -9,7 +9,7 @@ import TicketItem from "../../../components/TicketItem";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { addTicket, removeTicket } from "../../../store/boleteria/slice";
 import FixedFooter from "../../../components/FixedFooter";
-import CustomButton from '../../../components/CustomButton'
+import CustomButton from '../../../components/customButton'
 import { getTotalPrize } from "../../../store/selectors";
 
 export default function CarritoCompra() {

@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 
-import CustomButton from '../../../components/CustomButton';
+import CustomButton from '../../../components/customButton';
 import CheckIcon from '../../../../assets/icons/CheckIcon.svg';
 
 function SuccessSession( {route} ) {

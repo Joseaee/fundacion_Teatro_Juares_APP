@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, Platform, } from "react-native";
+import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { useForm } from "react-hook-form";
-import InputForm from "../../../components/InputForm";
+import InputForm from "../../../components/inputForm";
 
 import Cedula from "../../../../assets/icons/cedula.svg";
 import Password from "../../../../assets/icons/lock.svg";
-import CustomButton from "../../../components/CustomButton";
+import CustomButton from "../../../components/customButton";
 
 function Login({ navigation }) {
     const [inputId, setInputId] = useState(false);
@@ -18,6 +19,8 @@ function Login({ navigation }) {
       control,
       handleSubmit,
       formState: { errors },
+      setError,
+      clearErrors 
     } = useForm({
         defaultValues: {
         cedula: "",
@@ -25,9 +28,41 @@ function Login({ navigation }) {
       },
     });
 
-  const onSubmit = () => {
-    navigation.navigate("Home");
+  const onSubmit = (data) => {
+    
+    axios({
+      method: 'POST',
+      url: 'http://192.168.1.115/xampp/teatro_juares/',
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      params: {
+        url: 'usuario',
+        type: 'auth'
+      },
+      data: {
+        user: data.cedula,
+        password: data.password
+      }
+    })
+    .then(function (response) {
+
+      console.log(response.data);
+      navigation.navigate("Home");
+    })
+    .catch(function (error) {
+      errors.password = true
+
+      setError('session', {
+        type: 'manual',
+        message: 'El usuario o contraseña son incorrectos'
+      });
+      
+      console.error(error);
+    });
   };
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fafafa" }}>
@@ -52,14 +87,17 @@ function Login({ navigation }) {
             </View>
 
             <View style={{ flex: 1, justifyContent: "center", marginTop: hp("2%") }}>
-              <InputForm Icon={Cedula} regExp={/^[0-9]{7,8}$/} placeholder='Cedula' msjError='Cédula Invalida' control={control} value='' name='cedula'/>
+              <InputForm Icon={Cedula} regExp={/^[0-9]{7,8}$/} placeholder='Cedula' msjError='Cédula Invalida' control={control} value='' name='cedula' onChangeFunction ={() => { clearErrors('session'); }}/>
               {errors.cedula && (
-                <Text style={styles.error}>Error en la Cedula.</Text>
+                <Text style={styles.error}>{errors.cedula.message}.</Text>
               )}
               
-              <InputForm Icon={Password} regExp={/^[a-zA-Z0-9_\.\-]{8}$/} placeholder='Contraseña' msjError='Contraseña Invalida' control={control} value='' name='password'/>
+              <InputForm Icon={Password} regExp={/^[a-zA-Z0-9_\.\-]{8}$/} placeholder='Contraseña' msjError='Contraseña Invalida' control={control} value='' name='password' onChangeFunction ={() => { clearErrors('session'); }}/>
               {errors.password && (
                 <Text style={styles.error}>Error en la Contraseña.</Text>
+              )}
+              {errors.session && (
+                <Text style={styles.error}>{errors.session.message}</Text>
               )}
             </View>
 

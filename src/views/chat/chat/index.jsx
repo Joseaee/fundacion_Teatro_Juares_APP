@@ -4,7 +4,6 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-nati
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import Navbar from '../../../components/navbar';
-import CustomButton from '../../../components/CustomButton';
 import BottomNavbar from '../../../components/bottomNavbar';
 
 import Message from '../../../components/message';

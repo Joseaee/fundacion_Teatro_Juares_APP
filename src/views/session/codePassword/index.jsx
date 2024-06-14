@@ -16,10 +16,10 @@ import {
 import { useForm } from "react-hook-form";
 
 import Navbar from "../../../components/navbar";
-import CustomButton from "../../../components/CustomButton";
+import CustomButton from "../../../components/customButton";
 import Correo from "../../../../assets/icons/envelope.svg";
 
-import InputForm from "../../../components/InputForm";
+import InputForm from "../../../components/inputForm";
 
 function CodePassword({ navigation }) {
   const [inputId, setInputId] = useState(false);
