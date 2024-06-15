@@ -1,4 +1,4 @@
-import { View, StyleSheet, TextInput, TouchableOpacity,Platform } from 'react-native';
+import { View, StyleSheet, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -53,9 +53,9 @@ function Chat({ navigation }) {
     return (
         <SafeAreaView style = { styles.container }>
             <Navbar
-                title={ 'Chat de soporte' }
+                back={true}
+                title={'Soporte'}
                 loggedIn={ true }
-               
             />
             <View style = { { flex: 1 } }>
                 <View style = { styles.chatContainer }>      
@@ -82,6 +82,7 @@ function Chat({ navigation }) {
                                     height = { wp('10%') } 
                                     width = { hp('4%') } 
                                     stroke={'#CB2139'}
+                                    style={styles.send}
                                 />
                             </TouchableOpacity>   
                         </View>
@@ -126,6 +127,9 @@ const styles = StyleSheet.create({
         fontWeight: '200',
         fontSize: hp('2%'),
     },
+    send: {
+        transform: [{rotate: '45deg'}]
+    }
 });
 
 

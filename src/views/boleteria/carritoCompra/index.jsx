@@ -37,7 +37,7 @@ export default function CarritoCompra() {
   ];
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Navbar back={true} title={""} loggedIn={true} />
+      <Navbar back={true} title={"Boletería"} loggedIn={true} />
       <ScrollView style={{ flex: 1 }}>
         <StyleText
           tag="Boletos"

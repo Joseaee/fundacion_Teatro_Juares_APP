@@ -11,9 +11,13 @@ import Xmark from '../../../../assets/icons/xmark.svg'
 export default function FormasPago() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <Navbar title='' back={true} transparent={true} backArrowColor='#E31734' />
+            <Navbar
+                title={'Pagar'}
+                back={true}
+                loggedIn={ true }
+            />
             <View style={{ flex: 1 }}>
-                <StyleText tag='Pago' size='big' style={{ justifyContent: 'center' }}>Formas de</StyleText>
+                <StyleText tag='Pago' size='big' style={{ justifyContent: 'center', marginVertical: 14 }}>Formas de</StyleText>
                 <View style={{ margin: 8, padding: 6 }}>
                     <Text style={styles.event}>Evento 1</Text>
                     <Text>Función: </Text>
