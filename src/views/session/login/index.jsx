@@ -5,13 +5,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { useForm } from "react-hook-form";
-import InputForm from "../../../components/inputForm";
+import InputForm from "../../../components/inputForm"
+import { useEncryptData, useDecryptData} from "../../../hooks/encryption"
 
 import Cedula from "../../../../assets/icons/cedula.svg";
 import Password from "../../../../assets/icons/lock.svg";
 import CustomButton from "../../../components/customButton";
 
-function Login({ navigation }) {
+  function Login({ navigation }) {
     const [inputId, setInputId] = useState(false);
     const [inputPassword, setInputPassword] = useState(false);
 
@@ -32,7 +33,7 @@ function Login({ navigation }) {
     
     axios({
       method: 'POST',
-      url: 'http://192.168.1.115/xampp/teatro_juares/',
+      url: 'http://192.168.137.1/xampp/teatro_juares/',
       responseType: 'json',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -47,8 +48,8 @@ function Login({ navigation }) {
       }
     })
     .then(function (response) {
-
-      console.log(response.data);
+      console.log( response.data);
+      
       navigation.navigate("Home");
     })
     .catch(function (error) {
