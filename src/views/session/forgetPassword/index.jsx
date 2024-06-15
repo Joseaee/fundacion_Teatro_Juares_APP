@@ -8,8 +8,8 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp,
 import { useForm } from "react-hook-form";
 
 import Navbar from "../../../components/navbar";
-import CustomButton from "../../../components/CustomButton";
-import InputForm from "../../../components/InputForm";
+import CustomButton from "../../../components/customButton";
+import InputForm from "../../../components/inputForm";
 import Correo from "../../../../assets/icons/envelope.svg";
 
 function ForgetPassword({ navigation }) {

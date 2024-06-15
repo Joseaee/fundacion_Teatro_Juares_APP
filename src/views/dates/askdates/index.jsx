@@ -7,7 +7,7 @@ import DatePicker from 'react-native-modern-datepicker';
 import { Dropdown } from 'react-native-element-dropdown';
 
 import Navbar from '../../../components/navbar';
-import CustomButton from '../../../components/CustomButton';
+import CustomButton from '../../../components/customButton';
 import BottomNavbar from '../../../components/bottomNavbar';
 
 function AskDates( {} ) {

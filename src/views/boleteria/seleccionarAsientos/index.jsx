@@ -5,7 +5,7 @@ import SeatingChart from '../../../components/SeatingChart'
 import BottomNavbar from '../../../components/bottomNavbar'
 import Navbar from '../../../components/navbar'
 import StyleText from '../../../components/StyleText'
-import CustomButton from '../../../components/CustomButton'
+import CustomButton from '../../../components/customButton'
 import CardNotification from "../../../components/CardNotification";
 import Asientos from "../../../components/Asientos";
 import Sofa from '../../../../assets/icons/sofa.svg'

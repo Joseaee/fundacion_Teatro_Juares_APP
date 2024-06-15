@@ -13,7 +13,8 @@ export default function InputForm({
   placeholder,
   keyboardType,
   name,
-  control
+  control,
+  onChangeFunction
 }) {
 
   
@@ -51,6 +52,7 @@ export default function InputForm({
               setSelected(false);
             }}
             onChangeText={onChange}
+            onChange = {onChangeFunction}
             value={value}
           />
         )}
