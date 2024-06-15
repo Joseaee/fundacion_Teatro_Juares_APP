@@ -54,7 +54,7 @@ const SeatingChart = () => {
           </Text>
         ))}
       </Svg>
-      {selectedArea && (
+      {/* {selectedArea && (
         <ScrollView style={styles.seatsContainer}>
           <RNText style={styles.seatsTitle}>Asientos en {selectedArea}:</RNText>
           <View style={styles.seatsGrid}>
@@ -66,7 +66,7 @@ const SeatingChart = () => {
             ))}
           </View>
         </ScrollView>
-      )}
+      )} */}
     </View>
   );
 };

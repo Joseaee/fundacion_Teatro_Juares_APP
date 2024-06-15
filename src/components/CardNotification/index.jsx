@@ -1,25 +1,50 @@
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-export default function CardNotification({children, timestamp, imgSrc, icon, onPress}){
+export default function CardNotification({children, subtitle, Icon, onPress, iconBackground}){
+    const backgroundColor = (iconBackground) ? iconBackground : '#E31734'
     return (
-        <TouchableOpacity onPress={onPress} style={{flex:1}}>
-            <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: wp('100%')}}>
-            <View style={{padding: 16}}>
-               <Image style={{width: 70, height: 70, borderRadius: 50}} source={imgSrc}/>
+        <TouchableOpacity style={styles.carta} onPress={onPress}>
+            <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: wp('100%'), padding: 16, overflow: 'hidden'}}>
+                <View style={[styles.boxMessage, {backgroundColor}]}>
+                    <Icon style={styles.icon} />
+                </View>
+                <View style={{flex:1, paddingStart: 12}}>
+                    <Text style={styles.title}>{children}</Text>
+                    <Text style={styles.text}>{subtitle}</Text>
+                </View>
             </View>
-            <View style={{flex:1, paddingStart: 12}}>
-                <Text style={{fontSize: 18}}>{children}</Text>
-                <Text style={{fontSize: 14, color: 'gray'}}>{timestamp}</Text>
-            </View>
-        </View>
         </TouchableOpacity>
-        
     )
 }
 
 const styles = StyleSheet.create({
-    img: {
-        flex: 1
+    carta: {
+        marginVertical: 6,
+        marginHorizontal: 14,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        elevation: 6,
+        overflow: 'hidden'
+    },
+    boxMessage: {
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    icon: {
+        fill: "#fff",
+        width: 25,
+        height: 25,
+    },
+    title: {
+        fontSize: 18,
+        color: '#2f2f2f'
+    },
+    text: {
+        color: 'gray',
+        fontSize: 14
     }
 })

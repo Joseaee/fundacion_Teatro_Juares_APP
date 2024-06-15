@@ -36,7 +36,7 @@ function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, invert
             <BackArrow
               height={wp("8%")}
               width={hp("5%")}
-              fill={transparent ? "#E31734" : "white"}
+              fill={backArrowColor}
               onPress={() => {
                 screen
                   ? navigation.navigate(screen)
@@ -55,12 +55,15 @@ function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, invert
         >
           {loggedIn ? (
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-              <Bell height={wp("8%")} width={hp("5%")} fill={"white"} onPress={()=> {
+              <Bell 
+                height={26}
+                width={36} 
+                fill={"white"} onPress={()=> {
                 navigation.navigate('Notification')
               }}/>
               <UserCircle
-                height={wp("10%")}
-                width={hp("5%")}
+                height={28}
+                width={36}
                 fill={"white"}
                 style={{marginStart: 10}}
                 onPress={() => {
