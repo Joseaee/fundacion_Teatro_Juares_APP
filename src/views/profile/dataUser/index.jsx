@@ -50,8 +50,8 @@ function DataUser() {
     return(
         
         <SafeAreaView style={ {flex: 1} }>
-            <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={false}>
-                <View style={{marginLeft: 10}}>
+            <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={true}>
+                <View style={{marginLeft: 10,}}>
                     <Shadow
                         distance = { 4 }
                         startColor ={ '#666666' }
@@ -81,13 +81,8 @@ function DataUser() {
                 </View>
                 
             </Banner>
-
-            
-
             <View style={ {flex: 1, marginTop: hp('9%')} }>
-                
-                <Text style={styles.title}>Sabrina Colmenarez</Text>
-
+            <Text style={styles.title}>Sabrina Colmenarez</Text>
                 <KeyboardAwareScrollView>
                 <Table 
                     datos={user}
@@ -101,11 +96,7 @@ function DataUser() {
                     existData={true}
                 />
                 </KeyboardAwareScrollView>
-
             </View>
-
-            
-
             <BottomNavbar
                 title={ 'Inicio' }
                 loggedIn={ true }

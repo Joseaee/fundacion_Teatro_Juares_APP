@@ -15,7 +15,8 @@ import { useNavigation } from "@react-navigation/native";
         return (
             <SafeAreaView style={ {flex: 1, backgroundColor: "#fafafa"} }>
                 <Navbar
-                    title={'Servicio ayuda'}
+                    back={true}
+                    title={'Servicio Ayuda'}
                     loggedIn={ true }
                 />
                 <ScrollView>

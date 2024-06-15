@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet,FlatList } from "react-native";
+import { View, Text, StyleSheet,FlatList, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Navbar from "../../../components/navbar";
 import BottomNavbar from "../../../components/bottomNavbar";
-import CustomButton from "../../../components/customButton";
+import CustomButton from "../../../components/CustomButton";
 import CardNotification from "../../../components/CardNotification";
+import Messages from '../../../../assets/icons/messages.svg';
+import StyleText from "../../../components/StyleText";
 
 const notis = [
     {id: '1', img: require('../../../../assets/img/Servicios/belleza.jpg'), title: 'Compra Aceptada mi rey', time: 'Hace una hora'},
@@ -14,16 +16,29 @@ const notis = [
 export default function Notification(){
     return (
         <SafeAreaView style={{flex: 1}}>
-            <Navbar title='Notificaciones' loggedIn={true} />
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <View style={{flex: 1}}>
-                    <FlatList data={notis} keyExtractor={item => item.id} renderItem={(item)=> <CardNotification imgSrc={item.img} timestamp={item.time}>{item.title}</CardNotification>}/>
-                </View>
-                {/* <View style={{flexDirection: 'row' ,height: 40, paddingHorizontal: 12, marginBottom: 30}}>
-                    <CustomButton text='Ver Notificaciones Anteriores' />
-                </View> */}
-            </View>
+            <Navbar
+                back={true}
+                title={'Notificaciones'}
+                loggedIn={ true }
+            />
+                <ScrollView style={{flex: 1}}>
+                    <View>
+                        <StyleText tag='Notificaciones' size={'big'} style={{marginVertical: 14, justifyContent: 'center'}}>Nuevas</StyleText>
+                        
+                        <CardNotification style={styles.carta} Icon={Messages} subtitle={'1min'}>
+                            <Text>Mensaje</Text>
+                        </CardNotification>
+
+                        <CardNotification style={styles.carta} Icon={Messages} subtitle={'1min'}>
+                            <Text>Mensaje</Text>
+                        </CardNotification>
+                    </View>
+                </ScrollView>
             <BottomNavbar title='Notificaciones' loggedIn={true} />
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+
+})

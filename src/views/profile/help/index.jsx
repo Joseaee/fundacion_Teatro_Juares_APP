@@ -1,52 +1,128 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Linking, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Navbar from "../../../components/navbar";
 import BottomNavbar from "../../../components/bottomNavbar";
 import CardHorizontal from "../../../components/CardHorizontal";
-
-import User from "../../../../assets/icons/user.svg";
-import Chat from "../../../../assets/icons/chat.svg";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
+import User from "../../../../assets/icons/user-regular.svg";
+import ChatSoporte from "../../../../assets/icons/chatSoporte.svg";
 import Film from "../../../../assets/icons/film.svg";
 import News from "../../../../assets/icons/news.svg";
+import StyleText from "../../../components/StyleText";
+import CardNotification from "../../../components/CardNotification";
+
+import Facebook from "../../../../assets/icons/facebook.svg";
+import Twitter from "../../../../assets/icons/twitter.svg";
+import Instagram from "../../../../assets/icons/instagram.svg";
+import Tiktok from "../../../../assets/icons/tiktok.svg";
+import Internet from "../../../../assets/icons/internet.svg";
 
 import { useNavigation } from "@react-navigation/native";
+
 
 function Help({ }) {
     const navigation = useNavigation();
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={{flex: 1}}>
             <Navbar
-                title={'Servicio ayuda'}
-                loggedIn={true}
+                back={true}
+                title={'Ayuda'}
+                loggedIn={ true }
             />
-            <View style={styles.cardsContainer}>
-                <CardHorizontal key='1' title='Usuario' Icon={User} onPress={() => navigation.navigate('HelpDetailsUser')} style={styles.card} />
-                <CardHorizontal key='2' title='Chat' Icon={Chat} onPress={() => navigation.navigate('HelpDetailsChat')} style={styles.card} />
-                <CardHorizontal key='3' title='Eventos' Icon={Film} onPress={() => navigation.navigate('HelpDetailsEvent')} style={styles.card} />
-                <CardHorizontal key='4' title='Noticias' Icon={News} onPress={() => navigation.navigate('HelpDetailsNoticias')} style={styles.card} />
-            </View>
+            <ScrollView>
+            <View style={{flex: 1, marginBottom: 30}}>
+                <View style={styles.cardsContainer}>
+                    <CardHorizontal key='1' title='Usuario' Icon={User} onPress={() => navigation.navigate('HelpDetailsUser')} style={styles.card} />
+                    <CardHorizontal key='2' title='Soporte' Icon={ChatSoporte} onPress={() => navigation.navigate('HelpDetailsChat')} style={styles.card} />
+                    <CardHorizontal key='3' title='Eventos' Icon={Film} onPress={() => navigation.navigate('HelpDetailsEvent')} style={styles.card} />
+                    <CardHorizontal key='4' title='Noticias' Icon={News} onPress={() => navigation.navigate('HelpDetailsNoticias')} style={styles.card} />
+                </View>
+            
+                <StyleText tag='Soporte' size={'big'} style={{marginVertical: 14, justifyContent: 'center'}}>Chat de</StyleText> 
 
+                    <CardNotification subtitle={'Preguntas frecuentes'} Icon={ChatSoporte} iconBackground={'#0B6396'} onPress={() => navigation.navigate('Chat')}>
+                        Chat Soporte
+                    </CardNotification>
+
+                <StyleText tag='Sociales' size={'big'} style={{marginVertical: 14, justifyContent: 'center'}}>Redes</StyleText> 
+
+                <View style={styles.contenedor}>
+
+                    <CardNotification subtitle={'teatrojuaresVenezuela'} Icon={Facebook} iconBackground={'#3b5998'} onPress={()=> {Linking.openURL('https://www.facebook.com/teatrojuaresVenezuela/').catch(err => console.error("Couldn't load page", err));
+                            }}>
+                    Facebook
+                    </CardNotification>
+
+                    <CardNotification subtitle={'juares_teatro'} Icon={Twitter} iconBackground={'#00acee'} onPress={()=> {Linking.openURL('https://twitter.com/juares_teatro?lang=es').catch(err => console.error("Couldn't load page", err));
+                            }}>
+                    Twitter
+                    </CardNotification>
+
+                    <CardNotification subtitle={'teatrojuares'} Icon={Instagram} iconBackground={'#E1306C'} onPress={()=> {Linking.openURL('https://www.instagram.com/teatrojuares/?hl=es').catch(err => console.error("Couldn't load page", err));
+                            }}>
+                    Instagram
+                    </CardNotification>
+
+                    <CardNotification subtitle={'@teatrojuares'} Icon={Tiktok} iconBackground={'#222'} onPress={()=> {Linking.openURL('https://www.tiktok.com/@teatrojuares').catch(err => console.error("Couldn't load page", err));
+                            }}>
+                    Tiktok
+                    </CardNotification>
+                    
+                    <StyleText tag='sitio web' size={'big'} style={{marginVertical: 14, justifyContent: 'center'}}>Visita nuestro</StyleText> 
+
+                    <CardNotification subtitle={'www.teatrojuares.com'} Icon={Internet}>
+                    Sitio web
+                    </CardNotification>
+                </View>
+            </View>
+            </ScrollView>
             <BottomNavbar active={5} />
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
     cardsContainer: {
-        flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         padding: 10,
     },
-    card: {
-        width: '45%', 
-        marginBottom: 10,
-        backgroundColor: '#7297DD',
+    carta: {
+        marginVertical: 6,
+        marginHorizontal: 14,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        elevation: 6,
     },
+    boxMessage: {
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    social: {
+        flexDirection: 'row', 
+        justifyContent: 'flex-start', 
+        alignItems: 'center', 
+        width: wp('100%'), 
+        padding: 16, 
+        overflow: 'hidden'
+    },  
+    icon: {
+        fill: "#fff",
+        width: 25,
+        height: 25,
+    },
+    title: {
+        fontSize: 18,
+        color: '#2f2f2f'
+    },
+    text: {
+        color: 'gray',
+        fontSize: 14
+    }
 });
 
 export default Help;
