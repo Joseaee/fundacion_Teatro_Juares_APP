@@ -3,11 +3,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import { useForm, Controller } from "react-hook-form";
-import InputForm from "../../../components/InputForm";
+import InputForm from "../../../components/inputForm";
 
 import Navbar from "../../../components/navbar";
 import Password from "../../../../assets/icons/lock.svg";
-import CustomButton from "../../../components/CustomButton";
+import CustomButton from "../../../components/customButton";
 
 function MakePassword({ navigation }) {
   const {
