@@ -7,6 +7,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-na
 import { useForm } from "react-hook-form";
 import InputForm from "../../../components/inputForm"
 import { useEncryptData, useDecryptData} from "../../../hooks/encryption"
+import { API_URL } from "../../../config/constants";
 
 import Cedula from "../../../../assets/icons/cedula.svg";
 import Password from "../../../../assets/icons/lock.svg";
@@ -33,7 +34,7 @@ import CustomButton from "../../../components/customButton";
     
     axios({
       method: 'POST',
-      url: 'http://192.168.137.1/xampp/teatro_juares/',
+      url: API_URL,
       responseType: 'json',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
