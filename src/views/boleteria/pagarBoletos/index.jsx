@@ -5,6 +5,7 @@ import StyleText from '../../../components/StyleText'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomButton from '../../../components/customButton'
 import InputForm from "../../../components/inputForm";
+import { useForm } from "react-hook-form";
 
 import Cedula from "../../../../assets/icons/cedula.svg";
 import Telefono from "../../../../assets/icons/phone.svg";
@@ -13,7 +14,7 @@ import Billete from "../../../../assets/icons/money.svg";
 import Calendario from "../../../../assets/icons/calendario.svg";
 import Reloj from "../../../../assets/icons/reloj.svg";
 
-export default function AgregarPago(){
+export default function PagarBoletos(){
 
     const {
         control,
