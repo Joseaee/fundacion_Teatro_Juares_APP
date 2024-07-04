@@ -8,9 +8,14 @@ import { CommonActions } from "@react-navigation/native";
 import BackArrow from "../../../assets/icons/goback-arrow.svg";
 import UserCircle from "../../../assets/icons/userCircle.svg";
 import Bell from "../../../assets/icons/bell.svg";
+import DoorExit from "../../../assets/icons/door.svg";
 
 
-function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, inverted, transparent} ) {
+function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, inverted, transparent, icons = {
+  logout: false,
+  bell: true,
+  user: true
+}} ) {
 
   const navigation = useNavigation();
   const [activeMenu, setActiveMenu] = useState(false);
@@ -55,104 +60,45 @@ function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, invert
         >
           {loggedIn ? (
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-              <Bell 
+              {
+                icons.bell ? 
+                <Bell 
                 height={26}
                 width={36} 
                 fill={"white"} onPress={()=> {
                 navigation.navigate('Notification')
               }}/>
-              <UserCircle
+                : null
+              }
+              {
+                icons.user ? 
+                <UserCircle
                 height={28}
                 width={36}
                 fill={"white"}
                 style={{marginStart: 10}}
-                onPress={() => {
-                  activeMenu ? setActiveMenu(false) : setActiveMenu(true);
-                  setOnSelected([0, 0, 0]);
-                }}
-              />
+                onPress={()=> {
+                  navigation.navigate('DataUser')
+                }}/>
+                : null
+              }
+              {
+                icons.logout ? 
+                <DoorExit
+                height={28}
+                width={36}
+                fill={"white"}
+                style={{marginStart: 10}}
+                onPress={()=> {
+                  navigation.navigate('DataUser')
+              }}/>
+                : null
+              }
+              
             </View>
           ) : null}
         </View>
       </LinearGradient>
-      {activeMenu ? (
-        <View style={{ alignItems: "flex-end", marginEnd: wp("1%") }}>
-          <View style={styles.containerMenu}>
-            <TouchableOpacity
-              style={[
-                styles.itemMenu,
-                onSelected[0] ? { backgroundColor: "#DBDAD1" } : null,
-              ]}
-              onPressIn={() => {
-                setOnSelected([1, 0, 0]);
-              }}
-              onPressOut={() => {
-                setOnSelected([0, 0, 0]);
-              }}
-              onPress={() => {
-                navigation.navigate("DataUser");
-              }}
-            >
-              <Text
-                style={[
-                  styles.text,
-                  onSelected[0] ? { color: "#710014" } : null,
-                ]}
-              >
-                Mi perfil
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.itemMenu,
-                onSelected[1] ? { backgroundColor: "#DBDAD1" } : null,
-              ]}
-              onPressIn={() => {
-                setOnSelected([0, 1, 0]);
-              }}
-              onPressOut={() => {
-                setOnSelected([0, 0, 0]);
-              }}
-              onPress={() => {
-                navigation.navigate("Help");
-              }}
-            >
-              <Text
-                style={[
-                  styles.text,
-                  onSelected[1] ? { color: "#710014" } : null,
-                ]}
-              >
-                Ayuda
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.itemMenu,
-                onSelected[2] ? { backgroundColor: "#DBDAD1" } : null,
-              ]}
-              onPressIn={() => {
-                setOnSelected([0, 0, 1]);
-              }}
-              onPressOut={() => {
-                setOnSelected([0, 0, 0]);
-              }}
-              onPress={() => {
-                navigation.navigate("Login");
-              }}
-            >
-              <Text
-                style={[
-                  styles.text,
-                  onSelected[2] ? { color: "#710014" } : null,
-                ]}
-              >
-                Cerra Sesión
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      ) : null}
     </>
   );
 
