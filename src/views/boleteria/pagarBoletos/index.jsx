@@ -1,4 +1,5 @@
-import {Text, View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native'
+import {Text, View, StyleSheet, ScrollView, TouchableOpacity, Button } from 'react-native';
+import { useState } from 'react';
 import BottomNavbar from '../../../components/bottomNavbar'
 import Navbar from '../../../components/navbar'
 import StyleText from '../../../components/StyleText'
@@ -6,15 +7,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomButton from '../../../components/customButton'
 import InputForm from "../../../components/inputForm";
 import { useForm } from "react-hook-form";
+import { Picker } from '@react-native-picker/picker';
 
-import Cedula from "../../../../assets/icons/cedula.svg";
-import Telefono from "../../../../assets/icons/phone.svg";
-import Banco from "../../../../assets/icons/banco.svg";
 import Billete from "../../../../assets/icons/money.svg";
-import Calendario from "../../../../assets/icons/calendario.svg";
-import Reloj from "../../../../assets/icons/reloj.svg";
+import Ref from "../../../../assets/icons/ref.svg";
+import Telefono from "../../../../assets/icons/phone.svg";
 
 export default function PagarBoletos(){
+
+    const [selectedValue, setSelectedValue] = useState('java');
 
     const {
         control,
@@ -32,15 +33,15 @@ export default function PagarBoletos(){
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <Navbar
-                title={'Pagar'}
+                title={'Agregar Pago'}
                 back={true}
                 loggedIn={ true }
             />
+            <ScrollView style={{ flex: 1 }}>
             <View style={{flex: 1}}>
-                <StyleText tag='Pago' size='big' style={{ justifyContent: 'center', marginVertical: 14 }}>Agregar </StyleText>
                 
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 6 }}>
-                    <CustomButton text='Cuentas' width={220} height={40} />
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 18 }}>
+                    <CustomButton text='Ver Cuentas' width={220} height={40} />
                 </View>
 
                 <View style={styles.contenedor}>
@@ -53,18 +54,45 @@ export default function PagarBoletos(){
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ flex: 1, justifyContent: "center" }}>
-                    <InputForm
-                        Icon={Cedula}
-                        regExp={/^[a-zA-ZÀ-ÿ\u00f1\ \u00d1\ ]{3,30}$/}
-                        placeholder="Nombre(s)"
-                        msjError="Nombre(s) Invalido"
-                        control={control}
-                        value=""
-                        name="nombres"
-                    />
+                <View style={styles.select}>
+                    <StyleText tag='Banco' size={'medium'} style={{ marginVertical: 14, justifyContent: 'center' }}>Seleccionar </StyleText>
+                        <Picker
+                            selectedValue={selectedValue}
+                            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                            style={styles.picker}
+                        >
+                            <Picker.Item label="Venezuela" value="0102" />
+                            <Picker.Item label="Mercantil" value="0105" />
+                            <Picker.Item label="Provincial" value="0108" />
+                            <Picker.Item label="Banesco" value="0134" />
+                        </Picker>
                 </View>
+
+                <View style={styles.inputs}>
+                    <StyleText tag='Pago' size={'medium'} style={{ marginVertical: 14, justifyContent: 'center' }}>Datos del</StyleText>
+
+                    <InputForm Icon={Billete} regExp={/^\d{0,6}(\.\d{1})?\d{0,2}$/} placeholder='Monto' msjError='Monto Invalido' control={control} value='' name='monto' onChangeFunction ={() => { clearErrors('session'); }}/>
+                    {errors.monto && (
+                    <Text style={styles.error}>{errors.monto.message}.</Text>
+                    )}
+
+                    <InputForm Icon={Ref} regExp={/^[0-9]{4,12}$/} placeholder='Referencia' msjError='Referencia Invalida' control={control} value='' name='referencia' onChangeFunction ={() => { clearErrors('session'); }}/>
+                    {errors.referencia && (
+                    <Text style={styles.error}>{errors.referencia.message}.</Text>
+                    )}
+
+                    <InputForm Icon={Telefono} regExp={/^04(12|24|26|14|16)[0-9]{7}$/} placeholder='Telefono' msjError='Telefono Invalido' control={control} value='' name='telefono' onChangeFunction ={() => { clearErrors('session'); }}/>
+                    {errors.telefono && (
+                    <Text style={styles.error}>{errors.telefono.message}.</Text>
+                    )}
+                </View>
+
+                <View style={{ marginHorizontal: 30, marginBottom: 40}}>
+                    <CustomButton text='Agregar' screen='FormasPago'></CustomButton>
+                </View>
+
             </View>
+            </ScrollView>
             <BottomNavbar></BottomNavbar>
         </SafeAreaView>
     )
@@ -75,8 +103,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginHorizontal: 14,
         marginVertical: 14,
-        width: 330,
-        height: 200,
         justifyContent: 'space-around',
     },
     tipoPago: {
@@ -88,5 +114,27 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    select: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    picker: {
+        backgroundColor: '#fff',
+        elevation: 6,
+        overflow: 'hidden',
+        width: 300,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    inputs: {
+        marginHorizontal: 30,
+        marginVertical: 14,
+    },
+    dates: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 14
+    },
 })
