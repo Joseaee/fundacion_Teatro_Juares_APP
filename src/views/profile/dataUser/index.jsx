@@ -50,7 +50,13 @@ function DataUser() {
     return(
         
         <SafeAreaView style={ {flex: 1} }>
-            <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={true}>
+            <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={true} icons={
+                {
+                    logout: true,
+                    user: false,
+                    bell: true
+                }
+            }>
                 <View style={{marginLeft: 10,}}>
                     <Shadow
                         distance = { 4 }
