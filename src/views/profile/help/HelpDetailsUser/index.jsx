@@ -16,14 +16,12 @@ import { useNavigation } from "@react-navigation/native";
             <SafeAreaView style={ {flex: 1, backgroundColor: "#fafafa"} }>
                 <Navbar
                     back={true}
-                    title={'Servicio Ayuda'}
+                    title={'Ayuda Usuario'}
                     loggedIn={ true }
                 />
                 <ScrollView>
                 <View style = { { flex: 1 } }>
-                    
-                    <StyleText tag='Usuario' size={'big'} style={{marginVertical: 14, justifyContent: 'center'}}>Ayuda</StyleText>
-
+                
                     <View style={styles.parrafo}>
                         <View style={styles.redBlock}></View>
                         <Text style={styles.subtitle}>

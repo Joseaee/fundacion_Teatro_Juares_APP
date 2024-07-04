@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Linking, TouchableOpacity, ScrollView } from "r
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Navbar from "../../../components/navbar";
 import BottomNavbar from "../../../components/bottomNavbar";
-import CardHorizontal from "../../../components/CardHorizontal";
+import Card from "../../../components/Card";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import User from "../../../../assets/icons/user-regular.svg";
 import ChatSoporte from "../../../../assets/icons/chatSoporte.svg";
@@ -32,10 +32,29 @@ function Help({ }) {
             <ScrollView>
             <View style={{flex: 1, marginBottom: 30}}>
                 <View style={styles.cardsContainer}>
-                    <CardHorizontal key='1' title='Usuario' Icon={User} onPress={() => navigation.navigate('HelpDetailsUser')} style={styles.card} />
-                    <CardHorizontal key='2' title='Soporte' Icon={ChatSoporte} onPress={() => navigation.navigate('HelpDetailsChat')} style={styles.card} />
-                    <CardHorizontal key='3' title='Eventos' Icon={Film} onPress={() => navigation.navigate('HelpDetailsEvent')} style={styles.card} />
-                    <CardHorizontal key='4' title='Noticias' Icon={News} onPress={() => navigation.navigate('HelpDetailsNoticias')} style={styles.card} />
+                    <Card key='1' title='Usuario' onPress={() => navigation.navigate('HelpDetailsUser')} reverse={true} borderRadius={4} width={wp('45%')}>
+                        <View>
+                            <User width={50} height={50} fill='gray'/>
+                        </View>
+                    </Card>
+
+                    <Card key='2' title='Soporte' onPress={() => navigation.navigate('HelpDetailsChat')} reverse={true} borderRadius={4} width={wp('45%')}>
+                        <View>
+                            <ChatSoporte width={50} height={50} fill='gray'/>
+                        </View>
+                    </Card>
+
+                    <Card key='3' title='Eventos' onPress={() => navigation.navigate('HelpDetailsEvent')} reverse={true} borderRadius={4} width={wp('45%')}>
+                        <View>
+                            <Film width={50} height={50} fill='gray'/>
+                        </View>
+                    </Card>
+
+                    <Card key='4' title='Noticias' onPress={() => navigation.navigate('HelpDetailsNoticias')} reverse={true} borderRadius={4} width={wp('45%')}>
+                        <View>
+                            <News width={50} height={50} fill='gray'/>
+                        </View>
+                    </Card>
                 </View>
             
                 <StyleText tag='Soporte' size={'big'} style={{marginVertical: 14, justifyContent: 'center'}}>Chat de</StyleText> 
@@ -86,7 +105,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
-        padding: 10,
+        margin: 12,
+        gap: 10
     },
     carta: {
         marginVertical: 6,
