@@ -17,7 +17,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { useForm, Controller } from "react-hook-form";
 import Navbar from "../../../components/navbar";
-import CustomButton from "../../../components/CustomButton";
+import CustomButton from "../../../components/customButton";
 
 import User from "../../../../assets/icons/user.svg";
 import UserGroup from "../../../../assets/icons/user-group.svg";
@@ -25,7 +25,7 @@ import Cedula from "../../../../assets/icons/cedula.svg";
 import Correo from "../../../../assets/icons/envelope.svg";
 import Telefono from "../../../../assets/icons/phone.svg";
 import Password from "../../../../assets/icons/lock.svg";
-import InputForm from "../../../components/InputForm";
+import InputForm from "../../../components/inputForm";
 
 function EditUser() {
   const [inputFistName, setInputFistName] = useState(false);

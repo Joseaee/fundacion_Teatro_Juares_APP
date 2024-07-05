@@ -1,4 +1,3 @@
-import { useState, useEffect} from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, Platform, } from "react-native";
 import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,27 +6,36 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-na
 import { useForm } from "react-hook-form";
 import InputForm from "../../../components/inputForm"
 import { useEncryptData, useDecryptData} from "../../../hooks/encryption"
+import { regExp } from "../../../hooks/constants";
 
 import Cedula from "../../../../assets/icons/cedula.svg";
 import Password from "../../../../assets/icons/lock.svg";
 import CustomButton from "../../../components/customButton";
 
-  function Login({ navigation }) {
-    const [inputId, setInputId] = useState(false);
-    const [inputPassword, setInputPassword] = useState(false);
+function Login({ navigation }) {
 
-    const {
+  const {
       control,
       handleSubmit,
       formState: { errors },
       setError,
       clearErrors 
-    } = useForm({
+  } = useForm({
         defaultValues: {
         cedula: "",
         password: "",
       },
-    });
+  });
+
+  const isValidUser = (value) =>{
+
+      if (!regExp.cedula.test(value) && ! regExp.email.test(value)) {
+
+        return 'Error en el usuario';
+      }
+
+      return true;
+  }
 
   const onSubmit = (data) => {
     
@@ -52,7 +60,9 @@ import CustomButton from "../../../components/customButton";
       
       navigation.navigate("Home");
     })
-    .catch(function (error) {
+    .catch(function (error, AWA) {
+        console.error(error);
+        console.error(AWA);
       errors.password = true
 
       setError('session', {
@@ -63,7 +73,6 @@ import CustomButton from "../../../components/customButton";
       console.error(error);
     });
   };
-
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fafafa" }}>
@@ -88,7 +97,7 @@ import CustomButton from "../../../components/customButton";
             </View>
 
             <View style={{ flex: 1, justifyContent: "center", marginTop: hp("2%") }}>
-              <InputForm Icon={Cedula} regExp={/^[0-9]{7,8}$/} placeholder='Cedula' msjError='Cédula Invalida' control={control} value='' name='cedula' onChangeFunction ={() => { clearErrors('session'); }}/>
+              <InputForm Icon={Cedula} validate={isValidUser} placeholder='Usuario' control={control} value='' name='cedula' onChangeFunction ={() => { clearErrors('session'); }}/>
               {errors.cedula && (
                 <Text style={styles.error}>{errors.cedula.message}.</Text>
               )}

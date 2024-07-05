@@ -3,8 +3,8 @@ import BottomNavbar from '../../../components/bottomNavbar'
 import Navbar from '../../../components/navbar'
 import StyleText from '../../../components/StyleText'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CustomButton from '../../../components/CustomButton'
-import InputForm from "../../../components/InputForm";
+import CustomButton from '../../../components/customButton'
+import InputForm from "../../../components/inputForm";
 
 import Cedula from "../../../../assets/icons/cedula.svg";
 import Telefono from "../../../../assets/icons/phone.svg";

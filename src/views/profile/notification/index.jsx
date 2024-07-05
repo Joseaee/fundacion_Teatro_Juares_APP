@@ -2,7 +2,7 @@ import { View, Text, StyleSheet,FlatList, ScrollView, TouchableOpacity } from "r
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Navbar from "../../../components/navbar";
 import BottomNavbar from "../../../components/bottomNavbar";
-import CustomButton from "../../../components/CustomButton";
+import CustomButton from "../../../components/customButton";
 import CardNotification from "../../../components/CardNotification";
 import Messages from '../../../../assets/icons/messages.svg';
 import StyleText from "../../../components/StyleText";

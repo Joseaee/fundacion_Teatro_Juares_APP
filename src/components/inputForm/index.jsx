@@ -13,6 +13,7 @@ export default function InputForm({
   placeholder,
   keyboardType,
   name,
+  validate,
   control,
   onChangeFunction
 }) {
@@ -35,9 +36,10 @@ export default function InputForm({
         rules={{
           required: true,
           pattern: {
-            value: regExp,
+            value: regExp? regExp : '',
             message: msjError,
           },
+          validate: validate ? validate : ''
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput

@@ -1,8 +1,12 @@
-import { View, Text, StyleSheet, Image, TextInput, Platform, TouchableOpacity, } from "react-native";
+import { View, Text, StyleSheet, Image, Platform, TouchableOpacity, } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { widthPercentageToDP as wp,heightPercentageToDP as hp, } from "react-native-responsive-screen";
-import { useForm, Controller } from "react-hook-form";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-native-responsive-screen";
+import { useForm } from "react-hook-form";
+import { useAppSelector, useAppDispatch } from '../../../hooks/store';
+import { addUser } from '../../../store/user/slice';
+import { regExp } from "../../../hooks/constants";
+
 import Navbar from "../../../components/navbar";
 import CustomButton from "../../../components/customButton";
 import InputForm from "../../../components/inputForm";
@@ -13,21 +17,28 @@ import Cedula from "../../../../assets/icons/cedula.svg";
 import Correo from "../../../../assets/icons/envelope.svg";
 
 function Register({ navigation }) {
+
+  const user = useAppSelector((state)=> state.user)
+  const dispatch = useAppDispatch()
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      cedula: "",
-      nombres: "",
-      apellidos: "",
-      correo: "",
+      cedula: user.cedula,
+      nombres: user.nombres,
+      apellidos: user.apellidos,
+      correo: user.correo,
     },
   });
 
-  const onSubmit = () => {
-    navigation.navigate("MakePassword");
+  const onSubmit = (data) => {
+    console.log(data)
+    dispatch(addUser(data));
+    console.log(user)
+    //navigation.navigate("MakePassword");
   };
 
   return (
@@ -57,7 +68,7 @@ function Register({ navigation }) {
               placeholder="Cedula"
               msjError="Cédula Invalida"
               control={control}
-              value=""
+              value={user.cedula}
               name="cedula"
             />
             {errors.cedula && (

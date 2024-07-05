@@ -1,5 +1,4 @@
-import { public_key, private_key} from '../security/keys/keys'
-import RNRSA from 'react-native-rsa-native';
+import { public_key, private_key } from '../security/keys/keys'
 
 export const useEncryptData = async (data) => {
     const encryptedData = await RNRSA.encrypt(data, public_key);
