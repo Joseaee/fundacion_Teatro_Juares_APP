@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
-const getEvents = (state) => state.boleteria.eventos;
+export const getEvents = (state) => state.boleteria.eventos;
+export const getFilters = (state, {slice, filter})=> state[slice].filtros[filter]
 const getEventId = (_, props) => props.eventId;
 const getTickets = (state)=> state.boleteria.boletos
 
@@ -33,3 +34,5 @@ export const getTotalPrize = createSelector(
     return total.toFixed(2)
   }
 )
+
+export const getIsLogged = (state)=> state.auth.isAuthenticated
