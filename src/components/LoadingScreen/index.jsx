@@ -1,9 +1,29 @@
-import {Text, View} from 'react-native'
+import React from 'react';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
-export default function LoadingScreen(){
+const LoadingScreen = () => {
+
     return (
-        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Cargando...</Text>
-        </View>
-    )
-}
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#E31734" />
+        <Text style={styles.loadingText}>Cargando...</Text>
+      </View>
+    );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 18,
+  },
+  loadedText: {
+    fontSize: 22,
+  },
+});
+
+export default LoadingScreen;
