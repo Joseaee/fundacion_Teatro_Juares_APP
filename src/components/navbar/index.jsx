@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import {widthPercentageToDP as wp,heightPercentageToDP as hp,} from "react-native-responsive-screen";
@@ -9,6 +8,7 @@ import BackArrow from "../../../assets/icons/goback-arrow.svg";
 import UserCircle from "../../../assets/icons/userCircle.svg";
 import Bell from "../../../assets/icons/bell.svg";
 import DoorExit from "../../../assets/icons/door.svg";
+import { useAuthActions } from '../../hooks/useAuthActions'
 
 
 function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, inverted, transparent, icons = {
@@ -18,8 +18,7 @@ function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, invert
 }} ) {
 
   const navigation = useNavigation();
-  const [activeMenu, setActiveMenu] = useState(false);
-  const [onSelected, setOnSelected] = useState([0, 0, 0]);
+  const {logout} = useAuthActions()
 
 
   const colorGradient = transparent
@@ -89,9 +88,13 @@ function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, invert
                 width={36}
                 fill={"white"}
                 style={{marginStart: 10}}
-                onPress={()=> {
-                  navigation.navigate('DataUser')
-              }}/>
+                onPress={async () => {
+                  try {
+                    await logout()
+                  } catch (error) {
+                    console.error(error)
+                  }
+                }}/>
                 : null
               }
               
