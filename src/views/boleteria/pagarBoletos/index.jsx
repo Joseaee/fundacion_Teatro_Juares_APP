@@ -12,6 +12,7 @@ import { Picker } from '@react-native-picker/picker';
 import Billete from "../../../../assets/icons/money.svg";
 import Ref from "../../../../assets/icons/ref.svg";
 import Telefono from "../../../../assets/icons/phone.svg";
+import ButtonTab from '../../../components/ButtonTab';
 
 export default function PagarBoletos(){
 
@@ -45,17 +46,16 @@ export default function PagarBoletos(){
                 </View>
 
                 <View style={styles.contenedor}>
-                    <TouchableOpacity style={styles.tipoPago}>
-                        <Text>Pago Móvil</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.tipoPago}>
-                        <Text>Transferencia</Text>
-                    </TouchableOpacity>
+                    <ButtonTab width={150} bgColor='#fff' elevation={true}>
+                        Pago Móvil
+                    </ButtonTab>
+                    <ButtonTab width={150} bgColor='#fff' elevation={true}>
+                        Transferencia
+                    </ButtonTab>
                 </View>
 
                 <View style={styles.select}>
-                    <StyleText tag='Banco' size={'medium'} style={{ marginVertical: 14, justifyContent: 'center' }}>Seleccionar </StyleText>
+                    <StyleText tag='Banco' size={'medium'} style={{ marginBottom: 14, marginTop: 6, justifyContent: 'center' }}>Seleccionar </StyleText>
                         <Picker
                             selectedValue={selectedValue}
                             onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
@@ -69,7 +69,7 @@ export default function PagarBoletos(){
                 </View>
 
                 <View style={styles.inputs}>
-                    <StyleText tag='Pago' size={'medium'} style={{ marginVertical: 14, justifyContent: 'center' }}>Datos del</StyleText>
+                    <StyleText tag='Pago' size={'medium'} style={{ marginBottom: 14, marginTop: 6, justifyContent: 'center' }}>Datos del</StyleText>
 
                     <InputForm Icon={Billete} regExp={/^\d{0,6}(\.\d{1})?\d{0,2}$/} placeholder='Monto' msjError='Monto Invalido' control={control} value='' name='monto' onChangeFunction ={() => { clearErrors('session'); }}/>
                     {errors.monto && (
@@ -104,16 +104,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 14,
         marginVertical: 14,
         justifyContent: 'space-around',
-    },
-    tipoPago: {
-        backgroundColor: '#fff',
-        elevation: 6,
-        overflow: 'hidden',
-        width: 150,
-        height: 50,
-        borderRadius: 50,
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     select: {
         justifyContent: 'center',
