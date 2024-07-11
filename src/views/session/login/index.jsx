@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import InputForm from "../../../components/inputForm";
 import { useEncryption } from "../../../hooks/encryption";
 import { useAuthActions } from "../../../hooks/useAuthActions";
+import { useAppSelector } from "../../../hooks/store";
 
 import Cedula from "../../../../assets/icons/cedula.svg";
 import Password from "../../../../assets/icons/lock.svg";
@@ -26,6 +27,7 @@ import CustomButton from "../../../components/customButton";
 function Login({ navigation }) {
   const [inputId, setInputId] = useState(false);
   const [inputPassword, setInputPassword] = useState(false);
+  const loading = useAppSelector((state)=> state.auth.loading)
 
   const {
     control,
@@ -123,6 +125,7 @@ function Login({ navigation }) {
               text={"Iniciar Sesión"}
               screen={"Home"}
               onPress={handleSubmit(onSubmit)}
+              loading={loading}
             />
           </View>
           <View
