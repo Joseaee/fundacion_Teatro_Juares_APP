@@ -1,21 +1,40 @@
-import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ScrollView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import Navbar from '../../../components/navbar';
-import CustomButton from '../../../components/customButton';
 import BottomNavbar from '../../../components/bottomNavbar';
 
 import Message from '../../../components/message';
-import Send from '../../../../assets/icons/send.svg'
+import ButtonTab from '../../../components/ButtonTab';
 import { useState } from 'react';
+import Search from '../../../../assets/icons/search.svg'
 
 function Chat({ navigation }) {
+
+    const secciones = [
+        {
+          id: '1',
+          nombre: 'Citas',
+        },
+        {
+          id: '2',
+          nombre: 'Compras'
+        },
+        {
+          id: '3',
+          nombre: 'Clientes'
+        },
+        {
+          id: '4',
+          nombre: 'Eventos'
+        },
+      ]
     
     const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState([{user: true, text: 'Dígame en que puedo ayudarle'}]);
-   
+    const [messages, setMessages] = useState([{user: true, text: '¡Hola! Por favor selecciona la sección en la que necesitas ayuda.'}]);
+
 
     const handleNavigateScreens = (screen) =>
     {
@@ -49,11 +68,12 @@ function Chat({ navigation }) {
             />
         ));
     }
-   
+ 
     return (
         <SafeAreaView style = { styles.container }>
             <Navbar
-                title={ 'Chat de soporte' }
+                back={true}
+                title={'Soporte'}
                 loggedIn={ true }
             />
             <View style = { { flex: 1 } }>
@@ -66,23 +86,12 @@ function Chat({ navigation }) {
                             {renderMessage()}
                         </KeyboardAwareScrollView>
                         <View style = { styles.inputContainer }>
-                            <TextInput 
-                                style={ styles.input }
-                                placeholder='Escribir Mensaje'
-                                placeholderTextColor='#656565'
-                                onChangeText = { (text) => {setMessage(text)} }
-                                value={message}
-                            />
-                            <TouchableOpacity
-                                onClick = { (e) => {e.stopPropagation(); saveMessages(); } }
-                                onPress = { (e) => {e.stopPropagation(); saveMessages(); } }
-                            >
-                                <Send
-                                    height = { wp('10%') } 
-                                    width = { hp('4%') } 
-                                    stroke={'#CB2139'}
-                                />
-                            </TouchableOpacity>   
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                {secciones.map(item => 
+                                <ButtonTab rowSeparation={8} key={item.id}>{item.nombre}
+                                </ButtonTab>
+                                )}
+                            </ScrollView>
                         </View>
                     </View>
                 </View>
@@ -98,11 +107,9 @@ function Chat({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-
         flex: 1,
     },
     chatContainer: {
-
         flex: 2,
         marginHorizontal: wp('5%'),
         justifyContent: 'center',
@@ -110,21 +117,9 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderColor: '#CB2139',
-        borderWidth: 1,
-        borderRadius: 5,
         marginTop: hp('2%'),
         marginBottom: hp('5%'),
-        marginHorizontal: hp('2%'),
-        paddingRight: wp('4%'),
-        backgroundColor: 'white'
-    },
-    input: {
-        flex: 1,
-        padding: '4%',
-        fontWeight: '200',
-        fontSize: hp('2%'),
-    },
+    }
 });
 
 

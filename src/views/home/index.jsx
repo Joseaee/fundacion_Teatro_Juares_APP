@@ -1,18 +1,18 @@
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image, FlatList, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
-import Swiper from 'react-native-swiper';
-import { LinearGradient } from 'expo-linear-gradient';
-
+import Carousel from '../../components/Carousel';
 import Navbar from '../../components/navbar';
 import BottomNavbar from '../../components/bottomNavbar';
 import Masks from '../../../assets/icons/masks.svg';
 import Star from '../../../assets/icons/star.svg';
 import Eye from '../../../assets/icons/eye.svg';
+import CardButton from '../../components/CardButton';
+import StyleText from "../../components/StyleText";
 
 function Home( {} ) {
 
-    const services = [
+    const servicios = [
         {
             id: "1",
             title: "Obra Teatrales",
@@ -49,26 +49,24 @@ function Home( {} ) {
         
         <SafeAreaView style={ {flex: 1, backgroundColor: "#fafafa"} }>
             <Navbar
-                title={ 'Teatro Juares' }
+            title={'Inicio'}
                 loggedIn={ true }
             />
             <ScrollView>
-            <View style={ {flex: 1,} }>
+            <View style={ {flex: 1, marginHorizontal: 14} }>
                 <View style={ {flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 8} }>
                     <Image style = { styles.image }source={ require('../../../assets/img/logo.png') }/>
                 </View>
 
-                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <Text style={styles.subtitles}>Conoce un poco sobre la </Text>
-                    <Text style={styles.textSpan}>Fundación</Text>
-                </View>
+                <StyleText tag='Fundación' size={'big'} style={{marginVertical: 14, justifyContent: 'center'}}>Acerca de la</StyleText>
+
                 <View style={styles.cardInfo}>
                     <View style={{flexDirection: 'row'}}>
                         <Masks height={wp("5%")} width={hp("5%")} fill="#E31734"/> 
-                        <Text style={{fontSize: 16, fontWeight: 'bold'}}>Sobre Nosotros:</Text>
+                        <Text style={styles.subtitle}>Sobre Nosotros:</Text>
                     </View>
                     <View style={{paddingHorizontal: 12}}>
-                        <Text style={{textAlign: 'justify'}}>
+                        <Text style={styles.text}>
                             Somos una institución que ofrece servicios y productos en el área de entretenimiento al público barquisimetano y larense, siendo reconocidos a nivel nacional e internacional por sus grandes obras de teatro y escenificaciones.
                         </Text>
                     </View> 
@@ -80,7 +78,7 @@ function Home( {} ) {
                         <Text style={{fontSize: 16, fontWeight: 'bold'}}>Misión</Text>
                     </View>
                     <View style={{paddingHorizontal: 12}}>
-                        <Text style={{textAlign: 'justify'}}>
+                        <Text style={styles.text}>
                             Promover, difundir y proyectar las acciones artístico cultural de la Fundación Teatro Juares, mediante una política de características socialistas, con sostenibilidad en el tiempo, que logre dimensionar la máxima expresión de las obras escénicas que presente y así elevar el potencial artístico.
                         </Text>
                     </View> 
@@ -92,52 +90,21 @@ function Home( {} ) {
                         <Text style={{fontSize: 16, fontWeight: 'bold'}}>Visión</Text>
                     </View>
                     <View style={{paddingHorizontal: 12}}>
-                        <Text style={{textAlign: 'justify'}}>
+                        <Text style={styles.text}>
                         Contamos con una política de sala abierta, de amplio alcance, que atiende eficazmente las necesidades de promoción, difusión y proyección de la obra escénica que exhiba. Basándose en los valores socialistas de la inclusión, la cooperación y la participación.
                         </Text>
                     </View> 
                 </View>
 
-                <View style={{flexDirection: 'row', justifyContent: 'center', marginVertical: 4, marginBottom: 8}}>
-                    <Text style={styles.subtitles}>Servicios que ofrece la </Text>
-                    <Text style={styles.textSpan}>Fundación</Text>
-                </View>
+                <StyleText tag='Servicios' size={'big'} style={{marginVertical: 14, justifyContent: 'center'}}>Nuestros</StyleText>
 
-                <View style={ {flex: 1,} }>
-                    <Swiper 
-                        style={ styles.wrapper } 
-                        showsButtons={ false }
-                        autoplay={ true }
-                        showsPagination={ false }
-                    >
-                        {services.map((item) => {
-
-                            return( 
-                                <View 
-                                        style={styles.slide}
-                                        key={`service-item-${item.id}`}
-                                    >
-                                        <Image
-                                            style = { styles.imageCircle }
-                                            source={ item.img }
-                                        />
-                                        <Text style={ styles.title }>{ item.title }</Text>
-                                        <ScrollView  style={ {flex: 1,} }>
-                                            <Text style={ styles.text }>
-                                                { item.text }
-                                            </Text>
-                                        </ScrollView>
-                                </View>
-                            )
-                        })}
-                    </Swiper>
+                <View style={{marginHorizontal: 14, marginBottom: 30}}>
+                    <Carousel data={servicios} renderItem={(item)=>{
+                        return  (
+                            <CardButton key={item.id} title={item.title} source={item.img} />
+                        )
+                    }}/>
                 </View>
-                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <Text style={styles.subtitles}>¿Necesitas ayuda?</Text>
-                    <Text style={styles.textSpan}>Contactanos</Text>
-                </View>
-
-                
             </View>
             </ScrollView>
             <BottomNavbar
@@ -154,25 +121,9 @@ const styles = StyleSheet.create({
         height: hp('45%'),
         marginVertical: 14
     },
-    slide: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: wp('5%')
-    },
     image: {
         width: 120,
         height: 140,
-    },
-    imageCircle:{
-        backgroundColor: '#0D0060',
-        borderRadius: 9999,
-        alignItems: 'center',
-        width: wp('45%'),
-        height: hp('20%'),
-        justifyContent: 'center',
-        borderWidth: 10, 
-        borderColor:'#c7c7c7',
     },
     title: {
         color: '#E31734',
@@ -181,20 +132,14 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#2f2f2f',
-        fontSize: hp('2%'),
-        textAlign: 'justify',
+        fontSize: 14,
+        textAlign: 'start',
+        letterSpacing: .5
     },
-    subtitles: {
+    subtitle: {
         fontSize: hp('2.2%'),
         textAlign: 'center',
         color: '#2f2f2f',
-        fontWeight: 'bold'
-    },
-    textSpan: {
-        marginStart: 2,
-        fontSize: hp('2.2%'),
-        textAlign: 'center',
-        color: '#E31734',
         fontWeight: 'bold'
     },
     cardInfo: {
