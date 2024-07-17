@@ -5,8 +5,6 @@ import Swiper from 'react-native-swiper';
 import Navbar from "../../../../components/navbar";
 import BottomNavbar from "../../../../components/bottomNavbar";
 
-import CardHorizontal from "../../../../components/CardHorizontal";
-
 import Search from "../../../../../assets/icons/search.svg";
 import Ticket from "../../../../../assets/icons/ticket.svg";
 import Bell from "../../../../../assets/icons/bell.svg";
@@ -18,92 +16,73 @@ import { useNavigation } from "@react-navigation/native";
             <SafeAreaView style={ {flex: 1, backgroundColor: "#fafafa"} }>
                 <Navbar
                     back={true}
-                    title={'Servicio Ayuda'}
+                    title={'Ayuda Eventos'}
                     loggedIn={ true }
                 />
                 <ScrollView>
                 <View style = { { flex: 1 } }>
-                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <Text style={styles.subtitles}>Eventos</Text>
-                </View>
-
-                <View style={styles.cardInfo}>
-                    <View style={{flexDirection: 'row'}}>
-                    </View>
-                    <View style={{paddingHorizontal: 12}}>
-                        <Text style={{textAlign: 'justify'}}>
-
-                        <Search height={wp("5%")} width={hp("5%")} fill="#E31734"/>Consultar un evento en cartelera es muy facíl solo debes de seguir estos pasos
-                        para poder visualizar las funciones o eventos disponibles en nuestras instalaciones Fundación Teatro Juares.
-
-                        </Text>
-                    </View> 
-                </View>
-                    
-                <View style={styles.cardInfo}>
-                    <View style={{flexDirection: 'row'}}>  
-                        <Text style={styles.textSpan}>¿Como consultar los evetos disponiles?{"\n"}</Text>
-                    </View>
-                    <View style={{paddingHorizontal: 12}}>
-                        <Text style={{textAlign: 'justify'}}>
-                        Consultar un evento en cartelera es muy facíl solo debes de seguir estos pasos
-                        para poder visualizar las funciones o eventos disponibles en nuestras instalaciones: {"\n"}{"\n"}
-
-                        <Text style={styles.indice}>1-</Text> Presiona el apartado de Eventos en la cual podrás visualizar las categorias de eventos disponibles en nuestras instalaciones,
-                        si deseas buscar un evento en especifico podrás realizar la consultar de mismo en el campo de busqueda.{"\n"}{"\n"}
-
-                            AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"} 
-
-                            <Text style={styles.indice}>2-</Text>Encontraras información detallada sobre el evento, podrás visualizar y consultar los eventos disponibles en nuestras instalaciones. 
-
-                            <Text style={styles.indice}>3-</Text>Al seleccionar el evento el cual deseas consultar, podrás conocer la sipnosis de la presentación, categoria perteneciente al evento,
-                            próxima función y duración del evento. {"\n"}{"\n"}
-
-                            AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
-                        </Text>
-                    </View> 
-                </View>
-
-                <View style={styles.cardInfo}>
-                    <View style={{flexDirection: 'row'}}>
-                        <Text style={styles.textSpan}> <Ticket height={wp("5%")} width={hp("5%")} fill="#E31734"/>Comprar un boleto {"\n"}</Text>
-                    </View>
-                    <View style={{paddingHorizontal: 12}}>
-                        <Text style={{textAlign: 'justify'}}>
-
-                        <Text style={styles.indice}>1-</Text> Consulta los eventos disponibles, selecciona el evento al cual deseas realizar la compra del los boletos{"\n"}{"\n"}
-
-                        AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
-
-                        <Text style={styles.indice}>2-</Text> Selecciona la función del evento que desees, se presentara los datos correspondientes al seleccionado. {"\n"}{"\n"}
-
-                        <Text style={styles.indice}>3-</Text> Realiza el pago del boleto.{"\n"}{"\n"}     
-
-                        AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"} 
-
-                        <Text style={styles.indice}>4-</Text> Deberás esperar que el pago realizado sea verificado por nuestros administradores.{"\n"}{"\n"} 
-
-                        </Text>
-                    </View> 
-                </View>
                 
-                <View style={styles.cardInfo}>
-                    <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.textSpan}> <Bell height={wp("5%")} width={hp("5%")} fill="#E31734"/>Informacion importante{"\n"}</Text>
-                    </View>
-                    <View style={{paddingHorizontal: 12}}>
-                        <Text style={{textAlign: 'justify'}}> 
-                        Si deseas solicitar una cita deberas ingresar a nuestro Sitio Web <Text style={styles.indice}>http://localhost/teatro_juares/?url=inicio</Text> con el personal del teatro debes realizar una carta,
-                        dirigida al Presidente Ramón Suárez y a la Gerente de Producción, allí especificarás el motivo por el cual deseas utilizar nuestro espacio, 
-                        fecha del evento y la cantidad de asientos a reservar, luego convertirás ese documento en PDF y lo adjuntarás en el formulario que se encuentra abajo, 
-                        posteriormente esperarás a que la Fundación del Teatro se comunique contigo para finiquitar los detalles de tu reunión con ellos.{"\n"}{"\n"} 
-
-                        También es importante tener en cuenta que los horarios de atención en el Teatro son de 9:00 AM a 12:00 PM y de 1:00 PM a 4:00 PM.
-
-                        </Text>
-                    </View> 
+                <View style={styles.parrafo}>
+                    <View style={styles.redBlock}></View>
+                    <Text style={styles.subtitle}>
+                        Consultar un evento
+                    </Text>
                 </View>
 
+                <Text style={styles.text}>
+                    Consultar un evento en cartelera es muy facíl solo debes de seguir estos pasos
+                    para poder visualizar las funciones o eventos disponibles en nuestras instalaciones Fundación Teatro Juares. {"\n"}{"\n"}
+
+                    <Text style={styles.indice}>1-</Text> Presiona el apartado de Eventos en la cual podrás visualizar las categorias de eventos disponibles en nuestras instalaciones,
+                    si deseas buscar un evento en especifico podrás realizar la consultar de mismo en el campo de busqueda.{"\n"}{"\n"}
+
+                    AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"} 
+
+                    <Text style={styles.indice}>2-</Text> Encontraras información detallada sobre el evento, podrás visualizar y consultar los eventos disponibles en nuestras instalaciones. {"\n"}{"\n"}
+
+                    <Text style={styles.indice}>3-</Text> Al seleccionar el evento el cual deseas consultar, podrás conocer la sipnosis de la presentación, categoria perteneciente al evento,
+                    próxima función y duración del evento. {"\n"}{"\n"}
+
+                    AQUI VA UNA IMAGEN GISELITA {"\n"}
+                </Text>
+
+                <View style={styles.parrafo}>
+                    <View style={styles.redBlock}></View>
+                    <Text style={styles.subtitle}>
+                        Comprar un Boleto
+                    </Text>
+                </View>
+
+                <Text style={styles.text}>
+                    <Text style={styles.indice}>1-</Text> Consulta los eventos disponibles, selecciona el evento al cual deseas realizar la compra del los boletos{"\n"}{"\n"}
+
+                    AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
+
+                    <Text style={styles.indice}>2-</Text> Selecciona la función del evento que desees, se presentara los datos correspondientes al seleccionado. {"\n"}{"\n"}
+
+                    <Text style={styles.indice}>3-</Text> Realiza el pago del boleto.{"\n"}{"\n"}     
+
+                    AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"} 
+
+                    <Text style={styles.indice}>4-</Text> Deberás esperar que el pago realizado sea verificado por nuestros administradores.
+                </Text>
+
+                <View style={styles.parrafo}>
+                    <View style={styles.redBlock}></View>
+                    <Text style={styles.subtitle}>
+                        Información Importante
+                    </Text>
+                </View>
+
+                <Text style={styles.text}>
+                    Si deseas solicitar una cita deberas ingresar a nuestro Sitio Web:{"\n"}{"\n"}
+                    <Text style={styles.indice}>http://localhost/teatro_juares/?url=inicio</Text> {"\n"}{"\n"}
+                    
+                    Con el personal del teatro debes realizar una carta,
+                    dirigida al Presidente de la Fundación y a la Gerente de Producción, allí especificarás el motivo por el cual deseas utilizar nuestro espacio, 
+                    fecha del evento y la cantidad de asientos a reservar, luego convertirás ese documento en PDF y lo adjuntarás en el formulario que se encuentra abajo, 
+                    posteriormente esperarás a que la Fundación del Teatro se comunique contigo para finiquitar los detalles de tu reunión con ellos.{"\n"}{"\n"} 
+                </Text>
                 </View>
                 </ScrollView>
                 <BottomNavbar active={ 5 }/>
@@ -113,56 +92,47 @@ import { useNavigation } from "@react-navigation/native";
 
     const styles = StyleSheet.create({
         container: {
-
             flex: 1,
         },
-        title: {
-            color: '#E31734',
-            fontSize: hp('3%'),
-            fontWeight: 'bold'
+        parrafo: {
+            display: 'flex',
+            width: wp('100%'),
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            color: '#222',
+            textAlign: 'start',
+            marginHorizontal: hp('2%'),
+            marginVertical: hp('3%'),
+            textAlign: 'justify'
+        },
+        subtitle: {
+            color: '#383838',
+            fontSize: 18,
+            letterSpacing: 1,
+        },
+        redBlock: {
+            backgroundColor: '#E31734',
+            width: 6,
+            height: 20,
+            marginEnd: 6,
         },
         text: {
-            color: '#2f2f2f',
-            fontSize: hp('2%'),
+            fontSize: 16,
             textAlign: 'justify',
-        },
-        subtitles: {
-            fontSize: hp('2.2%'),
-            textAlign: 'center',
-            color: '#337AFF',
-            fontWeight: 'bold'
+            color: '#585858',
+            marginHorizontal: 14,
+            letterSpacing: .4
         },
         indice: {
-            fontSize: hp('1.5.1.5%'),
-            textAlign: 'center',
-            color: '#337AFF',
-            fontWeight: 'bold'
-        },
-        textSpan: {
-            marginStart: 2,
-            fontSize: hp('2.2%'),
+            fontSize: 14,
             textAlign: 'center',
             color: '#E31734',
-            fontWeight: 'bold',
         },
-
-        textSpanTwo: {
-            marginStart: 2,
-            fontSize: hp('1.2.1.2%'),
+        link: {
+            fontSize: 14,
             textAlign: 'center',
-            color: '#657696',
-            fontWeight: 'bold',
-        },
-        cardInfo: {
-            marginVertical: 12,
-            paddingHorizontal: 8,
-            paddingVertical: 10,
-            borderWidth: 2,
-            borderColor: '#fff',
-            backgroundColor: '#fff',
-            marginHorizontal: 12,
-            borderRadius: 10,
-            elevation: 6
+            color: 'steelblue',
         }
     });
     export default HelpDetailsEvent;

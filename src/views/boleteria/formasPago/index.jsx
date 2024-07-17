@@ -25,7 +25,7 @@ export default function FormasPago() {
                     {true ? <Text>Asientos Seleccionados: </Text> : null}
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 6 }}>
-                    <CustomButton text='Agregar Forma de Pago' width={220} height={40} />
+                    <CustomButton text='Agregar Forma de Pago' width={220} height={40} screen='PagarBoletos'/>
                 </View>
                 <View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#FBFBFB', padding: 10, marginHorizontal: 12, marginVertical: 6, borderRadius: 10 }}>

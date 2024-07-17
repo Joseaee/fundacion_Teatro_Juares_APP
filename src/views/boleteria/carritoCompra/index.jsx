@@ -37,25 +37,18 @@ export default function CarritoCompra() {
   ];
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Navbar back={true} title={"Boletería"} loggedIn={true} />
+      <Navbar back={true} title={"Comprar Boletos"} loggedIn={true} />
       <ScrollView style={{ flex: 1 }}>
-        <StyleText
-          tag="Boletos"
-          size="big"
-          style={{ marginVertical: 18, justifyContent: "center" }}
-        >
-          Comprar
-        </StyleText>
-        <View style={{ marginHorizontal: 10, marginVertical: 8, padding: 6 }}>
+        <View style={{ marginHorizontal: 10, marginVertical: 16, padding: 6 }}>
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              marginBottom: 4,
+              marginBottom: 8,
             }}
           >
             <Text style={styles.title}>{evento}</Text>
-            <Badge color="red">Obra Teatral</Badge>
+            <Badge color="gray">Obra Teatral</Badge>
           </View>
 
           <Text style={styles.subtitle}>{`Fecha: ${fecha}`}</Text>
@@ -63,7 +56,6 @@ export default function CarritoCompra() {
             style={styles.subtitle}
           >{`Horario: ${horaInicio} - ${horaFinal}`}</Text>
         </View>
-        {/* <Text >{JSON.stringify(tickets)}</Text> */}
         <View style={{ marginHorizontal: 10, marginTop: 12, marginBottom: 6 }}>
           {lotes.map((lote) => {
             const index = tickets.findIndex(item=> item.id === lote.id)

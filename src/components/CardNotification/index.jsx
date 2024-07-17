@@ -1,15 +1,20 @@
+import { useState } from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-export default function CardNotification({children, subtitle, Icon, onPress, iconBackground}){
+export default function CardNotification({children, subtitle, Icon, onPress = ()=>{}, iconBackground}){
+    const [selected, setSelected] = useState(false)
     const backgroundColor = (iconBackground) ? iconBackground : '#E31734'
     return (
-        <TouchableOpacity style={styles.carta} onPress={onPress}>
+        <TouchableOpacity style={[styles.carta, selected ? styles.selected : null]} onPress={()=> {
+            setSelected(!selected)
+            onPress()
+        }}>
             <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: wp('100%'), padding: 16, overflow: 'hidden'}}>
                 <View style={[styles.boxMessage, {backgroundColor}]}>
                     <Icon style={styles.icon} />
                 </View>
-                <View style={{flex:1, paddingStart: 12}}>
+                <View style={{paddingHorizontal: 12}}>
                     <Text style={styles.title}>{children}</Text>
                     <Text style={styles.text}>{subtitle}</Text>
                 </View>
@@ -23,9 +28,15 @@ const styles = StyleSheet.create({
         marginVertical: 6,
         marginHorizontal: 14,
         backgroundColor: '#fff',
+        borderWidth: 3,
+        borderColor: '#fff',
         borderRadius: 10,
         elevation: 6,
         overflow: 'hidden'
+    },
+    selected: {
+        borderColor: '#48C9B0',
+        borderWidth: 3,
     },
     boxMessage: {
         width: 50,
@@ -45,6 +56,6 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'gray',
-        fontSize: 14
+        fontSize: 14,
     }
 })

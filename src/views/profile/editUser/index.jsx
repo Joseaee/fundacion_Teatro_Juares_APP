@@ -26,6 +26,7 @@ import Correo from "../../../../assets/icons/envelope.svg";
 import Telefono from "../../../../assets/icons/phone.svg";
 import Password from "../../../../assets/icons/lock.svg";
 import InputForm from "../../../components/inputForm";
+import StyleText from '../../../components/StyleText';
 
 function EditUser() {
   const [inputFistName, setInputFistName] = useState(false);
@@ -69,7 +70,7 @@ function EditUser() {
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
-          <Text style={styles.title}>Mi Informacion</Text>
+          <StyleText tag='Información' size={'big'} style={{ marginTop: 20, justifyContent: 'center' }}>Mi</StyleText>
         </View>
 
         <View style={styles.containerForm}>
