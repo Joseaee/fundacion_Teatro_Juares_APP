@@ -126,9 +126,9 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         shadowRadius: 1,
         
-      },
+        },
     
-      title: {
+        title: {
         fontSize: 28,
         fontWeight: 'bold',
         marginLeft: 15,
