@@ -29,7 +29,6 @@ function Message({ user, text }) {
 const style = StyleSheet.create({
 
     container:{
-
         backgroundColor: 'white',
         borderRadius: 10,
         borderColor: '#B3B3B3',
@@ -43,7 +42,6 @@ const style = StyleSheet.create({
         paddingHorizontal: wp('4%'),
     },
     text:{
-        
         fontSize: hp('2.2%'),
         paddingHorizontal: wp('4%'),
         paddingVertical: wp('1%'),

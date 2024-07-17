@@ -9,7 +9,7 @@ import Home from '../../../assets/icons/home.svg';
 import Help from '../../../assets/icons/help.svg';
 import Film from '../../../assets/icons/film.svg';
 import News from '../../../assets/icons/news.svg';
-import Chat from '../../../assets/icons/chat.svg';
+import ChatSoporte from '../../../assets/icons/chatSoporte.svg';
 
 function BottomNavbar( {active, screen} ) {
 
@@ -29,12 +29,12 @@ function BottomNavbar( {active, screen} ) {
                 <Text style={ [styles.text, {color: (active == 1) ? '#E31734' : 'grey'}] }>Inicio</Text>
             </TouchableOpacity>
             <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('Chat')} } >
-                <Chat 
+                <ChatSoporte
                     height={ wp('5%') } 
                     width={ hp('5%') } 
                     fill={ (active == 2) ? '#E31734' : 'grey' }
                 />
-                <Text style={ [styles.text, {color: (active == 2) ? '#E31734' : 'grey'}] }>Chat</Text>
+                <Text style={ [styles.text, {color: (active == 2) ? '#E31734' : 'grey'}] }>Soporte</Text>
             </TouchableOpacity>
             <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('Cartelera')} }>
                 <LinearGradient 
@@ -51,7 +51,7 @@ function BottomNavbar( {active, screen} ) {
                 </LinearGradient>
                 <Text style={ [styles.text, {color: (active == 3) ? '#E31734' : 'grey'}] }>Eventos</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate(/*'News'*/'Home')} }>
+            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('ForoNoticias')} }>
                 <News 
                     height={ wp('5%') } 
                     width={ hp('5%') } 
@@ -59,7 +59,7 @@ function BottomNavbar( {active, screen} ) {
                 />
                 <Text style={ [styles.text, {color: (active == 4) ? '#E31734' : 'grey'}] }>Noticias</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('Home')} } >
+            <TouchableOpacity style={ styles.column } onPress={ () => {navigation.navigate('Help')} } >
                 <Help 
                     height={ wp('5%') } 
                     width={ hp('5%') } 
