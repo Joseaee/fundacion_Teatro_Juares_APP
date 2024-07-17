@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, FlatList, TextInput, ScrollView} from 'react-native'
+import {View, Text, StyleSheet, FlatList, TextInput, ScrollView, ActivityIndicator} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 import { useAppSelector} from '../../../hooks/store';
@@ -11,6 +11,8 @@ import Search from '../../../../assets/icons/search.svg'
 import { useNavigation } from '@react-navigation/native';
 import { useBoleteriaActions } from '../../../hooks/useBoleteriaActions';
 import { getEvents, getFilters } from "../../../store/selectors";
+import { useEffect } from 'react';
+import { API_URL } from '../../../config/constants';
 
 const categorias = [
   {
@@ -36,12 +38,26 @@ export default function Cartelera(){
     const eventos = useAppSelector((state)=> getEvents(state))
     const categoriaFiltro = useAppSelector((state)=> getFilters(state, {slice: 'boleteria', filter: 'categoria'}))
     const filtroNombreEvento = useAppSelector((state)=> state.boleteria.filtros.nombre)
-    const {filterCategory, filterEvent} = useBoleteriaActions()
+    const loading = useAppSelector((state)=> state.boleteria.loading)
+    const {filterCategory, filterEvent, fetchingEvents} = useBoleteriaActions()
+
+    useEffect(()=> {
+      const loadEvents = async()=>{
+        try {
+          await fetchingEvents()
+        } catch (error) {
+          console.error(error)
+        }
+        
+      }
+      
+      loadEvents()
+    },[])
 
     const ItemCard = ({item})=>{
       return <View style={{marginHorizontal: 14, marginVertical: 6}}>
-          <CardButton source={item.poster} title={item.nombre} subtitle={item.categoria} onPress={()=> navigation.navigate('EventDetails', {
-          id: item.id
+          <CardButton source={{uri:`${API_URL}${item.imagen}`}} title={item.nombre} subtitle={item.categoria} onPress={()=> navigation.navigate('EventDetails', {
+          id: item.nroEvento
         })}/>
       </View>
 
@@ -74,7 +90,14 @@ export default function Cartelera(){
                 {categorias.map(item => <ButtonTab isSelected={isSelected(item.nombre)} rowSeparation={8} key={item.id} onPress={()=> filterCategory(item.nombre)}>{item.nombre}</ButtonTab>)}
               </ScrollView>
             </View>
-                  {(filteredEvents.length === 0) ? <View style={{flex:1, justifyContent:'center', alignItems: 'center'}}><StyleText tag="eventos" >No se encontraron</StyleText></View> : <FlatList style={{width: wp('100%')}} data={filteredEvents} renderItem={ItemCard} keyExtractor={(item)=> item.id}/>}
+                  { loading
+                      
+                    ? <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                        <ActivityIndicator size="large" color="#E31734" />
+                      </View>
+                   : (filteredEvents.length === 0) 
+                      ? <View style={{flex:1, justifyContent:'center', alignItems: 'center'}}><StyleText tag="eventos" >No se encontraron</StyleText></View> 
+                      : <FlatList style={{width: wp('100%')}} data={filteredEvents} renderItem={ItemCard} keyExtractor={(item)=> item.nroEvento}/>}
 
               <BottomNavbar
                 title={ 'Cartelera' }

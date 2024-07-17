@@ -1,86 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchEvents, fetchBoletos } from "./thunks";
 
 const initialState = {
-    eventos: [
-        {
-            id: '1',
-            nombre: 'Eventito',
-            categoria: 'Obra Teatral',
-            poster: require('../../../assets/img/Servicios/obras.jpg'),
-            funciones: [
-                {
-                    id: '1',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '10:00 AM',
-                    fecha: '2024-05-16'
-                },
-                {
-                    id: '2',
-                    horaInicio: '10:00 AM',
-                    horaFinal: '11:00 AM',
-                    fecha: '2024-05-17'
-                },
-                {
-                    id: '3',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '9:00 AM',
-                    fecha: '2024-05-18'
-                }
-            ]
-        },
-        {
-            id: '2',
-            nombre: 'Eventito 2',
-            categoria: 'Concierto',
-            poster: require('../../../assets/img/Servicios/conciertos.jpg'),
-            funciones: [
-                {
-                    id: '1',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '10:00 AM',
-                    fecha: '2024-05-16'
-                },
-                {
-                    id: '2',
-                    horaInicio: '10:00 AM',
-                    horaFinal: '11:00 AM',
-                    fecha: '2024-05-17'
-                },
-                {
-                    id: '3',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '9:00 AM',
-                    fecha: '2024-05-18'
-                }
-            ]
-        },
-        {
-            id: '3',
-            nombre: 'Evento 3',
-            categoria: 'Concierto',
-            poster: require('../../../assets/img/Servicios/belleza.jpg'),
-            funciones: [
-                {
-                    id: '1',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '10:00 AM',
-                    fecha: '2024-05-16'
-                },
-                {
-                    id: '2',
-                    horaInicio: '10:00 AM',
-                    horaFinal: '11:00 AM',
-                    fecha: '2024-05-17'
-                },
-                {
-                    id: '3',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '9:00 AM',
-                    fecha: '2024-05-18'
-                }
-            ]
-        }
-    ],
+    loading: false,
+    eventos: [],
+    categorias: [],
     filtros: {
         categoria: 'all',
         nombre: ''
@@ -132,6 +56,30 @@ export const boleteriaSlice = createSlice({
                 }
             }
         }
+    },
+    extraReducers: (builder)=>{
+        builder
+      .addCase(fetchEvents.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchEvents.fulfilled, (state, action) => {
+        state.loading = false;
+        state.eventos = action.payload;
+      })
+      .addCase(fetchEvents.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(fetchBoletos.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchBoletos.fulfilled, (state, action) => {
+        state.loading = false;
+        state.boletos = action.payload;
+      })
+      .addCase(fetchBoletos.rejected, (state) => {
+        state.loading = false;
+      })
+      ;
     }
 })
 

@@ -8,7 +8,16 @@ const getTickets = (state)=> state.boleteria.boletos
 export const getEventById = createSelector(
   [getEvents, getEventId],
   (events, eventId) => {
-    return events.find((event) => event.id === eventId);
+    return events.find((event) => event.nroEvento === eventId);
+  }
+);
+
+export const getEventRecent = createSelector(
+  [getEvents],
+  (events) => {
+    return events.reduce((mostRecent, currentEvent) => {
+      return new Date(`${currentEvent.fechaEstreno} ${currentEvent.horaInicio}`) > new Date(`${mostRecent.fechaEstreno} ${mostRecent.horaInicio}`) ? currentEvent : mostRecent;
+    }, events[0]);
   }
 );
 
