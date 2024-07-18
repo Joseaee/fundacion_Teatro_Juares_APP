@@ -1,12 +1,16 @@
-import {View, Text, StyleSheet, TextInput, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, TextInput, ScrollView, FlatList} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
+import { useAppSelector} from '../../../hooks/store';
 import Banner from '../../../components/Banner';
 import BottomNavbar from '../../../components/bottomNavbar';
 import Search from '../../../../assets/icons/search.svg';
 import Carousel from '../../../components/Carousel';
 import CardButton from '../../../components/CardButton';
+import StyleText from '../../../components/StyleText';
 import { useNavigation } from '@react-navigation/native';
+import { useNoticiasActions } from '../../../hooks/useNoticiasActions';
+import { getNoticias } from "../../../store/selectors";
 
 const noticiasRelevantes = [
     {id: '1', banner: require("../../../../assets/img/Servicios/graduaciones.jpg"), title: 'Las mejores graduaciones', text: 'Desde obras de ballet, danza y urbano hasta circo, comedia y obras infantiles hemos tenido el honor de organizar, al tener un espacio amplio y una gran capacidad, nuestras instalaciones son perfectas para llevar a cabo tu producción, contamos con un excelente equipo de área técnica que no te va a fallar al montar la obra que tú sueñas.', images: [require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg")]},
@@ -23,6 +27,18 @@ const otrasNoticias = [
 export default function Noticias(){
     const navigation = useNavigation();
 
+    const noticias = useAppSelector((state)=> getNoticias(state))
+    const filtroNombreNoticia = useAppSelector((state)=> state.noticias.filtros.title)
+    const {filterNoticia} = useNoticiasActions()
+
+    const filterNoticias = (noticias)=>{
+        return noticias.filter(noticia=>{
+          return (filtroNombreNoticia === '' || noticia.title.startsWith(filtroNombreNoticia))
+        })
+    }
+
+    const filteredNoticias = filterNoticias(noticias)
+
     return (
         <SafeAreaView style={{flex: 1}}>
             <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={true}>
@@ -32,15 +48,17 @@ export default function Noticias(){
             <ScrollView style={{flex:1}}>
                 <View style={styles.input}>
                     <Search height={wp('5%')} width={hp('5%')} fill='gray' />
-                    <TextInput placeholder='Buscar Noticia...' style={{flex: 1}}/>
+                    <TextInput placeholder='Buscar Noticia...' style={{flex: 1}} onChangeText={(text)=> filterNoticia(text)} value={filterNoticia}/>
                 </View>
+
+                {(filteredNoticias.length === 0) ? <View style={{flex:1, justifyContent:'center', alignItems: 'center'}}><StyleText tag="noticias" >No se encontraron</StyleText></View> : <FlatList style={{width: wp('100%')}} data={filteredNoticias} renderItem={CardButton} keyExtractor={(item)=> item.id}/>}
 
                 <View style={{flex:1}}>
                     <View style={styles.parrafo}>
                         <View style={styles.redBlock}></View><Text style={styles.text}>Noticias Relevantes</Text>
                     </View>
 
-                    <View style={{marginHorizontal: 14}}>
+                    {/* <View style={{marginHorizontal: 14}}>
                         <Carousel data={noticiasRelevantes} loop={true} renderItem={(item)=> {
                             return (
                                 <CardButton key={item.id} title={item.title} source={item.banner} alignContent='bottom' onPress={()=> navigation.navigate('DetalleNoticia', {
@@ -48,13 +66,13 @@ export default function Noticias(){
                                 })}/>
                             )
                         }}/>
-                    </View>
+                    </View> */}
                     
                     <View style={styles.parrafo}>
                         <View style={styles.redBlock}></View><Text style={styles.text}>Otras Noticias</Text>
                     </View>
 
-                    <View style={{flexDirection: 'row', gap: 5, flexWrap: 'wrap', marginHorizontal: 14, marginBottom: 20, justifyContent: 'center'}}>
+                    {/* <View style={{flexDirection: 'row', gap: 5, flexWrap: 'wrap', marginHorizontal: 14, marginBottom: 20, justifyContent: 'center'}}>
                         {otrasNoticias.map((item, index) => {
                             return (
                                 <CardButton key={index} title={item.title} source={item.banner} alignContent='bottom' width={160} titleSize='small' onPress={()=> navigation.navigate('DetalleNoticia', {
@@ -62,7 +80,7 @@ export default function Noticias(){
                                 })}/>
                             )
                         })}
-                    </View>
+                    </View> */}
 
                 </View>
 
