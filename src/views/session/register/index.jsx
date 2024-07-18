@@ -20,6 +20,7 @@ function Register({ navigation }) {
 
   const user = useAppSelector((state)=> state.user)
   const dispatch = useAppDispatch()
+  const { encryptData } = useEncryption();
 
   const {
     control,
@@ -35,10 +36,9 @@ function Register({ navigation }) {
   });
 
   const onSubmit = (data) => {
-    console.log(data)
+
     dispatch(addUser(data));
-    console.log(user)
-    //navigation.navigate("MakePassword");
+    navigation.navigate("MakePassword");
   };
 
   return (
@@ -64,15 +64,17 @@ function Register({ navigation }) {
           >
             <InputForm
               Icon={Cedula}
-              regExp={/^[0-9]{7,8}$/}
+              regExp={regExp.cedula}
               placeholder="Cedula"
               msjError="Cédula Invalida"
               control={control}
               value={user.cedula}
+              required={{ value: true, message: 'La cedula es requerida.' }}
               name="cedula"
+              keyboardType={"number-pad"}
             />
             {errors.cedula && (
-              <Text style={styles.error}>Error en la Cedula.</Text>
+              <Text style={styles.error}>{errors.cedula.message}</Text>
             )}
 
             <InputForm
@@ -81,11 +83,12 @@ function Register({ navigation }) {
               placeholder="Nombre(s)"
               msjError="Nombre(s) Invalido"
               control={control}
-              value=""
+              value={user.nombres}
+              required={{ value: true, message: 'El nombre es requerido.' }}
               name="nombres"
             />
             {errors.nombres && (
-              <Text style={styles.error}>Error en el Nombre(s).</Text>
+              <Text style={styles.error}>{errors.nombres.message}</Text>
             )}
 
             <InputForm
@@ -94,11 +97,12 @@ function Register({ navigation }) {
               placeholder="Apellido(s)"
               msjError="Apellido(s) Invalido"
               control={control}
-              value=""
+              value={user.apellidos}
+              required={{ value: true, message: 'El apellido es requerido.' }}
               name="apellidos"
             />
             {errors.apellidos && (
-              <Text style={styles.error}>Error en los Apellido(s).</Text>
+              <Text style={styles.error}>{errors.apellidos.message}</Text>
             )}
 
             <InputForm
@@ -108,10 +112,12 @@ function Register({ navigation }) {
               msjError="Correo Invalido"
               control={control}
               value=""
+              required={{ value: true, message: 'El correo es requerido.' }}
               name="correo"
+              keyboardType={"email-address"}
             />
             {errors.correo && (
-              <Text style={styles.error}>Error en el Correo.</Text>
+              <Text style={styles.error}>{errors.correo.message}</Text>
             )}
           </View>
           <View style={{ marginTop: hp("1%") }}>

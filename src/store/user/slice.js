@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     cedula: '',
-    nombres: '',
-    apellidos: '',
+    nombre: '',
+    apellido: '',
     correo:  '',
     contraseña: '',
 }
@@ -15,10 +15,10 @@ const userSlice = createSlice({
         addUser: (state, action) => {
             const { cedula, nombres, apellidos, correo } = action.payload;
 
-            state.cedula = cedula.trimEnd().trimRight();
-            state.nombres = nombres.trimEnd().trimRight();
-            state.apellidos = apellidos.trimEnd().trimRight();
-            state.correo = correo.trimEnd().trimRight();
+            state.cedula = cedula.replace(/\s+/g, ' ').trim();
+            state.nombre = nombres.replace(/\s+/g, ' ').trim();
+            state.apellido = apellidos.replace(/\s+/g, ' ').trim();
+            state.correo = correo.replace(/\s+/g, ' ').trim();
         },
         addPasswod: (state, action) =>{
             state.contraseña = action.payload;
@@ -26,10 +26,13 @@ const userSlice = createSlice({
         addCorreo: (state, action) =>{
             state.correo = action.payload;
         },
+        resetState: (state) =>{
+            return initialState;
+        },
     }
 
 })
 
 export default userSlice.reducer
 
-export const { addUser, addPasswod, addCorreo } = userSlice.actions  
+export const { addUser, addPasswod, addCorreo, resetState } = userSlice.actions  

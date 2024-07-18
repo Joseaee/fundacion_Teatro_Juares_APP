@@ -1,19 +1,43 @@
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image, TextInput, Platform } from "react-native";
+import { View, Text, StyleSheet, Image, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-native-responsive-screen";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import InputForm from "../../../components/inputForm";
-
+import { addPasswod, resetState } from '../../../store/user/slice';
+import { setLoading } from '../../../store/auth/slice'
 import Navbar from "../../../components/navbar";
 import Password from "../../../../assets/icons/lock.svg";
 import CustomButton from "../../../components/customButton";
+import { useAppSelector, useAppDispatch } from '../../../hooks/store';
+import { useEncryption } from "../../../hooks/encryption";
+import { API_URL } from "../../../config/constants";
+import axios from 'axios';
 
 function MakePassword({ navigation }) {
+
+  const user = useAppSelector((state)=> state.user)
+  const loading = useAppSelector((state)=> state.auth.loading)
+  const dispatch = useAppDispatch()
+  const { encryptData } = useEncryption();
+  
+  const samePassword = (value) =>{
+
+    if (value != getValues().inputPassword) {
+
+      return 'Las contraseñas no coinciden';
+    }
+
+    return true;
+  }
+
   const {
     control,
     handleSubmit,
     formState: { errors },
+    getValues,
+    setError,
+    clearErrors,
   } = useForm({
     defaultValues: {
       inputPassword: "",
@@ -21,10 +45,40 @@ function MakePassword({ navigation }) {
     },
   });
 
-  const onSubmit = () => {
-    navigation.navigate("SuccessSession", {
-      title: "Registrarse",
-      message: "¡Registro de usuario exitoso!",
+  const onSubmit = (data) => {
+
+    dispatch(addPasswod(data.inputPassword2))
+    const encryptedData = encryptData(JSON.stringify(user));
+    dispatch(setLoading(true))
+  
+    axios({
+      method: 'POST',
+      url: API_URL,
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      params: {
+        url: 'app',
+        type: 'register'
+      },
+      data: {
+        user: encryptedData
+      }
+    }).then(function (response) {
+      dispatch(resetState());
+      navigation.navigate("SuccessSession", {
+        title: "Registrarse",
+        message: "¡Registro de usuario exitoso!",
+      });
+    }).catch(function (error) {
+
+      setError('register', {
+        type: 'manual',
+        message: error.response.data.message})
+
+    }).finally (function () {
+      dispatch(setLoading(false))
     });
   };
 
@@ -50,19 +104,45 @@ function MakePassword({ navigation }) {
             style={{ flex: 1, justifyContent: "center", marginTop: hp("3%") }}
           >
 
-            <InputForm Icon={Password} regExp={/^[a-zA-Z0-9_\.\-]{8}$/} placeholder='Contraseña' msjError='Contraseña Invalida' control={control} value='' name='inputPassword'/>
+            <InputForm 
+              Icon={Password} 
+              regExp={/^[0-9]{8}$/} 
+              placeholder='Contraseña'   
+              keyboardType={"number-pad"}
+              maxLength={8} 
+              msjError='Contraseña Invalida' 
+              control={control} 
+              value='' 
+              required={{ value: true, message: 'La contraseña es requerida' }} 
+              name='inputPassword'
+              onChangeFunction={() => {
+                clearErrors("inputPassword2");
+              }}
+              />
             {errors.inputPassword && (
-              <Text style={styles.error}>Error en la contraseña.</Text>
+              <Text style={styles.error}>{errors.inputPassword.message}.</Text>
             )}
 
-            <InputForm Icon={Password} regExp={/^[a-zA-Z0-9_\.\-]{8}$/} placeholder='Repetir Contraseña' msjError='Las contraseñas no coinciden' control={control} value='' name='inputPassword2'/>
+            <InputForm 
+            Icon={Password}
+            validate={samePassword}
+            placeholder='Repetir Contraseña' 
+            control={control} 
+            value=''
+            required={{ value: true, message: 'La contraseña es requerida' }} 
+            keyboardType={"number-pad"}
+            maxLength={8}  
+            name='inputPassword2'/>
             {errors.inputPassword2 && (
-              <Text style={styles.error}>Error en la contraseña.</Text>
+              <Text style={styles.error}>{errors.inputPassword2.message}.</Text>
+            )}
+            {errors.register && (
+              <Text style={styles.error}>{errors.register.message}</Text>
             )}
           </View>
 
             <View style={{marginTop: 10}}>
-              <CustomButton text={'Finalizar'} onPress={handleSubmit(onSubmit)} />
+              <CustomButton text={'Finalizar'} onPress={()=> { clearErrors("register"); handleSubmit(onSubmit)()}}  loading={loading}/>
             </View>
         </View>
       </KeyboardAwareScrollView>
