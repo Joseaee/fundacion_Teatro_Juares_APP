@@ -4,48 +4,71 @@ import { Shadow } from 'react-native-shadow-2';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import LoadingScreen from '../../../components/LoadingScreen'
 
 import Banner from '../../../components/Banner';
 import BottomNavbar from '../../../components/bottomNavbar';
 import Table from '../../../components/table'
 
 import Envelope from '../../../../assets/icons/user.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const user = 
-{
-    Cedula: '29517943',
-    Correo: 'sabrii.colmenarez@gmail.com',
-    Telefono: '04128575496'  
-}
+import { useAppDispatch, useAppSelector } from "../../../hooks/store";
+import { consulterUser } from '../../../store/user/thunks';
+import { API_URL } from '../../../config/constants';
 
 const compra = 
 {
     Boletos: '3',
     Evento: 'Spiderman',
-    Fecha: '08/08/2024' ,
-    Funcion: '12:00 PM',
+    Funcion: '08/08/2024' ,
+    Hora: '12:00 PM',
     Pago: '120 bs',
+    Fecha: '05/08/2024',
     Estado: 'Verificada'  
 }
 
 function DataUser() {
 
+    const profile = useAppSelector((state) => state.profile);
+    const dispatch = useAppDispatch()
+
+    const user = 
+    {
+        Cedula: profile.cedula,
+        Correo: profile.correo,
+        Telefono: profile.telefono  
+    }
+
+    const {loading, compras} = profile
+
     const navigation = useNavigation();
+
+    useEffect(()=>{
+
+        const cargarDatos = async ()=>{
+            try {
+                
+                await dispatch(consulterUser()).unwrap()
+
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        cargarDatos();
+    },[])
 
     
     const onPress = () => {
-
-        const data = 
-            {
-                name: 'Sabrina',
-                lastname: 'Colmenarez Colmenarez',
-                mail: 'sabrii.colmenarez@gmail.com',
-                phone: '04128575496'   
-            }
         
-        navigation.navigate('EditUser', {data})
+        navigation.navigate('EditUser')
     };
+
+    if(loading){
+        return(
+            <LoadingScreen></LoadingScreen>
+        )
+    }
 
     return(
         
@@ -65,7 +88,7 @@ function DataUser() {
                         corners = { { topStart: true, topEnd: true, bottomStart: true, bottomEnd: true } }
                         radius = { 5 }
                     >
-                            <Image style={styles.img} source={require('../../../../assets/img/Servicios/belleza.jpg')}></Image>
+                            <Image style={styles.img} source={{uri: `${API_URL}${profile.img}`}}></Image>
                     </Shadow>
                 </View>
                 
@@ -88,19 +111,18 @@ function DataUser() {
                 
             </Banner>
             <View style={ {flex: 1, marginTop: hp('9%')} }>
-            <Text style={styles.title}>Sabrina Colmenarez</Text>
+            <Text style={styles.title}>{profile.nombre+' '+profile.apellido}</Text>
                 <KeyboardAwareScrollView>
                 <Table 
                     datos={user}
                     title={'Informacion'}
-                    existData={true}
                 />
 
-                <Table 
-                    datos={compra}
+                    <Table 
+                    datos={compras}
                     title={'Mi Ultima Compra'}
-                    existData={true}
-                />
+                    />
+
                 </KeyboardAwareScrollView>
             </View>
             <BottomNavbar

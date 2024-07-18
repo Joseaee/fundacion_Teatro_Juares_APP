@@ -28,6 +28,9 @@ import Password from "../../../../assets/icons/lock.svg";
 import InputForm from "../../../components/inputForm";
 import StyleText from '../../../components/StyleText';
 
+import { useAppSelector, useAppDispatch } from "../../../hooks/store";
+import {setProfile} from "../../../store/user/slice"
+
 function EditUser() {
   const [inputFistName, setInputFistName] = useState(false);
   const [inputLastName, setInputLastName] = useState(false);
@@ -37,26 +40,28 @@ function EditUser() {
   const [inputPassword2, setInputPassword2] = useState(false);
 
   const navigation = useNavigation();
-  const route = useRoute();
-  const { data } = route.params;
-
+  const profile = useAppSelector((state) => state.profile);
+  const dispatch = useAppDispatch();
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      nombres: data.name,
-      apellidos: data.lastname,
-      telefono: data.phone,
-      correo: data.mail,
+      nombre: profile.nombre,
+      apellido: profile.apellido,
+      telefono: profile.telefono,
+      correo: profile.correo,
       password: "",
       passwordTwo: "",
     },
   });
 
-  const onSubmit = () => {
+
+  const onSubmit = (data) => {
+    dispatch(setProfile(data))
     navigation.navigate("DataUser");
+  
   };
 
   return (
@@ -81,8 +86,8 @@ function EditUser() {
               placeholder="Nombre(s)"
               msjError="Nombre(s) Invalido"
               control={control}
-              value=""
-              name="nombres"
+              value= {profile.nombre}
+              name="nombre"
             />
             {errors.nombres && (
               <Text style={styles.error}>Error en el Nombre(s).</Text>
@@ -94,8 +99,8 @@ function EditUser() {
               placeholder="Apellido(s)"
               msjError="Apellido(s) Invalido"
               control={control}
-              value=""
-              name="apellidos"
+              value={profile.apellido}
+              name="apellido"
             />
             {errors.apellidos && (
               <Text style={styles.error}>Error en los Apellido(s).</Text>
@@ -107,7 +112,7 @@ function EditUser() {
               placeholder="Correo Electrónico"
               msjError="Correo Invalido"
               control={control}
-              value=""
+              value={profile.correo}
               name="correo"
             />
             {errors.correo && (
@@ -120,7 +125,7 @@ function EditUser() {
               placeholder="teléfono"
               msjError="Teléfono Invalido"
               control={control}
-              value=""
+              value={profile.telefono}
               name="telefono"
             />
             {errors.telefono && (
