@@ -1,8 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Button, Modal } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import {widthPercentageToDP as wp,heightPercentageToDP as hp,} from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 import { CommonActions } from "@react-navigation/native";
+import React, { useState } from 'react';
+import CustomModal from '../CustomModal';
 
 import BackArrow from "../../../assets/icons/goback-arrow.svg";
 import UserCircle from "../../../assets/icons/userCircle.svg";
@@ -20,6 +22,7 @@ function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, invert
   const navigation = useNavigation();
   const {logout} = useAuthActions()
 
+  const [modalVisible, setModalVisible] = useState(false);
 
   const colorGradient = transparent
     ? ["transparent", "transparent"]
@@ -88,18 +91,23 @@ function Navbar( {title, screen, back, backArrowColor = 'white',loggedIn, invert
                 width={36}
                 fill={"white"}
                 style={{marginStart: 10}}
-                onPress={async () => {
-                  try {
-                    await logout()
-                  } catch (error) {
-                    console.error(error)
-                  }
-                }}/>
+                onPress={() => setModalVisible(true)}
+                />
                 : null
               }
               
             </View>
           ) : null}
+          <CustomModal
+            icons={
+              {
+                question: true,
+              }
+            }
+            title="¿Desea cerrar la sesión?"
+            visible={modalVisible}
+            onClose={() => setModalVisible(false)}
+          />
         </View>
       </LinearGradient>
     </>
