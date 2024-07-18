@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+
 export const getEvents = (state) => state.boleteria.eventos;
 export const getFilters = (state, {slice, filter})=> state[slice].filtros[filter]
 const getEventId = (_, props) => props.eventId;
@@ -34,5 +35,15 @@ export const getTotalPrize = createSelector(
     return total.toFixed(2)
   }
 )
+
+export const getNoticias = (state) => state.noticias.noticias;
+const getNroNoticia = (_, props) => props.nroNoticia;
+
+export const getNoticiaByNro = createSelector(
+  [getNoticias, getNroNoticia],
+  (noticias, nroNoticia) => {
+    return noticias.find((noticia) => noticia.nro === nroNoticia);
+  }
+);
 
 export const getIsLogged = (state)=> state.auth.isAuthenticated
