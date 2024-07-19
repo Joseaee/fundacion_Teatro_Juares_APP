@@ -109,7 +109,7 @@ function Login({ navigation }) {
 
             <InputForm
               Icon={Password}
-              regExp={/^[0-9]{8}$/}
+              regExp={regExp.password}
               placeholder="Contraseña"
               msjError="Contraseña Invalida."
               control={control}
@@ -119,7 +119,6 @@ function Login({ navigation }) {
               onChangeFunction={() => {
                 clearErrors("session");
               }}
-              keyboardType={"number-pad"}
               maxLength={8}
             />
             {errors.password && (

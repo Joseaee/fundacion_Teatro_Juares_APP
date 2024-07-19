@@ -12,6 +12,7 @@ import CustomButton from "../../../components/customButton";
 import { useAppSelector, useAppDispatch } from '../../../hooks/store';
 import { useEncryption } from "../../../hooks/encryption";
 import { API_URL } from "../../../config/constants";
+import { regExp } from "../../../hooks/constants";
 import axios from 'axios';
 
 function MakePassword({ navigation }) {
@@ -106,9 +107,8 @@ function MakePassword({ navigation }) {
 
             <InputForm 
               Icon={Password} 
-              regExp={/^[0-9]{8}$/} 
+              regExp={regExp.password} 
               placeholder='Contraseña'   
-              keyboardType={"number-pad"}
               maxLength={8} 
               msjError='Contraseña Invalida' 
               control={control} 
@@ -130,7 +130,6 @@ function MakePassword({ navigation }) {
             control={control} 
             value=''
             required={{ value: true, message: 'La contraseña es requerida' }} 
-            keyboardType={"number-pad"}
             maxLength={8}  
             name='inputPassword2'/>
             {errors.inputPassword2 && (

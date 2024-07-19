@@ -13,7 +13,7 @@ export const regExp = {
 	nombreEvento: /^[a-zA-ZÀ-ÿ\u00f1\u00d10-9_\ \.\-¡!¿?]{3,60}$/,
 	descripcionCita: /^[a-zA-ZÀ-ÿ\u00f1\u00d10-9_\ \.\,\-¡!¿?]{30,300}$/,
 	telefono: /^04(12|24|26|14|16)[0-9]{7}$/,
-	nroTelefono: /^[0-9\-]{7}$/,
+	nroTelefono: /^[0-9\-]{11}$/,
 	director: /^[a-zA-ZÀ-ÿ\ \u00f1\u00d1]{3,35}$/,
 	agrupacion: /^[a-zA-ZÀ-ÿ\ \u00f1\u00d1]{3,35}$/,
 	descripcionEvento: /^[0-9a-zA-ZÀ-ÿ\u00f1\u00d1\.\,\!\¡¿?;\ ]{60,240}$/,

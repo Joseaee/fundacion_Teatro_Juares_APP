@@ -9,6 +9,7 @@ import { useAppSelector, useAppDispatch } from '../../../hooks/store';
 import { addCorreo } from '../../../store/user/slice';
 import { confirmEmail } from '../../../store/user/thunks';
 import { useEncryption } from "../../../hooks/encryption";
+import { regExp } from "../../../hooks/constants";
 
 import Navbar from "../../../components/navbar";
 import CustomButton from "../../../components/customButton";
@@ -90,7 +91,7 @@ function ForgetPassword({ navigation }) {
           >
             <InputForm
               Icon={Correo}
-              regExp={/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/}
+              regExp={regExp.email}
               placeholder="Correo Electrónico"
               msjError="Correo Invalido"
               control={control}

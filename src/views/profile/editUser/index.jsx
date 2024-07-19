@@ -1,10 +1,7 @@
-import { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  Image,
-  TextInput,
   Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,15 +10,16 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { useNavigation, useRoute } from "@react-navigation/native";
-
-import { useForm, Controller } from "react-hook-form";
+import { useNavigation } from "@react-navigation/native";
+import { useEncryption } from "../../../hooks/encryption";
+import { useForm } from "react-hook-form";
+import { editPerfil } from "../../../store/profile/thunks";
 import Navbar from "../../../components/navbar";
 import CustomButton from "../../../components/customButton";
+import { regExp } from "../../../hooks/constants";
 
 import User from "../../../../assets/icons/user.svg";
 import UserGroup from "../../../../assets/icons/user-group.svg";
-import Cedula from "../../../../assets/icons/cedula.svg";
 import Correo from "../../../../assets/icons/envelope.svg";
 import Telefono from "../../../../assets/icons/phone.svg";
 import Password from "../../../../assets/icons/lock.svg";
@@ -32,19 +30,18 @@ import { useAppSelector, useAppDispatch } from "../../../hooks/store";
 import {setProfile} from "../../../store/profile/slice"
 
 function EditUser() {
-  const [inputFistName, setInputFistName] = useState(false);
-  const [inputLastName, setInputLastName] = useState(false);
-  const [inputMail, setInputMail] = useState(false);
-  const [inputPhone, setInputPhone] = useState(false);
-  const [inputPassword, setInputPassword] = useState(false);
-  const [inputPassword2, setInputPassword2] = useState(false);
 
   const navigation = useNavigation();
+  const loading = useAppSelector((state)=> state.auth.loading)
   const profile = useAppSelector((state) => state.profile);
+  const { encryptData } = useEncryption();
   const dispatch = useAppDispatch();
   const {
     control,
     handleSubmit,
+    getValues,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -57,11 +54,30 @@ function EditUser() {
     },
   });
 
+  const samePassword = (value) =>{
 
-  const onSubmit = (data) => {
-    dispatch(setProfile(data))
-    navigation.navigate("DataUser");
-  
+    if (value != getValues().password) {
+
+      return 'Las contraseñas no coinciden';
+    }
+
+    return true;
+  }
+
+  const onSubmit = async (data) => {
+    data.cedula = profile.cedula;
+    const encryptedData = encryptData(JSON.stringify(data));
+
+    try {
+      let editado = await dispatch(editPerfil(encryptedData)).unwrap();
+      if(editado.status == 'success') dispatch(setProfile(data)); navigation.navigate("DataUser");
+    } catch (error) {
+
+      setError("edit", {
+        type: "manual",
+        message: error.message,
+      });
+    }
   };
 
   return (
@@ -82,76 +98,89 @@ function EditUser() {
           <View style={{ flex: 1, justifyContent: "center" }}>
             <InputForm
               Icon={User}
-              regExp={/^[a-zA-ZÀ-ÿ\u00f1\ \u00d1\ ]{3,30}$/}
+              regExp={regExp.nombreUsuario}
               placeholder="Nombre(s)"
               msjError="Nombre(s) Invalido"
               control={control}
               value= {profile.nombre}
               name="nombre"
+              required={{ value: true, message: 'El nombre es requerido' }}
             />
-            {errors.nombres && (
-              <Text style={styles.error}>Error en el Nombre(s).</Text>
+            {errors.nombre && (
+              <Text style={styles.error}>{errors.nombre.message}.</Text>
             )}
 
             <InputForm
               Icon={UserGroup}
-              regExp={/^[a-zA-ZÀ-ÿ\u00f1\ \u00d1\ ]{3,30}$/}
+              regExp={regExp.apellidoUsuario}
               placeholder="Apellido(s)"
               msjError="Apellido(s) Invalido"
               control={control}
               value={profile.apellido}
               name="apellido"
+              required={{ value: true, message: 'El apellido es requerido' }}
             />
-            {errors.apellidos && (
-              <Text style={styles.error}>Error en los Apellido(s).</Text>
+            {errors.apellido && (
+              <Text style={styles.error}>{errors.apellido.message}.</Text>
             )}
 
             <InputForm
               Icon={Correo}
-              regExp={/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/}
+              regExp={regExp.email}
               placeholder="Correo Electrónico"
               msjError="Correo Invalido"
               control={control}
               value={profile.correo}
               name="correo"
+              required={{ value: true, message: 'El correo es requerido' }}
             />
             {errors.correo && (
-              <Text style={styles.error}>Error en el Correo.</Text>
+              <Text style={styles.error}>{errors.correo.message}.</Text>
             )}
 
             <InputForm
               Icon={Telefono}
-              regExp={/^[0-9]{11}$/}
+              regExp={regExp.nroTelefono}
               placeholder="teléfono"
               msjError="Teléfono Invalido"
               control={control}
               value={profile.telefono}
+              required={{ value: false}} 
               name="telefono"
+              maxLength={11}
             />
             {errors.telefono && (
-              <Text style={styles.error}>Error en el teléfono.</Text>
+              <Text style={styles.error}>{errors.telefono.message}.</Text>
             )}
 
             <InputForm 
-                Icon={Password} regExp={/^[a-zA-Z0-9_\.\-]{8}$/} 
+                Icon={Password} regExp={regExp.password} 
                 placeholder='Contraseña' 
                 msjError='Contraseña Invalida' 
                 control={control} 
                 value='' 
-                name='inputPassword'/>
-            {errors.inputPassword && (
-                <Text style={styles.error}>Error en la contraseña.</Text>
+                maxLength={8}
+                required={{ value: true, message: 'La contraseña es requerida' }}
+                name='password'/>
+            {errors.password && (
+                <Text style={styles.error}>{errors.password.message}.</Text>
             )}
 
             <InputForm 
-                Icon={Password} regExp={/^[a-zA-Z0-9_\.\-]{8}$/} 
+                Icon={Password} regExp={regExp.password} 
                 placeholder='Repita Contraseña' 
+                validate={samePassword}
                 msjError='Contraseña Invalida' 
                 control={control} 
                 value='' 
-                name='inputPassword2'/>
-            {errors.inputPassword2 && (
-                <Text style={styles.error}>Error en la contraseña.</Text>
+                maxLength={8}
+                required={{ value: true, message: 'Repetir la contraseña es requerido' }}
+                name='passwordTwo'/>
+            {errors.passwordTwo && (
+                <Text style={styles.error}>{errors.passwordTwo.message}.</Text>
+            )}
+              {errors.edit && (
+                <Text style={styles.error}>{errors.edit.message}.</Text>
             )}
 
           </View>
@@ -159,7 +188,8 @@ function EditUser() {
             <CustomButton
               text={"Continuar"}
               screen={"DataUser"}
-              onPress={handleSubmit(onSubmit)}
+              onPress={()=>{clearErrors('edit'); handleSubmit(onSubmit)()}}
+              loading={loading}
             />
           </View>
         </View>

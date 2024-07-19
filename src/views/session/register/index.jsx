@@ -20,7 +20,6 @@ function Register({ navigation }) {
 
   const user = useAppSelector((state)=> state.user)
   const dispatch = useAppDispatch()
-  const { encryptData } = useEncryption();
 
   const {
     control,
@@ -72,6 +71,7 @@ function Register({ navigation }) {
               required={{ value: true, message: 'La cedula es requerida.' }}
               name="cedula"
               keyboardType={"number-pad"}
+              maxLength={8}
             />
             {errors.cedula && (
               <Text style={styles.error}>{errors.cedula.message}</Text>
@@ -79,7 +79,7 @@ function Register({ navigation }) {
 
             <InputForm
               Icon={User}
-              regExp={/^[a-zA-ZÀ-ÿ\u00f1\ \u00d1\ ]{3,30}$/}
+              regExp={regExp.nombreUsuario}
               placeholder="Nombre(s)"
               msjError="Nombre(s) Invalido"
               control={control}
@@ -93,7 +93,7 @@ function Register({ navigation }) {
 
             <InputForm
               Icon={UserGroup}
-              regExp={/^[a-zA-ZÀ-ÿ\u00f1\ \u00d1\ ]{3,30}$/}
+              regExp={regExp.apellidoUsuario}
               placeholder="Apellido(s)"
               msjError="Apellido(s) Invalido"
               control={control}
@@ -107,7 +107,7 @@ function Register({ navigation }) {
 
             <InputForm
               Icon={Correo}
-              regExp={/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/}
+              regExp={regExp.email}
               placeholder="Correo Electrónico"
               msjError="Correo Invalido"
               control={control}

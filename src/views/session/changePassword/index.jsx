@@ -14,6 +14,7 @@ import axios from 'axios';
 import Navbar from '../../../components/navbar';
 import Password from "../../../../assets/icons/lock.svg";
 import CustomButton from '../../../components/customButton';
+import { regExp } from '../../../hooks/constants';
 
 function ChangePassword( {navigation} ) {
 
@@ -97,9 +98,8 @@ function ChangePassword( {navigation} ) {
     
               <InputForm 
                   Icon={Password} 
-                  regExp={/^[0-9]{8}$/} 
+                  regExp={regExp.password} 
                   placeholder='Contraseña'   
-                  keyboardType={"number-pad"}
                   maxLength={8} 
                   msjError='Contraseña Invalida' 
                   control={control} 
@@ -121,7 +121,6 @@ function ChangePassword( {navigation} ) {
                   control={control} 
                   value=''
                   required={{ value: true, message: 'La contraseña es requerida' }} 
-                  keyboardType={"number-pad"}
                   maxLength={8}  
                   name='inputPassword2'/>
                   {errors.inputPassword2 && (
