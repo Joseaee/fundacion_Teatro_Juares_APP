@@ -11,7 +11,7 @@ import Search from '../../../../assets/icons/search.svg'
 import { useNavigation } from '@react-navigation/native';
 import { useBoleteriaActions } from '../../../hooks/useBoleteriaActions';
 import { getEvents, getFilters } from "../../../store/selectors";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { API_URL } from '../../../config/constants';
 
 const categorias = [
@@ -38,7 +38,7 @@ export default function Cartelera(){
     const eventos = useAppSelector((state)=> getEvents(state))
     const categoriaFiltro = useAppSelector((state)=> getFilters(state, {slice: 'boleteria', filter: 'categoria'}))
     const filtroNombreEvento = useAppSelector((state)=> state.boleteria.filtros.nombre)
-    const loading = useAppSelector((state)=> state.boleteria.loading)
+    const [loading, setLoading] = useState(true)
     const {filterCategory, filterEvent, fetchingEvents} = useBoleteriaActions()
 
     useEffect(()=> {
@@ -47,6 +47,8 @@ export default function Cartelera(){
           await fetchingEvents()
         } catch (error) {
           console.error(error)
+        }finally{
+          setLoading(false)
         }
         
       }
