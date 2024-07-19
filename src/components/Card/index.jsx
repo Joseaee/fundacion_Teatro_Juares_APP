@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-function Card({ title,  onPress = ()=>{}, reverse = false, borderRadius = 0,  children, width, height, borderColorSelected = '#fff', backgroundColor = '#fff'}) {
+function Card({ title,  onPress = ()=>{}, reverse = false, borderRadius = 0,  children, width, height, borderColorSelected = '#fff', backgroundColor = '#fff', disabled = false}) {
     const [selected, setSelected] = useState(false)
     return (
-        <TouchableOpacity style={[styles.card, (width) ? {width} : null, (height) ? {height} : null, selected ? {
+        <TouchableOpacity disabled={disabled} style={[styles.card, (width) ? {width} : null, (height) ? {height} : null, selected ? {
             borderWidth: 3,
             borderColor: borderColorSelected,
         } : null, reverse ? {flexDirection: 'column-reverse'} : null, {borderRadius}, {backgroundColor}]} onPress={()=>{

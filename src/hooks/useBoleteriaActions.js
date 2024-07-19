@@ -1,6 +1,6 @@
 import { useAppDispatch } from "./store";
-import { setFilterEvent, changeFilterCategory, removeTicket, addTicket } from "../store/boleteria/slice";
-import { fetchEvents, fetchBoletos } from "../store/boleteria/thunks";
+import { setFilterEvent, changeFilterCategory, removeTicket, addTicket, addSeat, setFactura, addFormaPago, editFormaPago, removeFormaPago, removeFactura } from "../store/boleteria/slice";
+import { fetchEvents, fetchTasaBs } from "../store/boleteria/thunks";
 
 export const useBoleteriaActions = () => {
   const dispatch = useAppDispatch();
@@ -17,18 +17,41 @@ export const useBoleteriaActions = () => {
     return await dispatch(fetchEvents()).unwrap()
   }
 
-  const fetchingTickets = async (funcion)=>{
-    return await dispatch(fetchBoletos(funcion)).unwrap()
-
-  }
-
   const newTicket = (ticket)=>{
     dispatch(addTicket(ticket))
   } 
 
-  const deleteTicket = ()=>{
+  const deleteTicket = (ticket)=>{
     dispatch(removeTicket(ticket))
   }
 
-  return {filterCategory, filterEvent, fetchingEvents, fetchingTickets, newTicket, deleteTicket}
+  const setSeats = ({lote, asientos})=>{
+    dispatch(addSeat({lote, asientos}))
+  }
+
+  const newFactura = (factura)=>{
+    dispatch(setFactura(factura))
+  }
+
+  const getTasaBs = async ()=>{
+    return await dispatch(fetchTasaBs()).unwrap()
+  }
+
+  const newFormaPago = ({id, data})=>{
+    dispatch(addFormaPago({id, data}))
+  }
+
+  const changeFormaPago = ({id, index, data})=>{
+    dispatch(editFormaPago({id, index, data}))
+  }
+
+  const deleteFormaPago = ({id, index})=>{
+    dispatch(removeFormaPago({id, index}))
+  }
+
+  const deleteFactura = (index)=>{
+    dispatch(removeFactura(index))
+  }
+
+  return {filterCategory, filterEvent, fetchingEvents, newTicket, deleteTicket, setSeats, getTasaBs, newFactura, newFormaPago, changeFormaPago, deleteFormaPago, deleteFactura}
 };

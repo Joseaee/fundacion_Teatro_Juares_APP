@@ -28,7 +28,8 @@ export default function DetallesEvento(){
             categoria: evento.categoria,
             fecha,
             horaInicio,
-            horaFinal
+            horaFinal,
+            tipoVenta: evento.tipoVenta
         })} >
         <Text>{horaInicio} - {horaFinal}</Text>
     </CalendarItem>

@@ -2,15 +2,16 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native'
 import Sofa from '../../../assets/icons/sofa.svg'
 import { useState } from 'react'
 
-function Asientos({children, selectedColor = '#222', }){
-    const [isSelected, setIsSelected] = useState(false)
+function Asientos({children, color = 'gray', onPress = ()=>{}, disabled = false, selected = false}){
+    const [isSelected, setIsSelected] = useState(selected)
     return (
-        <TouchableOpacity style={styles.contenedor} onPress={()=>{
+        <TouchableOpacity disabled={disabled} style={styles.contenedor} onPress={()=>{
             setIsSelected(
                 !isSelected
             )
+            onPress()
         }}>
-            <Sofa width={20} height={20} fill={(isSelected) ? selectedColor: '#E31734'} />
+            <Sofa width={20} height={20} fill={(isSelected) ? '#222': color} />
             <Text style={{color: '#222'}}>{children}</Text>
         </TouchableOpacity>
     )

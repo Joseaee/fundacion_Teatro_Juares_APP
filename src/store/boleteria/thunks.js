@@ -24,24 +24,24 @@ export const fetchEvents = createAsyncThunk(
     }
 )
 
-export const fetchBoletos = createAsyncThunk(
-  'boleteria/fetchBoletos',
-  async (idFuncion) => {
+export const fetchTasaBs = createAsyncThunk(
+  'boleteria/fetchTasaBs',
+  async ()=>{
     const {getItem} = useStorage()
-    const token = await getItem('userToken')
-    const response = await axios({
-        method: 'GET',
-        url: API_URL,
-        responseType: 'json',
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        params: {
-          url: 'app',
-          type: 'boletos',
-          funcion: idFuncion
-        }
-      })
-    return response.data.data
-}
+        const token = await getItem('userToken')
+        const response = await axios({
+            method: 'GET',
+            url: API_URL,
+            responseType: 'json',
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            params: {
+              url: 'app',
+              type: 'pagos',
+              get: 'tasaBs'
+            }
+          })
+      return response.data.data.tasaBs
+  }
 )
