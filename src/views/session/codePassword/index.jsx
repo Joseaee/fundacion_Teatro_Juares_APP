@@ -111,6 +111,7 @@ function CodePassword({ navigation }) {
               value=""
               name="code"
               required={{ value: true, message: 'EL codigo es requerido' }}
+              maxLength={5}
             />
             {errors.code && (
               <Text style={styles.error}>{errors.code.message}.</Text>
