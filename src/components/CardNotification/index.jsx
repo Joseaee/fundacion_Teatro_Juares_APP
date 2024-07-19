@@ -11,23 +11,25 @@ export default function CardNotification({
   subtitle,
   Icon,
   onPress = () => {},
+  onCheckPress = () => {},
   iconBackground,
   disabled = false,
   loading = false,
-  notSelected = false
+  checkButton = true,
+  colorSelected = "#48C9B0",
+  selected = false
 }) {
-  const [selected, setSelected] = useState(false);
   const backgroundColor = iconBackground ? iconBackground : "#E31734";
   return (
     <TouchableOpacity
-      style={[styles.carta, selected ? styles.selected : null]}
+      style={[styles.carta, selected ? {
+        borderColor: colorSelected,
+        borderWidth: 3,
+      } : null]}
       disabled={disabled}
-      onPress={() => {
-        if(!notSelected){
-            setSelected(!selected);
-        }
-        onPress();
-      }}
+      onPress={
+        onPress
+      }
     >
       <View
         style={{
@@ -54,10 +56,10 @@ export default function CardNotification({
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity style={{marginStart: 8}}>
+          <TouchableOpacity onPress={onCheckPress} style={{marginStart: 8}}>
             {loading ?
             <ActivityIndicator size="large" color="#E31734" /> 
-            : <Check fill="#0EA014" width={22} height={22} />}
+            : checkButton ? <Check fill="#0EA014" width={22} height={22} /> : null}
           </TouchableOpacity>
         </View>
       </View>
@@ -75,10 +77,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 6,
     overflow: "hidden",
-  },
-  selected: {
-    borderColor: "#48C9B0",
-    borderWidth: 3,
   },
   boxMessage: {
     width: 50,

@@ -36,7 +36,7 @@ export default function Notification() {
   const { getItem } = useStorage();
   const { getTimestamp } = useFormatDate();
   const event = useAppSelector((state) => getEventRecent(state));
-  console.log(event);
+  
   useEffect(() => {
     const fetchNotification = async () => {
       const token = await getItem("userToken");
@@ -54,7 +54,9 @@ export default function Notification() {
             type: "notificaciones",
           },
         });
-        setNotificaciones(response.data.data);
+        const {data} = response.data
+        const newNotis = data.filter(item=> item.modulo != 1)
+        setNotificaciones(newNotis);
       } catch (error) {
         console.error(error);
       } finally {
@@ -65,22 +67,31 @@ export default function Notification() {
     fetchNotification();
   }, []);
 
-  const handlePress = async ()=>{
+  const handlePress = async (idNotificacion)=>{
     const token = await getItem("userToken");
     try {
       const response = await axios({
-        method: "GET",
+        method: "POST",
         url: API_URL,
         responseType: "json",
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
         params: {
           url: "app",
           type: "notificaciones",
         },
+        data: {
+          idNotificacion
+        }
       });
-      setNotificaciones(response.data.data);
+      
+      if(response.data.status === 'success'){
+        const newNotis = notificaciones.filter(i=> i.idNotificacion != idNotificacion)
+        setNotificaciones(newNotis)
+      }
+      
     } catch (error) {
       console.error(error);
     }
@@ -88,7 +99,6 @@ export default function Notification() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Navbar back={true} title={"Notificaciones"} loggedIn={true} />
-
       {loading ? (
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -98,46 +108,65 @@ export default function Notification() {
       ) : (
         <ScrollView style={{ flex: 1 }}>
           <View>
-            <StyleText
+            {
+              (notificaciones.length === 0)
+              ? <StyleText
+              tag="Por Leer"
+              size={"medium"}
+              style={{ marginVertical: 20, justifyContent: "center" }}
+            >
+              No Posee Notificaciones
+              </StyleText>
+              : <>
+                  <StyleText
               tag="Notificaciones"
               size={"big"}
               style={{ marginVertical: 14, justifyContent: "center" }}
             >
               Nuevas
             </StyleText>
-            {notificaciones.map((item) => {
-              const disabled = item.referencia ? false : true;
-              return (
-                <CardNotification
-                  key={item.idNotificacion}
-                  disabled={disabled}
-                  style={styles.carta}
-                  Icon={icons[item.modulo]}
-                  subtitle={getTimestamp(item.fecha)}
-                  onPress={() => {
-                    navigation.navigate("Home");
-                  }}
-                >
-                  <Text>{item.transaccion}</Text>
-                </CardNotification>
-              );
-            })}
             {
-              <CardNotification
-                key={event.nroEvento}
-                style={styles.carta}
-                Icon={Film}
-                subtitle={event.nombre}
-                notSelected={true}
-                onPress={() => {
-                  navigation.navigate("EventDetails", {
-                    id: event.nroEvento,
-                  });
-                }}
-              >
-                <Text>Proximo Evento Reciente</Text>
-              </CardNotification>
+              notificaciones.map((item) => {
+                return (
+                  <CardNotification
+                    key={item.idNotificacion}
+                    disabled={true}
+                    style={styles.carta}
+                    Icon={icons[item.modulo]}
+                    subtitle={getTimestamp(item.fecha)}
+                    onPress={() => {
+                      navigation.navigate("Home");
+                    }}
+                    onCheckPress={()=>{
+                      handlePress(item.idNotificacion)
+                    }}
+                  >
+                    <Text>{item.transaccion}</Text>
+                  </CardNotification>
+                );
+              }) 
             }
+             {
+              (event) 
+              ? <CardNotification
+              key={event.nroEvento}
+              style={styles.carta}
+              Icon={Film}
+              subtitle={event.nombre}
+              onPress={() => {
+                navigation.navigate("EventDetails", {
+                  id: event.nroEvento,
+                });
+              }}
+            >
+              <Text>Proximo Evento Reciente</Text>
+            </CardNotification>
+              : null
+            }
+                </>
+            }
+
+           
           </View>
         </ScrollView>
       )}
