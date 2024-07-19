@@ -1,19 +1,14 @@
-import { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TextInput,
-  Platform,
-} from "react-native";
+import { View, Text, StyleSheet, Image, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import {  widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { useForm } from "react-hook-form";
+import { useEncryption } from "../../../hooks/encryption";
+import { useAuthActions } from "../../../hooks/useAuthActions";
+import { useAppSelector, useAppDispatch } from "../../../hooks/store";
+import { setLoading } from "../../../store/auth/slice";
+import axios from "axios";
+import { API_URL } from "../../../config/constants";
 
 import Navbar from "../../../components/navbar";
 import CustomButton from "../../../components/customButton";
@@ -22,11 +17,16 @@ import Correo from "../../../../assets/icons/envelope.svg";
 import InputForm from "../../../components/inputForm";
 
 function CodePassword({ navigation }) {
-  const [inputId, setInputId] = useState(false);
+
+  
+  const loading = useAppSelector((state)=> state.auth.loading)
+  const dispatch = useAppDispatch()
+  const { encryptData } = useEncryption();
 
   const {
     control,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -34,8 +34,37 @@ function CodePassword({ navigation }) {
     },
   });
 
-  const onSubmit = () => {
-    navigation.navigate("ChangePassword");
+  const onSubmit = (data) => {
+
+    const encryptedData = encryptData(JSON.stringify(data));
+    dispatch(setLoading(true))
+
+    axios({
+      method: 'POST',
+      url: API_URL,
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      params: {
+        url: 'app',
+        type: 'forgetPassword'
+      },
+      data: {
+        codeRecover: encryptedData
+      }
+    }).then(function (response) {
+
+        navigation.navigate("ChangePassword");
+    }).catch(function (error) {
+
+      setError('code', {
+        type: 'manual',
+        message: error.response.data.message})
+
+    }).finally (function () {
+      dispatch(setLoading(false))
+    });
   };
 
   return (
@@ -46,6 +75,7 @@ function CodePassword({ navigation }) {
         backArrowColor="#E31734"
         loggedIn={false}
         transparent={true}
+        screen={'ForgetPassword'}
       />
       <KeyboardAwareScrollView
         style={{ flex: 1 }}
@@ -74,15 +104,17 @@ function CodePassword({ navigation }) {
           >
             <InputForm
               Icon={Correo}
-              regExp={/^[0-9]{7,9}$/}
+              regExp={/^[0-9]{5}$/}
               placeholder="Código enviado a su correo"
               msjError="Código Invalido"
               control={control}
               value=""
               name="code"
+              required={{ value: true, message: 'EL codigo es requerido' }}
+              maxLength={5}
             />
             {errors.code && (
-              <Text style={styles.error}>Error en el código ingresado.</Text>
+              <Text style={styles.error}>{errors.code.message}.</Text>
             )}
           </View>
 
@@ -91,6 +123,7 @@ function CodePassword({ navigation }) {
               text={"Continuar"}
               screen={"ChangePassword"}
               onPress={handleSubmit(onSubmit)}
+              loading={loading}
             />
           </View>
         </View>

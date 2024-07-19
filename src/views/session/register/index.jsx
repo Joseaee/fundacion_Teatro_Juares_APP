@@ -1,8 +1,12 @@
-import { View, Text, StyleSheet, Image, TextInput, Platform, TouchableOpacity, } from "react-native";
+import { View, Text, StyleSheet, Image, Platform, TouchableOpacity, } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { widthPercentageToDP as wp,heightPercentageToDP as hp, } from "react-native-responsive-screen";
-import { useForm, Controller } from "react-hook-form";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-native-responsive-screen";
+import { useForm } from "react-hook-form";
+import { useAppSelector, useAppDispatch } from '../../../hooks/store';
+import { addUser } from '../../../store/user/slice';
+import { regExp } from "../../../hooks/constants";
+
 import Navbar from "../../../components/navbar";
 import CustomButton from "../../../components/customButton";
 import InputForm from "../../../components/inputForm";
@@ -13,20 +17,26 @@ import Cedula from "../../../../assets/icons/cedula.svg";
 import Correo from "../../../../assets/icons/envelope.svg";
 
 function Register({ navigation }) {
+
+  const user = useAppSelector((state)=> state.user)
+  const dispatch = useAppDispatch()
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      cedula: "",
-      nombres: "",
-      apellidos: "",
-      correo: "",
+      cedula: user.cedula,
+      nombres: user.nombres,
+      apellidos: user.apellidos,
+      correo: user.correo,
     },
   });
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
+
+    dispatch(addUser(data));
     navigation.navigate("MakePassword");
   };
 
@@ -53,54 +63,61 @@ function Register({ navigation }) {
           >
             <InputForm
               Icon={Cedula}
-              regExp={/^[0-9]{7,8}$/}
+              regExp={regExp.cedula}
               placeholder="Cedula"
               msjError="Cédula Invalida"
               control={control}
-              value=""
+              value={user.cedula}
+              required={{ value: true, message: 'La cedula es requerida.' }}
               name="cedula"
+              keyboardType={"number-pad"}
+              maxLength={8}
             />
             {errors.cedula && (
-              <Text style={styles.error}>Error en la Cedula.</Text>
+              <Text style={styles.error}>{errors.cedula.message}</Text>
             )}
 
             <InputForm
               Icon={User}
-              regExp={/^[a-zA-ZÀ-ÿ\u00f1\ \u00d1\ ]{3,30}$/}
+              regExp={regExp.nombreUsuario}
               placeholder="Nombre(s)"
               msjError="Nombre(s) Invalido"
               control={control}
-              value=""
+              value={user.nombres}
+              required={{ value: true, message: 'El nombre es requerido.' }}
               name="nombres"
             />
             {errors.nombres && (
-              <Text style={styles.error}>Error en el Nombre(s).</Text>
+              <Text style={styles.error}>{errors.nombres.message}</Text>
             )}
 
             <InputForm
               Icon={UserGroup}
-              regExp={/^[a-zA-ZÀ-ÿ\u00f1\ \u00d1\ ]{3,30}$/}
+              regExp={regExp.apellidoUsuario}
               placeholder="Apellido(s)"
               msjError="Apellido(s) Invalido"
               control={control}
-              value=""
+              value={user.apellidos}
+              required={{ value: true, message: 'El apellido es requerido.' }}
               name="apellidos"
             />
             {errors.apellidos && (
-              <Text style={styles.error}>Error en los Apellido(s).</Text>
+              <Text style={styles.error}>{errors.apellidos.message}</Text>
             )}
 
             <InputForm
               Icon={Correo}
-              regExp={/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/}
+              regExp={regExp.email}
               placeholder="Correo Electrónico"
               msjError="Correo Invalido"
               control={control}
               value=""
+              required={{ value: true, message: 'El correo es requerido.' }}
               name="correo"
+              keyboardType={"email-address"}
             />
             {errors.correo && (
-              <Text style={styles.error}>Error en el Correo.</Text>
+              <Text style={styles.error}>{errors.correo.message}</Text>
             )}
           </View>
           <View style={{ marginTop: hp("1%") }}>

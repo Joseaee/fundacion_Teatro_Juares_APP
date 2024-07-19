@@ -13,8 +13,11 @@ export default function InputForm({
   placeholder,
   keyboardType,
   name,
+  validate,
   control,
-  onChangeFunction
+  onChangeFunction,
+  maxLength,
+  required
 }) {
 
   
@@ -33,11 +36,12 @@ export default function InputForm({
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: required ? required : true,
           pattern: {
-            value: regExp,
+            value: regExp? regExp : '',
             message: msjError,
           },
+          validate: validate ? validate : ''
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
@@ -51,9 +55,11 @@ export default function InputForm({
               onBlur;
               setSelected(false);
             }}
-            onChangeText={onChange}
+            onChangeText={(e) => {onChange(e.replace(/\s+/g, ' ').trim())}}
             onChange = {onChangeFunction}
             value={value}
+            maxLength={maxLength ?? maxLength} 
+            keyboardType= {keyboardType}
           />
         )}
         name={name}
