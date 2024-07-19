@@ -1,4 +1,4 @@
-import { compose, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setUserAuthenticated, setLoading} from './slice.js';
 import axios from 'axios';
@@ -38,7 +38,7 @@ export const loginUser = createAsyncThunk(
       
       return token;
     } catch (error) {
-      console.log(error.data)
+
       return thunkAPI.rejectWithValue(error.response.data);
     } finally {
       thunkAPI.dispatch(setLoading(false))
