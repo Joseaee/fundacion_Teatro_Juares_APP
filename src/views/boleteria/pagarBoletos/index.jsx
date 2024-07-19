@@ -8,6 +8,7 @@ import CustomButton from '../../../components/customButton'
 import InputForm from "../../../components/inputForm";
 import { useForm } from "react-hook-form";
 import { Picker } from '@react-native-picker/picker';
+import ModalCuentas from '../../../components/ModalCuentas';
 
 import Billete from "../../../../assets/icons/money.svg";
 import Ref from "../../../../assets/icons/ref.svg";
@@ -17,6 +18,8 @@ import ButtonTab from '../../../components/ButtonTab';
 export default function PagarBoletos(){
 
     const [selectedValue, setSelectedValue] = useState('java');
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const {
         control,
@@ -42,7 +45,11 @@ export default function PagarBoletos(){
             <View style={{flex: 1}}>
                 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 18 }}>
-                    <CustomButton text='Ver Cuentas' width={220} height={40} />
+                    <CustomButton text='Ver Cuentas' width={220} height={40} onPress={() => setModalVisible(true)} />
+                    <ModalCuentas
+                        visible={modalVisible}
+                        onClose={() => setModalVisible(false)}
+                    />
                 </View>
 
                 <View style={styles.contenedor}>
