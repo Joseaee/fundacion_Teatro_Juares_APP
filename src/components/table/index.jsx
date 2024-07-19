@@ -2,14 +2,14 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, Linking} from 'react-n
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 
 
-function Table ({ datos, title, existData}) {
+function Table ({ datos, title}) {
 
     const vacio = {
 
         Compra: 'No hay Compras Realizadas'
     }
 
-    const result = (existData) ? datos : vacio;
+    const result = (datos) ? datos : vacio;
 
     return (
         <View style={ styles.cardInfo }>

@@ -6,7 +6,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-nati
 import { useFocusEffect } from '@react-navigation/native';
 
 import CustomButton from '../../../components/customButton';
-import CheckIcon from '../../../../assets/icons/check.svg';
+import CheckIcon from '../../../../assets/icons/circle-check.svg';
 
 function SuccessSession( {route} ) {
 
