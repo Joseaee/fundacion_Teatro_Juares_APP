@@ -5,16 +5,17 @@ import Banner from '../../../components/Banner';
 import BottomNavbar from '../../../components/bottomNavbar';
 import StyleText from "../../../components/StyleText";
 import { useRoute, useNavigation } from "@react-navigation/native";
+import { API_URL } from '../../../config/constants';
 
 export default function Noticias(){
     const route = useRoute();
     const navigation = useNavigation();
 
-    const {id, title, text, images, banner} = route.params
+    const {nroNoticia, titulo, imagen, descripcion, fecha, autor} = route.params
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <Banner image={banner} 
+            <Banner image={{uri: `${API_URL}${imagen}`}} 
                 darkOverlay={true} 
                 goBack={true}>
             </Banner>
@@ -24,29 +25,13 @@ export default function Noticias(){
                     <StyleText tag='Noticia' size={'big'} style={{marginVertical: 14, justifyContent: 'center'}}>Detalles de la</StyleText>
 
                     <View style={styles.parrafo}>
-                        <View style={styles.redBlock}></View><Text style={styles.text}>Título: {title}</Text>
+                        <View style={styles.redBlock}></View><Text style={styles.text}>Título: {titulo}</Text>
                     </View>
 
                     <Text style={styles.parrafo}>
-                        {text}
+                        {descripcion}
                     </Text>
                     
-                    <View style={styles.parrafo}>
-                        <View style={styles.redBlock}></View><Text style={styles.text}>Imagenes de la noticia</Text>
-                    </View>
-
-                    <View style={{flexDirection: 'row', gap: 5, flexWrap: 'wrap', marginHorizontal: 14, marginBottom: 20, justifyContent: 'center'}}>
-                        {images.map((img, index) => {
-                            return (
-                            <View key={index} style={styles.noticia}>
-                            <ImageBackground reziseMode='cover' source={img} style={styles.img}>
-                                <View style={styles.darkOverlay}/>
-                            </ImageBackground>
-                        </View>
-                            )
-                        })}
-                    </View>
-
                 </View>
 
             </ScrollView>
