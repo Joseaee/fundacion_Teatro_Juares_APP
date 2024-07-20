@@ -1,5 +1,6 @@
 import { useAppDispatch } from "./store";
 import { setFilterNoticia} from "../store/noticias/slice";
+import { fetchNoticias } from "../store/noticias/thunks";
 
 export const useNoticiasActions = () => {
     const dispatch = useAppDispatch();
@@ -8,5 +9,9 @@ export const useNoticiasActions = () => {
         dispatch(setFilterNoticia(name));
     };
 
-    return { filterNoticia }
+    const consultarNoticias = async ()=>{
+        return await dispatch(fetchNoticias()).unwrap()
+    }
+
+    return { filterNoticia, consultarNoticias }
 };
