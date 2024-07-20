@@ -68,7 +68,7 @@ function MakePassword({ navigation }) {
       }
     }).then(function (response) {
       dispatch(resetState());
-      navigation.navigate("SuccessSession", {
+      navigation.navigate("Success", {
         title: "Registrarse",
         message: "¡Registro de usuario exitoso!",
       });

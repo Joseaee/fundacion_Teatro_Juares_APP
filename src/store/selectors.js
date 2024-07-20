@@ -108,10 +108,10 @@ export const getFaltantePagar = createSelector(
   [getFacturas, facturaIndex],
   (facturas, index)=>{
     const factura = facturas[index]
-    const totalPagar = (factura.tasaBs) ? factura.tasaBs * parseFloat(factura.montoTotal) : 0
+    const totalPagar = (factura?.tasaBs) ? factura.tasaBs * parseFloat(factura.montoTotal) : 0
     
     let pagado = 0
-    factura.formasPago.map(i=>{
+    factura?.formasPago.map(i=>{
       const monto = (i.montoBs) ? i.montoBs : 0
       pagado += parseFloat(monto)
     })

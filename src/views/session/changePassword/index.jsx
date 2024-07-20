@@ -62,7 +62,7 @@ function ChangePassword( {navigation} ) {
       }).then(function (response) {
 
           dispatch(resetState());
-          navigation.navigate('SuccessSession', {title: 'Recuperar Contraseña', message: '¡Cambio de contraseña exitoso!'});
+          navigation.navigate('Success', {title: 'Recuperar Contraseña', message: '¡Cambio de contraseña exitoso!'});
       }).catch(function (error) {
 
           setError('register', {

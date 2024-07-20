@@ -5,8 +5,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 import { useFocusEffect } from '@react-navigation/native';
 
-import CustomButton from '../../../components/customButton';
-import CheckIcon from '../../../../assets/icons/circle-check.svg';
+import CustomButton from '../../components/customButton';
+import CheckIcon from '../../../assets/icons/circle-check.svg';
 
 function Success ( {route} ) {
 
@@ -43,7 +43,7 @@ function Success ( {route} ) {
             >
               <Image
                 style={styles.image}
-                source={require("../../../../assets/logoo.png")}
+                source={require("../../../assets/logoo.png")}
               />
               <CheckIcon height={hp("10%")} width={wp("12%")} marginTop={10} fill="#2B9F3B"/>
               <Text style={styles.title}>{receiveParams.message}</Text>
@@ -78,4 +78,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SuccessSession;
+export default Success;

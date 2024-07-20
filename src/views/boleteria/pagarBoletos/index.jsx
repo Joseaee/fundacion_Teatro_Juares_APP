@@ -42,7 +42,8 @@ export default function PagarBoletos(){
     const {encryptData} = useEncryption()
 
     const [modalVisible, setModalVisible] = useState(false);
-
+    const totalPagar = (tasaBs) ? tasaBs * parseFloat(factura.montoTotal) : 0
+    
     const {
         control,
         handleSubmit,
@@ -175,7 +176,10 @@ export default function PagarBoletos(){
                         onClose={() => setModalVisible(false)}
                     />
                 </View>
-
+                <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', gap: 2, marginVertical: 12 }}>
+                    <StyleText tag={`${totalPagar.toFixed(2)} Bs`} size='small' tagColor={'#2FB31A'}>Monto a Pagar</StyleText>
+                    <StyleText tag={`${faltantePagar.toFixed(2)} Bs`} size='small' tagColor={(faltantePagar === 0) ?'#2FB31A' : "#E31734" }>Faltante por Pagar</StyleText>
+                </View>
                 <View style={styles.contenedor}>
                 <ButtonTab onPress={()=>{
                         setMetodoPago(1)
@@ -208,12 +212,12 @@ export default function PagarBoletos(){
                 <View style={styles.inputs}>
                     <StyleText tag='Pago' size={'medium'} style={{ marginBottom: 14, marginTop: 6, justifyContent: 'center' }}>Datos del</StyleText>
 
-                    <InputForm Icon={Billete} regExp={/^\d{0,6}(\.\d{1})?\d{0,2}$/} placeholder='Monto' msjError='Monto Invalido' control={control} value='' name='monto' onChangeFunction ={() => { clearErrors('session'); }}/>
+                    <InputForm Icon={Billete} regExp={/^\d{0,6}(\.\d{1})?\d{0,2}$/} placeholder='Monto' msjError='Monto Invalido' required={{ value: true, message: 'El monto es requerido' }} control={control} value='' name='monto' onChangeFunction ={() => { clearErrors('session'); }}/>
                     {errors.monto && (
                     <Text style={styles.error}>{errors.monto.message}.</Text>
                     )}
 
-                    <InputForm Icon={Ref} regExp={/^[0-9]{4,12}$/} placeholder='Referencia' msjError='Referencia Invalida' control={control} value='' name='referencia' onChangeFunction ={() => { clearErrors('session'); }}/>
+                    <InputForm Icon={Ref} regExp={/^[0-9]{4,12}$/} placeholder='Referencia' msjError='Referencia Invalida' required={{ value: true, message: 'La referencia es requerida' }} control={control} value='' name='referencia' onChangeFunction ={() => { clearErrors('session'); }}/>
                     {errors.referencia && (
                     <Text style={styles.error}>{errors.referencia.message}.</Text>
                     )}
@@ -222,7 +226,7 @@ export default function PagarBoletos(){
                     )}
 
                 </View>
-
+                
                 <View style={{ marginHorizontal: 30, marginBottom: 40}}>
                     <CustomButton loading={loading} text='Agregar' onPress={handleSubmit(onSubmit)}></CustomButton>
                 </View>

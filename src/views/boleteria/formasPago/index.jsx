@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomNavbar from '../../../components/bottomNavbar'
 import Navbar from '../../../components/navbar'
@@ -33,11 +33,11 @@ export default function FormasPago() {
     const indexFactura = useAppSelector(state=> findIndexFactura(state, {idFuncion}))
     const boletos = useAppSelector(state=> getTicketsFunction(state, {idFuncion}))
     const faltantePagar = useAppSelector(state=> getFaltantePagar(state, {indexFactura}))
-    
 
-    const totalPagar = (factura.tasaBs) ? factura.tasaBs * parseFloat(factura.montoTotal) : 0
+    const totalPagar = (factura?.tasaBs) ? factura.tasaBs * parseFloat(factura.montoTotal) : 0
 
     useEffect(()=>{
+
         if(factura.tasaBs){
             setLoading(false)
             return
@@ -85,18 +85,22 @@ export default function FormasPago() {
                     lotes
                 }
               })
-              console.log(response)
+              console.log(response.data)
               const {status, message} = response.data
 
               if(status === 'error'){
                 console.error(message)
               }
 
-              navigation.navigate('Home')
-              deleteFactura(indexFactura)
+            deleteFactura(indexFactura)
 
+            navigation.navigate("Success", {
+                title: "Boletos comprados",
+                message: "¡Boletos comprados exitosamente!",
+                screen: 'Home',
+            })  
         } catch (error) {
-            console.error(error)
+            console.error(error.response)
         }finally{
             setLoadingButton(false)
         }
@@ -111,8 +115,8 @@ export default function FormasPago() {
             <View style={{ flex: 1 }}>
                 <StyleText tag='Pago' size='big' style={{ justifyContent: 'center', marginVertical: 14 }}>Formas de</StyleText>
                 <View style={{ margin: 8, padding: 6 }}>
-                    <Text style={styles.event}>{factura.evento}</Text>
-                    <Text>Función: {factura.funcion}</Text>
+                    <Text style={styles.event}>{factura?.evento}</Text>
+                    <Text>Función: {factura?.funcion}</Text>
                     <Text>Cantidad de Boletos: {boletos.length}</Text>
                 </View>
                 {   (faltantePagar === 0)
@@ -127,9 +131,9 @@ export default function FormasPago() {
                     </View>
                 }
                 
-                <View>
+                <ScrollView style={{ flex: 1}}>
                     {
-                        factura.formasPago.map((item, index)=>{
+                        factura?.formasPago.map((item, index)=>{
                             const metodoPago = (item.metodoPago == 1) ? 'Transferencia' : 'Pago Móvil'
                             return (
                                 <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#FBFBFB', padding: 10, marginHorizontal: 12, marginVertical: 6, borderRadius: 10 }}>
@@ -161,13 +165,13 @@ export default function FormasPago() {
                         })
                     }
                     
-                </View>
+                </ScrollView>
                 {
                     loading 
-                    ? <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    ? <View style={{flex: 0.2, justifyContent: 'center', alignItems: 'center'}}>
                     <ActivityIndicator size="large" color="#E31734" />
                   </View>
-                    : <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', gap: 2, marginBottom: 12 }}>
+                    : <View style={{ flex: 0.15, justifyContent: 'flex-end', alignItems: 'center', gap: 2, marginBottom: 12 }}>
                         <StyleText tag={`${totalPagar.toFixed(2)} Bs`} size='small' tagColor={'#2FB31A'}>Monto a Pagar</StyleText>
                         <StyleText tag={`${faltantePagar.toFixed(2)} Bs`} size='small' tagColor={(faltantePagar === 0) ?'#2FB31A' : "#E31734" }>Faltante por Pagar</StyleText>
                     </View>
