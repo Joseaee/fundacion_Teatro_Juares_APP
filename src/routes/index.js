@@ -49,10 +49,10 @@ function Routes() {
       try {
         const token = await getItem("userToken");
         const expToken = await getItem("expToken");
-        console.log('expiracion: '+expToken)
-        console.log('Token: '+token);
-
         const TiempoActual = Math.floor(Date.now() / 1000); 
+        console.log('expiracion: '+expToken)
+        console.log('Tiempo Actual: '+TiempoActual)
+        console.log('Token: '+token);
 
         if (token && expToken > TiempoActual) {
           authenticated(true);

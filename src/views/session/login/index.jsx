@@ -104,7 +104,7 @@ function Login({ navigation }) {
               }}
             />
             {errors.usuario && (
-              <Text style={styles.error}>{errors.usuario.message}</Text>
+              <Text style={styles.error}>{errors.usuario.message}.</Text>
             )}
 
             <InputForm
@@ -122,10 +122,10 @@ function Login({ navigation }) {
               maxLength={8}
             />
             {errors.password && (
-              <Text style={styles.error}>{errors.password.message}</Text>
+              <Text style={styles.error}>{errors.password.message}.</Text>
             )}
             {errors.session && (
-              <Text style={styles.error}>{errors.session.message}</Text>
+              <Text style={styles.error}>{errors.session.message}.</Text>
             )}
           </View>
 
