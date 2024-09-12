@@ -37,7 +37,7 @@ function ModalCuentas ( { title, visible, onClose } ){
                     showsPagination={true}
                     >
                     {datosPago.map((dp, id) => (
-                        <View style={styles.infoContent}>
+                        <View key={dp.id} style={styles.infoContent}>
                             <View style={styles.info}>
                                 <Banco style={styles.icon} />
                                 <Text style={styles.texto}>{dp.banco}</Text>

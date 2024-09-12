@@ -24,8 +24,9 @@ export const noticiaSlice = createSlice({
     extraReducers: (builder)=>{
         builder
       .addCase(fetchNoticias.fulfilled, (state, action) => {
+        console.log(action.payload)
         const {relevantes, otras} = action.payload
-        state.noticias.relevantes = relevantes;
+        state.noticias.relevantes = relevantes
         state.noticias.otras = otras
       })
       ;

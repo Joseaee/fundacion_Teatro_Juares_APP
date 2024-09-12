@@ -34,7 +34,7 @@ export default function Noticias(){
 
         loadNoticias()
     }, [])
-
+console.log(noticias.relevantes)
     return (
         <SafeAreaView style={{flex: 1}}>
             <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={true}>
@@ -47,7 +47,7 @@ export default function Noticias(){
                       ? <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                           <ActivityIndicator size="large" color="#E31734" />
                         </View>
-                     : (noticias.relevantes.length === 0)
+                     : (noticias.relevantes.length == 0)
                      ? <View style={{flex:1, justifyContent:'center', alignItems: 'center'}}><StyleText tag="noticias" >No se encontraron</StyleText></View> 
                      : <>
                          <View style={styles.parrafo}>
@@ -55,7 +55,7 @@ export default function Noticias(){
                  </View>
 
                  <View style={{marginHorizontal: 14}}>
-                     <Carousel data={noticias.relevantes} loop={true} renderItem={(item)=> {
+                     <Carousel data={noticias?.relevantes} loop={true} renderItem={(item)=> {
                          return (
                              <CardButton key={item.nroNoticia} title={item.titulo} source={{uri: `${API_URL}${item.imagen}`}} alignContent='bottom' onPress={()=> navigation.navigate('DetalleNoticia', {
                                  ...item
