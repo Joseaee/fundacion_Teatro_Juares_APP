@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View, Text, StyleSheet, Image, Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -6,6 +5,11 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { widthPercentageToDP as wp, heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useForm } from "react-hook-form";
+import { useAppSelector, useAppDispatch } from '../../../hooks/store';
+import { addCorreo } from '../../../store/user/slice';
+import { confirmEmail } from '../../../store/user/thunks';
+import { useEncryption } from "../../../hooks/encryption";
+import { regExp } from "../../../hooks/constants";
 
 import Navbar from "../../../components/navbar";
 import CustomButton from "../../../components/customButton";
@@ -13,11 +17,17 @@ import InputForm from "../../../components/inputForm";
 import Correo from "../../../../assets/icons/envelope.svg";
 
 function ForgetPassword({ navigation }) {
-  const [inputMail, setInputMail] = useState(false);
+
+  const user = useAppSelector((state)=> state.user.correo)
+  const loading = useAppSelector((state)=> state.auth.loading)
+  const dispatch = useAppDispatch()
+  const { encryptData } = useEncryption();
 
   const {
     control,
     handleSubmit,
+    clearErrors,
+    setError,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -25,9 +35,26 @@ function ForgetPassword({ navigation }) {
     },
   });
 
-  const onSubmit = () => {
-    navigation.navigate("CodePassword");
+  const onSubmit = async (data) => {
+
+    try {
+
+      const encryptedData = encryptData(JSON.stringify(data));
+
+      if(await dispatch(confirmEmail(encryptedData)).unwrap()){
+
+        dispatch(addCorreo(data));
+        navigation.navigate("CodePassword");
+      }
+    } catch (error) {
+
+      setError("correo", {
+        type: "manual",
+        message: error.message,
+      });
+    }
   };
+  
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fafafa" }}>
@@ -37,6 +64,7 @@ function ForgetPassword({ navigation }) {
         backArrowColor="#E31734"
         loggedIn={false}
         transparent={true}
+        screen={'Login'}
       />
       <KeyboardAwareScrollView
         style={{ flex: 1 }}
@@ -63,15 +91,19 @@ function ForgetPassword({ navigation }) {
           >
             <InputForm
               Icon={Correo}
-              regExp={/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/}
+              regExp={regExp.email}
               placeholder="Correo Electrónico"
               msjError="Correo Invalido"
               control={control}
               value=""
               name="correo"
+              required={{ value: true, message: 'El correo es requerido' }}
+              onChangeFunction={() => {
+                clearErrors("correo");
+              }}
             />
             {errors.correo && (
-              <Text style={styles.error}>Error en el correo.</Text>
+              <Text style={styles.error}>{errors.correo.message}.</Text>
             )}
           </View>
 
@@ -79,7 +111,8 @@ function ForgetPassword({ navigation }) {
             <CustomButton
               text={"Continuar"}
               screen={"CodePassword"}
-              onPress={handleSubmit(onSubmit)}
+              onPress={() => { handleSubmit(onSubmit)();}}
+              loading={loading}
             />
           </View>
         </View>

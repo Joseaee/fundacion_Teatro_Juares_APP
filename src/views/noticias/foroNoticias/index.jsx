@@ -1,69 +1,93 @@
-import {View, Text, StyleSheet, TextInput, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, TextInput, ScrollView, FlatList, ActivityIndicator} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
+import { useAppSelector} from '../../../hooks/store';
 import Banner from '../../../components/Banner';
 import BottomNavbar from '../../../components/bottomNavbar';
 import Search from '../../../../assets/icons/search.svg';
 import Carousel from '../../../components/Carousel';
 import CardButton from '../../../components/CardButton';
+import StyleText from '../../../components/StyleText';
 import { useNavigation } from '@react-navigation/native';
-
-const noticiasRelevantes = [
-    {id: '1', banner: require("../../../../assets/img/Servicios/graduaciones.jpg"), title: 'Las mejores graduaciones', text: 'Desde obras de ballet, danza y urbano hasta circo, comedia y obras infantiles hemos tenido el honor de organizar, al tener un espacio amplio y una gran capacidad, nuestras instalaciones son perfectas para llevar a cabo tu producción, contamos con un excelente equipo de área técnica que no te va a fallar al montar la obra que tú sueñas.', images: [require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg")]},
-
-    {id: '2', banner: require("../../../../assets/img/Servicios/conciertos.jpg"), title: 'Conciertos geniales' , text: 'Si buscas un espacio donde tu voz se escuche armoniosa y perfecta nuestro escenario es perfecto para ti, el mismo cuenta con una estructura basada en los Teatros Italianos que tienen la característica de proyectar e intensificar el sonido, además nuestras instalaciones cuenta con un excelente equipo de sonido y los especialistas capacitados para su manejo.', images: [require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg"), require("../../../../assets/img/Servicios/conciertos.jpg")]}
-]
-
-const otrasNoticias = [
-    {id: '1', banner: require("../../../../assets/img/Servicios/obras.jpg"), title: 'Obras de teatro', text: 'Desde obras de ballet, danza y urbano hasta circo, comedia y obras infantiles hemos tenido el honor de organizar, al tener un espacio amplio y una gran capacidad, nuestras instalaciones son perfectas para llevar a cabo tu producción, contamos con un excelente equipo de área técnica que no te va a fallar al montar la obra que tú sueñas.', images: [require("../../../../assets/img/Servicios/obras.jpg"), require("../../../../assets/img/Servicios/obras.jpg"), require("../../../../assets/img/Servicios/obras.jpg"), require("../../../../assets/img/Servicios/obras.jpg")]},
-
-    {id: '2', banner: require("../../../../assets/img/Servicios/belleza.jpg"), title: 'Concursos de belleza', text: 'Desde obras de ballet, danza y urbano hasta circo, comedia y obras infantiles hemos tenido el honor de organizar, al tener un espacio amplio y una gran capacidad, nuestras instalaciones son perfectas para llevar a cabo tu producción, contamos con un excelente equipo de área técnica que no te va a fallar al montar la obra que tú sueñas.', images: [require("../../../../assets/img/Servicios/belleza.jpg"), require("../../../../assets/img/Servicios/belleza.jpg"), require("../../../../assets/img/Servicios/belleza.jpg"), require("../../../../assets/img/Servicios/belleza.jpg")]},
-]
+import { useNoticiasActions } from '../../../hooks/useNoticiasActions';
+import { getNoticias } from "../../../store/selectors";
+import { useEffect, useState } from 'react';
+import { API_URL } from '../../../config/constants';
 
 export default function Noticias(){
     const navigation = useNavigation();
+    const [loading, setLoading] = useState(false)
+    const noticias = useAppSelector((state)=> getNoticias(state))
+    const {filterNoticia, consultarNoticias} = useNoticiasActions()
 
+    useEffect(()=>{
+        const loadNoticias = async ()=>{
+            setLoading(true)
+            try {
+                await consultarNoticias()
+            } catch (error) {
+                console.error(error)
+            }finally{
+                setLoading(false)
+            }
+        }
+
+        loadNoticias()
+    }, [])
+console.log(noticias.relevantes)
     return (
         <SafeAreaView style={{flex: 1}}>
             <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={true}>
                 <Text style={styles.title}>Foro de Noticias</Text>
             </Banner>
-
             <ScrollView style={{flex:1}}>
-                <View style={styles.input}>
-                    <Search height={wp('5%')} width={hp('5%')} fill='gray' />
-                    <TextInput placeholder='Buscar Noticia...' style={{flex: 1}}/>
-                </View>
-
                 <View style={{flex:1}}>
-                    <View style={styles.parrafo}>
-                        <View style={styles.redBlock}></View><Text style={styles.text}>Noticias Relevantes</Text>
-                    </View>
+                    { loading
+                      
+                      ? <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                          <ActivityIndicator size="large" color="#E31734" />
+                        </View>
+                     : (noticias.relevantes.length == 0)
+                     ? <View style={{flex:1, justifyContent:'center', alignItems: 'center'}}><StyleText tag="noticias" >No se encontraron</StyleText></View> 
+                     : <>
+                         <View style={styles.parrafo}>
+                     <View style={styles.redBlock}></View><Text style={styles.text}>Noticias Relevantes</Text>
+                 </View>
 
-                    <View style={{marginHorizontal: 14}}>
-                        <Carousel data={noticiasRelevantes} loop={true} renderItem={(item)=> {
-                            return (
-                                <CardButton key={item.id} title={item.title} source={item.banner} alignContent='bottom' onPress={()=> navigation.navigate('DetalleNoticia', {
-                                    ...item
-                                })}/>
-                            )
-                        }}/>
-                    </View>
-                    
-                    <View style={styles.parrafo}>
+                 <View style={{marginHorizontal: 14}}>
+                     <Carousel data={noticias?.relevantes} loop={true} renderItem={(item)=> {
+                         return (
+                             <CardButton key={item.nroNoticia} title={item.titulo} source={{uri: `${API_URL}${item.imagen}`}} alignContent='bottom' onPress={()=> navigation.navigate('DetalleNoticia', {
+                                 ...item
+                             })}/>
+                         )
+                     }}/>
+                 </View>
+                     </>
+                    }
+                    {loading
+                      
+                      ? null
+                      :
+                        (noticias.otras.length === 0)
+                        ? null
+                        : <>
+                        <View style={styles.parrafo}>
                         <View style={styles.redBlock}></View><Text style={styles.text}>Otras Noticias</Text>
                     </View>
 
                     <View style={{flexDirection: 'row', gap: 5, flexWrap: 'wrap', marginHorizontal: 14, marginBottom: 20, justifyContent: 'center'}}>
-                        {otrasNoticias.map((item, index) => {
+                        {noticias.otras.map((item, nroNoticia) => {
                             return (
-                                <CardButton key={index} title={item.title} source={item.banner} alignContent='bottom' width={160} titleSize='small' onPress={()=> navigation.navigate('DetalleNoticia', {
+                                <CardButton key={item.nroNoticia} title={item.titulo} source={{uri: `${API_URL}${item.imagen}`}} alignContent='bottom' width={160} titleSize='small' onPress={()=> navigation.navigate('DetalleNoticia', {
                                     ...item
                                 })}/>
                             )
                         })}
                     </View>
-
+                        </>
+                    }
+                    
                 </View>
 
             </ScrollView>

@@ -1,9 +1,10 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 
-export default function ButtonTab({ children, isSelected, rowSeparation, onPress, bgColor = "#dfdfdf", width, elevation }) {
+export default function ButtonTab({ children, isSelected, rowSeparation, onPress, bgColor = "#dfdfdf", width, elevation, disabled }) {
   return (
     <TouchableOpacity
+    disabled={disabled}
       style={[
         styles.button,
         { marginHorizontal: rowSeparation },

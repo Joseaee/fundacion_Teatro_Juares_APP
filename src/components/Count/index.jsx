@@ -1,24 +1,18 @@
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
 
-export default function Count({value, limit , onPlus, onMinus}){
+export default function Count({value, limit , onPlus = ()=>{}, onMinus = ()=>{}}){
     return (
         <View style={{flexDirection: 'row',gap: 6}}>
-            <TouchableOpacity style={styles.button} onPress={()=>{
-                if(value === 0) return
-                if(onMinus){
+            <TouchableOpacity disabled={value === 0} style={styles.button} onPress={()=>{
                     onMinus()
-                }
             }}>
                 <Text style={styles.btnText}>-</Text>
             </TouchableOpacity>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{fontSize: 14, fontWeight: 'bold'}}>{value}</Text>
             </View>
-            <TouchableOpacity style={styles.button} onPress={()=>{
-                if(value === limit) return
-                if(onPlus){
-                    onPlus()
-                }
+            <TouchableOpacity disabled={value == limit} style={styles.button} onPress={()=>{
+                onPlus()
             }}>
                 <Text style={styles.btnText}>+</Text>
             </TouchableOpacity>

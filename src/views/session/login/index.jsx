@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   Image,
-  TextInput,
   Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,16 +16,20 @@ import { useForm } from "react-hook-form";
 import InputForm from "../../../components/inputForm";
 import { useEncryption } from "../../../hooks/encryption";
 import { useAuthActions } from "../../../hooks/useAuthActions";
-import { useAppSelector } from "../../../hooks/store";
+import { useAppSelector, useAppDispatch } from "../../../hooks/store";
+import { regExp } from "../../../hooks/constants";
+import { activeChangePassword } from "../../../store/user/thunks";
 
 import Cedula from "../../../../assets/icons/cedula.svg";
 import Password from "../../../../assets/icons/lock.svg";
 import CustomButton from "../../../components/customButton";
 
 function Login({ navigation }) {
-  const [inputId, setInputId] = useState(false);
-  const [inputPassword, setInputPassword] = useState(false);
+
   const loading = useAppSelector((state)=> state.auth.loading)
+  const dispatch = useAppDispatch()
+  const { encryptData } = useEncryption();
+  const { login } = useAuthActions();
 
   const {
     control,
@@ -37,25 +39,31 @@ function Login({ navigation }) {
     clearErrors,
   } = useForm({
     defaultValues: {
-      cedula: "",
+      usuario: "",
       password: "",
     },
   });
-  const { encryptData } = useEncryption();
-  const { login } = useAuthActions();
+
+  const isValidUser = (value) =>{
+
+    if (!regExp.cedula.test(value) && ! regExp.email.test(value)) {
+
+      return 'Usuario invalido';
+    }
+
+    return true;
+  };
 
   const onSubmit = async (data) => {
     const encryptedData = encryptData(JSON.stringify(data));
     try {
       await login({ data: encryptedData });
     } catch (error) {
-      errors.password = true;
 
       setError("session", {
         type: "manual",
         message: "El usuario o contraseña son incorrectos",
       });
-      console.log(error.message);
     }
   };
 
@@ -80,43 +88,44 @@ function Login({ navigation }) {
             />
             <Text style={styles.title}>¡Iniciar Sesión!</Text>
           </View>
-
           <View
             style={{ flex: 1, justifyContent: "center", marginTop: hp("2%") }}
           >
             <InputForm
               Icon={Cedula}
-              regExp={/^[0-9]{7,8}$/}
-              placeholder="Cedula"
-              msjError="Cédula Invalida"
+              validate={isValidUser}
+              placeholder="Usuario"
               control={control}
               value=""
-              name="cedula"
+              required={{ value: true, message: 'El usuario es requerido' }} 
+              name="usuario"
               onChangeFunction={() => {
                 clearErrors("session");
               }}
             />
-            {errors.cedula && (
-              <Text style={styles.error}>{errors.cedula.message}.</Text>
+            {errors.usuario && (
+              <Text style={styles.error}>{errors.usuario.message}.</Text>
             )}
 
             <InputForm
               Icon={Password}
-              regExp={/^[a-zA-Z0-9_\.\-]{8}$/}
+              regExp={regExp.password}
               placeholder="Contraseña"
-              msjError="Contraseña Invalida"
+              msjError="Contraseña Invalida."
               control={control}
               value=""
+              required={{ value: true, message: 'La contraseña es requerida.' }} 
               name="password"
               onChangeFunction={() => {
                 clearErrors("session");
               }}
+              maxLength={8}
             />
             {errors.password && (
-              <Text style={styles.error}>Error en la Contraseña.</Text>
+              <Text style={styles.error}>{errors.password.message}.</Text>
             )}
             {errors.session && (
-              <Text style={styles.error}>{errors.session.message}</Text>
+              <Text style={styles.error}>{errors.session.message}.</Text>
             )}
           </View>
 
@@ -124,7 +133,7 @@ function Login({ navigation }) {
             <CustomButton
               text={"Iniciar Sesión"}
               screen={"Home"}
-              onPress={handleSubmit(onSubmit)}
+              onPress={() => {clearErrors("session"); handleSubmit(onSubmit)();}}
               loading={loading}
             />
           </View>
@@ -168,13 +177,25 @@ function Login({ navigation }) {
           </View>
           <TouchableOpacity
             style={{ flex: 1, alignItems: "center", marginTop: 10 }}
-            onClick={(e) => {
+            onClick={async (e) => {
               e.stopPropagation();
-              navigation.navigate("ForgetPassword");
+              if(await dispatch(activeChangePassword()).unwrap()){
+
+                navigation.navigate("CodePassword");
+              } else{
+
+                navigation.navigate("ForgetPassword");
+              }
             }}
-            onPress={(e) => {
+            onPress={async (e) => {
               e.stopPropagation();
-              navigation.navigate("ForgetPassword");
+              if(await dispatch(activeChangePassword()).unwrap()){
+
+                navigation.navigate("CodePassword");
+              } else{
+
+                navigation.navigate("ForgetPassword");
+              }
             }}
           >
             <Text style={styles.textLink}>¿Olvidaste tu contraseña?</Text>

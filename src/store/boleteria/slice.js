@@ -1,91 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchEvents, fetchTasaBs } from "./thunks";
 
 const initialState = {
-    eventos: [
-        {
-            id: '1',
-            nombre: 'Eventito',
-            categoria: 'Obra Teatral',
-            poster: require('../../../assets/img/Servicios/obras.jpg'),
-            funciones: [
-                {
-                    id: '1',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '10:00 AM',
-                    fecha: '2024-05-16'
-                },
-                {
-                    id: '2',
-                    horaInicio: '10:00 AM',
-                    horaFinal: '11:00 AM',
-                    fecha: '2024-05-17'
-                },
-                {
-                    id: '3',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '9:00 AM',
-                    fecha: '2024-05-18'
-                }
-            ]
-        },
-        {
-            id: '2',
-            nombre: 'Eventito 2',
-            categoria: 'Concierto',
-            poster: require('../../../assets/img/Servicios/conciertos.jpg'),
-            funciones: [
-                {
-                    id: '1',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '10:00 AM',
-                    fecha: '2024-05-16'
-                },
-                {
-                    id: '2',
-                    horaInicio: '10:00 AM',
-                    horaFinal: '11:00 AM',
-                    fecha: '2024-05-17'
-                },
-                {
-                    id: '3',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '9:00 AM',
-                    fecha: '2024-05-18'
-                }
-            ]
-        },
-        {
-            id: '3',
-            nombre: 'Evento 3',
-            categoria: 'Concierto',
-            poster: require('../../../assets/img/Servicios/belleza.jpg'),
-            funciones: [
-                {
-                    id: '1',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '10:00 AM',
-                    fecha: '2024-05-16'
-                },
-                {
-                    id: '2',
-                    horaInicio: '10:00 AM',
-                    horaFinal: '11:00 AM',
-                    fecha: '2024-05-17'
-                },
-                {
-                    id: '3',
-                    horaInicio: '8:00 AM',
-                    horaFinal: '9:00 AM',
-                    fecha: '2024-05-18'
-                }
-            ]
-        }
-    ],
+    eventos: [],
+    categorias: [],
     filtros: {
         categoria: 'all',
         nombre: ''
     },
-    boletos: []
+    boletos: [],
+    facturas: []
 }
 
 export const boleteriaSlice = createSlice({
@@ -131,10 +55,65 @@ export const boleteriaSlice = createSlice({
                     state.boletos.splice(index, 1);
                 }
             }
+        },
+        addSeat : (state, action)=>{
+            const {lote, asientos} = action.payload
+            const index = state.boletos.findIndex(item => item.id === lote);
+            if(index !== -1){
+                state.boletos[index].asientos = asientos
+            }
+        },
+        setFactura: (state, action)=> {
+            const factura = action.payload
+            const index = state.facturas.findIndex((item) => item.idFuncion === factura.idFuncion)
+
+            if (index !== -1) {
+                const formasPago = (state.facturas[index].formasPago.length > 0) ? state.facturas[index].formasPago : []
+                state.facturas[index] = {
+                    ...factura,
+                    formasPago: [...formasPago, ...factura.formasPago]
+                }
+                
+            }else{
+                state.facturas.push(factura)
+            }
+           
+        },
+        removeFactura: (state, action)=>{
+            const index = action.payload
+            state.facturas.splice(index, 1);
+
+        },
+        addFormaPago: (state, action)=> {
+            const {id, data} = action.payload
+
+            state.facturas[id].formasPago.push(data)
+        },
+        editFormaPago: (state, action)=> {
+            const {id, index, data} = action.payload
+            state.facturas[id].formasPago[index] = data
+        },
+        removeFormaPago: (state, action)=> {
+            const {id, index} = action.payload
+            state.facturas[id].formasPago.splice(index, 1)
         }
+    },
+    extraReducers: (builder)=>{
+        builder
+      .addCase(fetchEvents.fulfilled, (state, action) => {
+        state.eventos = action.payload;
+      })
+      .addCase(fetchTasaBs.fulfilled, (state, action) => {
+
+        for (let index = 0; index < state.facturas.length; index++) {
+            state.facturas[index] .tasaBs = action.payload;
+        }
+        
+      })
+      ;
     }
 })
 
 export default boleteriaSlice.reducer
 
-export const { changeFilterCategory, setFilterEvent, addTicket, removeTicket } = boleteriaSlice.actions  
+export const { changeFilterCategory, setFilterEvent, addTicket, removeTicket, addSeat, setFactura, addFormaPago, removeFormaPago, editFormaPago, removeFactura } = boleteriaSlice.actions  

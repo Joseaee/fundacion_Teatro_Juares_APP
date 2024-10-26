@@ -15,11 +15,8 @@ import MakePassword from "../views/session/makePassword";
 import ForgetPassword from "../views/session/forgetPassword";
 import CodePassword from "../views/session/codePassword";
 import ChangePassword from "../views/session/changePassword";
-import SuccessSession from "../views/session/successSession";
+import Success from "../views/success";
 import DataUser from "../views/profile/dataUser";
-import AskDates from "../views/dates/askdates";
-import MakeDate from "../views/dates/makeDate";
-import SuccessDate from "../views/dates/successDate";
 import Chat from "../views/chat/chat";
 
 import Cartelera from "../views/boleteria/cartelera";
@@ -51,8 +48,13 @@ function Routes() {
     const loadToken = async () => {
       try {
         const token = await getItem("userToken");
-        console.log(token);
-        if (token) {
+        const expToken = await getItem("expToken");
+        const TiempoActual = Math.floor(Date.now() / 1000); 
+        console.log('expiracion: '+expToken)
+        console.log('Tiempo Actual: '+TiempoActual)
+        console.log('Token: '+token);
+
+        if (token && expToken > TiempoActual) {
           authenticated(true);
         } else {
           authenticated(false);
@@ -168,26 +170,17 @@ function Routes() {
             />
 
             <Stack.Screen
-              name="AskDates"
-              component={AskDates}
-              options={{ animation: "fade_from_bottom" }}
-            />
-            <Stack.Screen
-              name="MakeDate"
-              component={MakeDate}
-              options={{ animation: "slide_from_right" }}
-            />
-            <Stack.Screen
-              name="SuccessDate"
-              component={SuccessDate}
-              options={{ animation: "slide_from_right" }}
-            />
-
-            <Stack.Screen
               name="EditUser"
               component={EditUser}
               options={{ animation: "slide_from_bottom" }}
             />
+
+            <Stack.Screen
+              name="Success"
+              component={Success}
+              options={{ animation: "slide_from_right" }}
+            />
+            
           </>
         ) : (
           <>
@@ -207,11 +200,6 @@ function Routes() {
               options={{ animation: "slide_from_right" }}
             />
             <Stack.Screen
-              name="SuccessSession"
-              component={SuccessSession}
-              options={{ animation: "slide_from_right" }}
-            />
-            <Stack.Screen
               name="ForgetPassword"
               component={ForgetPassword}
               options={{ animation: "slide_from_right" }}
@@ -224,6 +212,11 @@ function Routes() {
             <Stack.Screen
               name="ChangePassword"
               component={ChangePassword}
+              options={{ animation: "slide_from_right" }}
+            />
+            <Stack.Screen
+              name="Success"
+              component={Success}
               options={{ animation: "slide_from_right" }}
             />
           </>

@@ -1,14 +1,29 @@
-import { View, Text, StyleSheet, Image, Platform } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Image, Platform, BackHandler  } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
+import { useFocusEffect } from '@react-navigation/native';
 
 import CustomButton from '../../../components/customButton';
-import CheckIcon from '../../../../assets/icons/check.svg';
+import CheckIcon from '../../../../assets/icons/circle-check.svg';
 
 function SuccessSession( {route} ) {
 
     const receiveParams = route.params;
+
+    useFocusEffect(
+      React.useCallback(() => {
+        const onBackPress = () => {
+          // Retorna true para bloquear la acción de retroceso
+          return true;
+        };
+  
+        BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  
+        return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      }, [])
+    );
 
     return(
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fafafa" }}>
@@ -31,7 +46,7 @@ function SuccessSession( {route} ) {
                 source={require("../../../../assets/logoo.png")}
               />
               <CheckIcon height={hp("10%")} width={wp("12%")} marginTop={10} fill="#2B9F3B"/>
-              <Text style={styles.title}>¡Registro Exitoso!</Text>
+              <Text style={styles.title}>{receiveParams.message}</Text>
             </View>
 
             <View style={{ flex: 1, justifyContent: "center", marginTop: hp("2%") }}>
