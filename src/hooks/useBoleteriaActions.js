@@ -1,5 +1,5 @@
 import { useAppDispatch } from "./store";
-import { setFilterEvent, changeFilterCategory, removeTicket, addTicket, addSeat, setFactura, addFormaPago, editFormaPago, removeFormaPago, removeFactura } from "../store/boleteria/slice";
+import { setFilterEvent, changeFilterCategory, removeTicket, addTicket, addSeat, setFactura, addFormaPago, editFormaPago, removeFormaPago, removeFactura, resetState } from "../store/boleteria/slice";
 import { fetchEvents, fetchTasaBs } from "../store/boleteria/thunks";
 
 export const useBoleteriaActions = () => {
@@ -53,5 +53,9 @@ export const useBoleteriaActions = () => {
     dispatch(removeFactura(index))
   }
 
-  return {filterCategory, filterEvent, fetchingEvents, newTicket, deleteTicket, setSeats, getTasaBs, newFactura, newFormaPago, changeFormaPago, deleteFormaPago, deleteFactura}
+  const resetCompraBoletos = ()=>{
+    dispatch(resetCompra())
+  }
+
+  return {filterCategory, filterEvent, fetchingEvents, newTicket, deleteTicket, setSeats, getTasaBs, newFactura, newFormaPago, changeFormaPago, deleteFormaPago, deleteFactura, resetCompraBoletos}
 };
