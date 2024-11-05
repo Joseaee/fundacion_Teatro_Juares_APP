@@ -96,7 +96,15 @@ export const boleteriaSlice = createSlice({
         removeFormaPago: (state, action)=> {
             const {id, index} = action.payload
             state.facturas[id].formasPago.splice(index, 1)
+        },
+        resetCompra: () => {
+            return {
+                ...state, 
+                facturas: [],
+                boletos: []
+            }
         }
+        
     },
     extraReducers: (builder)=>{
         builder
@@ -116,4 +124,4 @@ export const boleteriaSlice = createSlice({
 
 export default boleteriaSlice.reducer
 
-export const { changeFilterCategory, setFilterEvent, addTicket, removeTicket, addSeat, setFactura, addFormaPago, removeFormaPago, editFormaPago, removeFactura } = boleteriaSlice.actions  
+export const { changeFilterCategory, setFilterEvent, addTicket, removeTicket, addSeat, setFactura, addFormaPago, removeFormaPago, editFormaPago, removeFactura, resetCompra } = boleteriaSlice.actions  
