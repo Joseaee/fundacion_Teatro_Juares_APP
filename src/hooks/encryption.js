@@ -10,5 +10,13 @@ export const useEncryption = ()=>{
         return encrypted;
     }
 
-    return {encryptData}
+    const getSizeKey = ()=>{
+        const encryptor = new JSEncrypt();
+        encryptor.setPublicKey(public_key);  
+        const keySize = encryptor.getKey().n.bitLength();
+
+        return keySize
+    }
+
+    return {encryptData, getSizeKey}
 }
