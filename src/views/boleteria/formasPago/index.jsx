@@ -13,7 +13,6 @@ import { useEffect, useState } from 'react';
 import { useBoleteriaActions } from '../../../hooks/useBoleteriaActions';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useStorage } from '../../../hooks/localStorage';
-import { useEncryption } from '../../../hooks/encryption';
 import axios from 'axios';
 import { API_URL } from '../../../config/constants';
 
@@ -21,9 +20,8 @@ export default function FormasPago() {
 
     const navigation = useNavigation()
     const route = useRoute()
-    const {getTasaBs, deleteFormaPago, deleteFactura} = useBoleteriaActions()
+    const {getTasaBs, deleteFormaPago, resetCompraBoletos} = useBoleteriaActions()
     const {getItem} = useStorage()
-    const {encryptData} = useEncryption()
     const [loading, setLoading] = useState(true)
     const [loadingButton, setLoadingButton] = useState(false)
 
@@ -56,15 +54,21 @@ export default function FormasPago() {
     },[])
 
     const handleSubmit = async ()=>{
-
-        const registroPago = encryptData(JSON.stringify({
-            formasPago: factura.formasPago,
+        const data = JSON.stringify({
             montoTotal: factura.montoTotal,
             tasaBs: factura.tasaBs,
-            tipoVenta: boletos[0].tipoVenta
-        }))
+            tipoVenta: boletos[0].tipoVenta,
+            idFuncion: boletos[0].idFuncion,
+        })
 
-        const lotes = encryptData(JSON.stringify(boletos))
+        const formasPago = JSON.stringify(factura.formasPago)
+        const registroPago = data
+        const lotes = JSON.stringify(boletos)
+ 
+        if(!registroPago){
+            return
+        }
+
         setLoadingButton(true)
         try {
             const token = await getItem('userToken')
@@ -82,7 +86,8 @@ export default function FormasPago() {
                 },
                 data: {
                     registroPago,
-                    lotes
+                    lotes,
+                    formasPago
                 }
               })
               console.log(response.data)
@@ -90,9 +95,8 @@ export default function FormasPago() {
 
               if(status === 'error'){
                 console.error(message)
+                return;
               }
-
-            deleteFactura(indexFactura)
 
             navigation.navigate("Success", {
                 title: "Boletos comprados",
@@ -178,13 +182,16 @@ export default function FormasPago() {
                 }
                 
                 <View style={{ flex: 0, justifyContent: 'flex-end', alignItems: 'center', marginBottom: 26 }}>
-                    <CustomButton loading={loadingButton} text='Registrar Pago' width={220} height={40} color='#0F9B4B' onPress={()=>{
-                        if(faltantePagar != 0){
-                            return
-                        }
-
-                        handleSubmit()
-                    }}/>
+                    {(faltantePagar > 0)
+                        ? null
+                        : <CustomButton loading={loadingButton} text='Registrar Pago' width={220} height={40} color='#0F9B4B' onPress={()=>{
+                            if(faltantePagar != 0){
+                                return
+                            }
+    
+                            handleSubmit()
+                        }}/> 
+                    }
                 </View>
             </View>
             <BottomNavbar title={"Cartelera"} loggedIn={true} active={3} />
