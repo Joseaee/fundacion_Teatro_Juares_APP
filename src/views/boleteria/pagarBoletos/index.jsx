@@ -69,7 +69,7 @@ export default function PagarBoletos(){
             });
             return
         }
-
+ 
         if(monto == 0 || (faltantePagar - parseFloat(monto)) < 0){
             errors.monto = true;
 
@@ -101,7 +101,7 @@ export default function PagarBoletos(){
             fechaPago: fecha,
             horaPago: hora
         }
-
+        
         const validarDetallePago = encryptData(JSON.stringify(detallePago))
         setLoading(true)
         try {
@@ -180,7 +180,9 @@ export default function PagarBoletos(){
                     <StyleText tag={`${totalPagar.toFixed(2)} Bs`} size='small' tagColor={'#2FB31A'}>Monto a Pagar</StyleText>
                     <StyleText tag={`${faltantePagar.toFixed(2)} Bs`} size='small' tagColor={(faltantePagar === 0) ?'#2FB31A' : "#E31734" }>Faltante por Pagar</StyleText>
                 </View>
-                <View style={styles.contenedor}>
+                <View style={[styles.contenedor, {flexDirection: 'column'}]}>
+                <StyleText tag='Metodo de Pago' size={'medium'} style={{ marginBottom: 14, marginTop: 6, justifyContent: 'center' }}>Seleccionar </StyleText>
+                <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
                 <ButtonTab onPress={()=>{
                         setMetodoPago(1)
                         clearErrors('session')
@@ -193,6 +195,8 @@ export default function PagarBoletos(){
                     }} isSelected={metodoPago === 2} width={150} bgColor='#fff' elevation={true}>
                         Pago Móvil
                     </ButtonTab>
+                </View>
+               
                 </View>
 
                 <View style={styles.select}>
@@ -212,7 +216,7 @@ export default function PagarBoletos(){
                 <View style={styles.inputs}>
                     <StyleText tag='Pago' size={'medium'} style={{ marginBottom: 14, marginTop: 6, justifyContent: 'center' }}>Datos del</StyleText>
 
-                    <InputForm Icon={Billete} regExp={/^\d{0,6}(\.\d{1})?\d{0,2}$/} placeholder='Monto' msjError='Monto Invalido' required={{ value: true, message: 'El monto es requerido' }} control={control} value='' name='monto' onChangeFunction ={() => { clearErrors('session'); }}/>
+                    <InputForm keyboardType='numeric' Icon={Billete} regExp={/^\d{0,6}(\.\d{1})?\d{0,2}$/} placeholder='Monto' msjError='Monto Invalido' required={{ value: true, message: 'El monto es requerido' }} control={control} value='' name='monto' onChangeFunction ={() => { clearErrors('session'); }}/>
                     {errors.monto && (
                     <Text style={styles.error}>{errors.monto.message}.</Text>
                     )}
