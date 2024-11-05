@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   title: {
     color: "#f1f1f1",
     fontWeight: "700",
-    fontSize: hp("2%"),
+    fontSize: hp("1.9%"),
     textAlign: "center",
     textAlignVertical: "center",
     textAlign: "center",
