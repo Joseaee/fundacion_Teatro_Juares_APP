@@ -37,7 +37,7 @@ export default function Noticias(){
 console.log(noticias.relevantes)
     return (
         <SafeAreaView style={{flex: 1}}>
-            <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={true}>
+            <Banner image={require('../../../../assets/img/banner-cartelera.jpg')} goBack={true}>
                 <Text style={styles.title}>Foro de Noticias</Text>
             </Banner>
             <ScrollView style={{flex:1}}>

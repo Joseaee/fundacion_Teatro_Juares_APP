@@ -73,7 +73,7 @@ function DataUser() {
     return(
         
         <SafeAreaView style={ {flex: 1} }>
-            <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={true} icons={
+            <Banner image={require('../../../../assets/img/banner-cartelera.jpg')} goBack={true} icons={
                 {
                     logout: true,
                     user: false,

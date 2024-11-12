@@ -77,7 +77,7 @@ export default function Cartelera(){
 
     return (
         <SafeAreaView style={{flex:1}}>
-            <Banner image={require('.:/../../assets/img/banner-cartelera.jpg')} goBack={true}>
+            <Banner image={require('../../../../assets/img/banner-cartelera.jpg')} goBack={true}>
                 <Text style={styles.title}>Cartelera de Eventos</Text>
             </Banner>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
