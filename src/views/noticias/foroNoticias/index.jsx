@@ -57,7 +57,7 @@ console.log(noticias.relevantes)
                  <View style={{marginHorizontal: 14}}>
                      <Carousel data={noticias?.relevantes} loop={true} renderItem={(item)=> {
                          return (
-                             <CardButton key={item.nroNoticia} title={item.titulo} source={{uri: `${API_URL}${item.imagen}`}} alignContent='bottom' onPress={()=> navigation.navigate('DetalleNoticia', {
+                             <CardButton key={item.nronoticia} title={item.titulo} source={{uri: `${API_URL}${item.imagen}`}} alignContent='bottom' onPress={()=> navigation.navigate('DetalleNoticia', {
                                  ...item
                              })}/>
                          )
@@ -79,7 +79,7 @@ console.log(noticias.relevantes)
                     <View style={{flexDirection: 'row', gap: 5, flexWrap: 'wrap', marginHorizontal: 14, marginBottom: 20, justifyContent: 'center'}}>
                         {noticias.otras.map((item, nroNoticia) => {
                             return (
-                                <CardButton key={item.nroNoticia} title={item.titulo} source={{uri: `${API_URL}${item.imagen}`}} alignContent='bottom' width={160} titleSize='small' onPress={()=> navigation.navigate('DetalleNoticia', {
+                                <CardButton key={item.nronoticia} title={item.titulo} source={{uri: `${API_URL}${item.imagen}`}} alignContent='bottom' width={160} titleSize='small' onPress={()=> navigation.navigate('DetalleNoticia', {
                                     ...item
                                 })}/>
                             )
