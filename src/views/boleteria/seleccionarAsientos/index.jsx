@@ -41,12 +41,12 @@ export default function SeleccionarAsientos() {
     const lote = boletos.find(boleto=> boleto.id === selectedLote)
     const colorSelected = (lote) ? lote.color : '#222'
     const secciones = [
-        {id: 1, title: 'Galería Este', width: 140, height:60, area: 'galeria', seccion: 'este'},
-        {id: 2,title: 'Galería Oeste', width: 140, height:60, area: 'galeria', seccion: 'oeste'},
-        {id: 3,title: 'Palco Este', width: 90, height:100, area: 'balcon', seccion: 'este'},
-        {id: 4, title: 'Palco Oeste', width: 90, height:100, area: 'balcon', seccion: 'oeste'},
-        {id: 5, title: 'Patio Este', width: 140, height:80, area: 'patio', seccion: 'este'},
-        {id: 6,title: 'Patio Oeste', width: 140, height:80, area: 'patio', seccion: 'oeste'},
+        {id: 1, title: 'Galería Oeste', width: 140, height:60, area: 'galeria', seccion: 'oeste'},
+        {id: 2,title: 'Galería Este', width: 140, height:60, area: 'galeria', seccion: 'este'},
+        {id: 3,title: 'Palco Oeste', width: 90, height:100, area: 'balcon', seccion: 'oeste'},
+        {id: 4, title: 'Palco Este', width: 90, height:100, area: 'balcon', seccion: 'este'},
+        {id: 5, title: 'Patio Oeste', width: 140, height:80, area: 'patio', seccion: 'oeste'},
+        {id: 6,title: 'Patio Este', width: 140, height:80, area: 'patio', seccion: 'este'},
     ]
 
     useEffect(()=>{
