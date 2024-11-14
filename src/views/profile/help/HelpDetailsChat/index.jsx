@@ -1,16 +1,11 @@
 import { View, Text, StyleSheet, ImageBackground, Image, FlatList, ScrollView } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Swiper from 'react-native-swiper';
 import Navbar from "../../../../components/navbar";
 import BottomNavbar from "../../../../components/bottomNavbar";
 
-import Chat from "../../../../../assets/icons/chat.svg";
-import Pencil from "../../../../../assets/icons/pencil.svg";
-import { useNavigation } from "@react-navigation/native";
-
     function HelpDetailsChat({ }) {
-        const navigation = useNavigation()
+        
         return (
             <SafeAreaView style={ {flex: 1, backgroundColor: "#fafafa"} }>
                 <Navbar
@@ -45,12 +40,8 @@ import { useNavigation } from "@react-navigation/native";
                 <Text style={styles.text}>
                     <Text style={styles.indice}>1-</Text> Se presentara las sesiones de preguntas relacionadas con el chat de soporte por las diferentes sesiones habilidatas. {"\n"}{"\n"}
 
-                    AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
-
                     <Text style={styles.indice}>2-</Text> Al seleccionar una de las sesiones podrás consultar las preguntas frecuentes de la sesión, en caso que dicha pregunta no tenga similitud con la consulta que deseas realizar, 
                     puedes presionar el apartado de habilitar chat de soporte y enviar tu mensaje de consulta.{"\n"}{"\n"}
-
-                    AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
 
                     <Text style={styles.indice}>3-</Text> Una vez enviada tu consulta deberás esperar un lapso de tiempo para que los supervisores respondan a tu solicitud{"\n"}{"\n"}
                 </Text>

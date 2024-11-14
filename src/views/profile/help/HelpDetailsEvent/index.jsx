@@ -1,17 +1,13 @@
 import { View, Text, StyleSheet, ImageBackground, Image, FlatList, ScrollView } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Swiper from 'react-native-swiper';
 import Navbar from "../../../../components/navbar";
 import BottomNavbar from "../../../../components/bottomNavbar";
 
-import Search from "../../../../../assets/icons/search.svg";
-import Ticket from "../../../../../assets/icons/ticket.svg";
-import Bell from "../../../../../assets/icons/bell.svg";
-import { useNavigation } from "@react-navigation/native";
+
 
     function HelpDetailsEvent({ }) {
-        const navigation = useNavigation()
+
         return (
             <SafeAreaView style={ {flex: 1, backgroundColor: "#fafafa"} }>
                 <Navbar
@@ -36,14 +32,11 @@ import { useNavigation } from "@react-navigation/native";
                     <Text style={styles.indice}>1-</Text> Presiona el apartado de Eventos en la cual podrás visualizar las categorias de eventos disponibles en nuestras instalaciones,
                     si deseas buscar un evento en especifico podrás realizar la consultar de mismo en el campo de busqueda.{"\n"}{"\n"}
 
-                    AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"} 
-
                     <Text style={styles.indice}>2-</Text> Encontraras información detallada sobre el evento, podrás visualizar y consultar los eventos disponibles en nuestras instalaciones. {"\n"}{"\n"}
 
                     <Text style={styles.indice}>3-</Text> Al seleccionar el evento el cual deseas consultar, podrás conocer la sipnosis de la presentación, categoria perteneciente al evento,
-                    próxima función y duración del evento. {"\n"}{"\n"}
+                    próxima función y duración del evento.
 
-                    AQUI VA UNA IMAGEN GISELITA {"\n"}
                 </Text>
 
                 <View style={styles.parrafo}>
@@ -56,13 +49,13 @@ import { useNavigation } from "@react-navigation/native";
                 <Text style={styles.text}>
                     <Text style={styles.indice}>1-</Text> Consulta los eventos disponibles, selecciona el evento al cual deseas realizar la compra del los boletos{"\n"}{"\n"}
 
-                    AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
+                    
 
                     <Text style={styles.indice}>2-</Text> Selecciona la función del evento que desees, se presentara los datos correspondientes al seleccionado. {"\n"}{"\n"}
 
                     <Text style={styles.indice}>3-</Text> Realiza el pago del boleto.{"\n"}{"\n"}     
 
-                    AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"} 
+                     
 
                     <Text style={styles.indice}>4-</Text> Deberás esperar que el pago realizado sea verificado por nuestros administradores.
                 </Text>

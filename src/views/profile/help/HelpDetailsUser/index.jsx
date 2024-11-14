@@ -4,14 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Navbar from "../../../../components/navbar";
 import BottomNavbar from "../../../../components/bottomNavbar";
-import StyleText from "../../../../components/StyleText";
-
-import User from "../../../../../assets/icons/user.svg";
-import Lock from "../../../../../assets/icons/lock.svg";
-import { useNavigation } from "@react-navigation/native";
 
     function HelpDetailsUser({ }) {
-        const navigation = useNavigation()
+  
         return (
             <SafeAreaView style={ {flex: 1, backgroundColor: "#fafafa"} }>
                 <Navbar
@@ -53,8 +48,6 @@ import { useNavigation } from "@react-navigation/native";
 
                         <Text style={styles.indice}>3-</Text> Al correo electrónico llegara un codigo el cual debes de ingresar en este apartado; Visualiza la imagen presentada a continuación.{"\n"}{"\n"}
 
-                        AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
-
                         Ahora debes de ingresar la nueva contraseña que deseas, repite nuevamente la contraseña para confirmar que coincidan, presiona el botón de finalizar y listo ya puedes iniciar sesión con tu nueva contraseña.
                     </Text>
 
@@ -70,13 +63,9 @@ import { useNavigation } from "@react-navigation/native";
 
                         <Text style={styles.indice}>1-</Text> Haz clic en tu foto de perfil en la parte superior derecha y, luego, haz clic en Mi perfil.{"\n"} {"\n"}
 
-                        AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
-
                         <Text style={styles.indice}>2-</Text> Presiona el apartado de Editar Datos.{"\n"}{"\n"}
 
                         <Text style={styles.indice}>3-</Text> Se mostrará el siguiente apartado con tu información personal.{"\n"}{"\n"}
-
-                        AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
 
                         <Text style={styles.indice}>4-</Text> Escribe la nueva contraseña y confirma la misma.{"\n"}{"\n"}
 

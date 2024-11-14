@@ -59,7 +59,7 @@ function Help({ }) {
             
                 <StyleText tag='Soporte' size={'big'} style={{marginVertical: 14, justifyContent: 'center'}}>Chat de</StyleText> 
 
-                    <CardNotification subtitle={'Preguntas frecuentes'} Icon={ChatSoporte} iconBackground={'#0B6396'} onPress={() => navigation.navigate('Chat')}>
+                    <CardNotification checkButton={false} subtitle={'Preguntas frecuentes'} Icon={ChatSoporte} iconBackground={'#0B6396'} onPress={() => navigation.navigate('Chat')}>
                         Chat Soporte
                     </CardNotification>
 
@@ -67,29 +67,29 @@ function Help({ }) {
 
                 <View style={styles.contenedor}>
 
-                    <CardNotification subtitle={'teatrojuaresVenezuela'} Icon={Facebook} iconBackground={'#3b5998'} onPress={()=> {Linking.openURL('https://www.facebook.com/teatrojuaresVenezuela/').catch(err => console.error("Couldn't load page", err));
+                    <CardNotification checkButton={false} subtitle={'teatrojuaresVenezuela'} Icon={Facebook} iconBackground={'#3b5998'} onPress={()=> {Linking.openURL('https://www.facebook.com/teatrojuaresVenezuela/').catch(err => console.error("Couldn't load page", err));
                             }}>
                     Facebook
                     </CardNotification>
 
-                    <CardNotification subtitle={'juares_teatro'} Icon={Twitter} iconBackground={'#00acee'} onPress={()=> {Linking.openURL('https://twitter.com/juares_teatro?lang=es').catch(err => console.error("Couldn't load page", err));
+                    <CardNotification checkButton={false} subtitle={'juares_teatro'} Icon={Twitter} iconBackground={'#00acee'} onPress={()=> {Linking.openURL('https://twitter.com/juares_teatro?lang=es').catch(err => console.error("Couldn't load page", err));
                             }}>
                     Twitter
                     </CardNotification>
 
-                    <CardNotification subtitle={'teatrojuares'} Icon={Instagram} iconBackground={'#E1306C'} onPress={()=> {Linking.openURL('https://www.instagram.com/teatrojuares/?hl=es').catch(err => console.error("Couldn't load page", err));
+                    <CardNotification checkButton={false} subtitle={'teatrojuares'} Icon={Instagram} iconBackground={'#E1306C'} onPress={()=> {Linking.openURL('https://www.instagram.com/teatrojuares/?hl=es').catch(err => console.error("Couldn't load page", err));
                             }}>
                     Instagram
                     </CardNotification>
 
-                    <CardNotification subtitle={'@teatrojuares'} Icon={Tiktok} iconBackground={'#222'} onPress={()=> {Linking.openURL('https://www.tiktok.com/@teatrojuares').catch(err => console.error("Couldn't load page", err));
+                    <CardNotification checkButton={false} subtitle={'@teatrojuares'} Icon={Tiktok} iconBackground={'#222'} onPress={()=> {Linking.openURL('https://www.tiktok.com/@teatrojuares').catch(err => console.error("Couldn't load page", err));
                             }}>
                     Tiktok
                     </CardNotification>
                     
                     <StyleText tag='sitio web' size={'big'} style={{marginVertical: 14, justifyContent: 'center'}}>Visita nuestro</StyleText> 
 
-                    <CardNotification subtitle={'www.teatrojuares.com'} Icon={Internet}>
+                    <CardNotification checkButton={false} subtitle={'www.teatrojuares.com'} Icon={Internet}>
                     Sitio web
                     </CardNotification>
                 </View>
