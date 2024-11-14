@@ -97,7 +97,7 @@ export const boleteriaSlice = createSlice({
             const {id, index} = action.payload
             state.facturas[id].formasPago.splice(index, 1)
         },
-        resetCompra: () => {
+        resetCompra: (state) => {            
             return {
                 ...state, 
                 facturas: [],
