@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { View, Text, StyleSheet, Image, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -13,6 +14,7 @@ import { useAppSelector, useAppDispatch } from '../../../hooks/store';
 import { useEncryption } from "../../../hooks/encryption";
 import { API_URL } from "../../../config/constants";
 import { regExp } from "../../../hooks/constants";
+import CustomModal from "../../../components/CustomModal";
 import axios from 'axios';
 
 function MakePassword({ navigation }) {
@@ -21,6 +23,7 @@ function MakePassword({ navigation }) {
   const loading = useAppSelector((state)=> state.auth.loading)
   const dispatch = useAppDispatch()
   const { encryptData } = useEncryption();
+  const [modalVisible, setModalVisible] = useState(false);
   
   const samePassword = (value) =>{
 
@@ -45,13 +48,45 @@ function MakePassword({ navigation }) {
       inputPassword2: "",
     },
   });
+  
+  const reactivarCuenta = () =>{
+
+    const encryptedData = encryptData(JSON.stringify(user));
+    axios({
+      method: 'POST',
+      url: API_URL,
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      params: {
+        url: 'app',
+        type: 'register'
+      },
+      data: {
+        activarUser: encryptedData
+      }
+    }).then(function (response) {
+      dispatch(resetState());
+
+      navigation.navigate("Success", {
+          title: "Registrarse",
+          message: "El usuario se ha habilitado",
+      }); 
+    }).catch(function (error) {
+
+      setModalVisible(false)
+      setError('register', {
+        type: 'manual',
+        message: error.response.data.message})
+    })
+  }
 
   const onSubmit = (data) => {
 
-    dispatch(addPasswod(data.inputPassword2))
     const encryptedData = encryptData(JSON.stringify(user));
     dispatch(setLoading(true))
-  
+
     axios({
       method: 'POST',
       url: API_URL,
@@ -67,11 +102,17 @@ function MakePassword({ navigation }) {
         user: encryptedData
       }
     }).then(function (response) {
-      dispatch(resetState());
-      navigation.navigate("Success", {
-        title: "Registrarse",
-        message: "¡Registro de usuario exitoso!",
-      });
+
+      if(response.data.data.activateAccount){
+
+        setModalVisible(true)
+      } else{
+        dispatch(resetState());
+        navigation.navigate("Success", {
+          title: "Registrarse",
+          message: "¡Registro de usuario exitoso!",
+        }); 
+      }
     }).catch(function (error) {
 
       setError('register', {
@@ -117,7 +158,9 @@ function MakePassword({ navigation }) {
               name='inputPassword'
               onChangeFunction={() => {
                 clearErrors("inputPassword2");
+                dispatch(addPasswod(getValues().inputPassword))
               }}
+              passwordInput={true}
               />
             {errors.inputPassword && (
               <Text style={styles.error}>{errors.inputPassword.message}.</Text>
@@ -131,7 +174,12 @@ function MakePassword({ navigation }) {
             value=''
             required={{ value: true, message: 'La contraseña es requerida' }} 
             maxLength={8}  
-            name='inputPassword2'/>
+            onChangeFunction={(e) => {
+              dispatch(addPasswod(getValues().inputPassword))
+            }}
+            name='inputPassword2'
+            passwordInput={true}
+            />
             {errors.inputPassword2 && (
               <Text style={styles.error}>{errors.inputPassword2.message}.</Text>
             )}
@@ -143,6 +191,17 @@ function MakePassword({ navigation }) {
             <View style={{marginTop: 10}}>
               <CustomButton text={'Finalizar'} onPress={()=> { clearErrors("register"); handleSubmit(onSubmit)()}}  loading={loading}/>
             </View>
+            <CustomModal
+            icons={
+              {
+                question: true,
+              }
+            }
+            title="Cuenta deshabilita, ¿Desea activar su cuenta?"
+            visible={modalVisible}
+            customFunctionAcceptButton={reactivarCuenta}
+            onClose={() => setModalVisible(false)}
+          />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

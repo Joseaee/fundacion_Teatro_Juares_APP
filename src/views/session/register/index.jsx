@@ -2,10 +2,13 @@ import { View, Text, StyleSheet, Image, Platform, TouchableOpacity, } from "reac
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-native-responsive-screen";
+import { useEncryption } from "../../../hooks/encryption";
 import { useForm } from "react-hook-form";
 import { useAppSelector, useAppDispatch } from '../../../hooks/store';
 import { addUser } from '../../../store/user/slice';
 import { regExp } from "../../../hooks/constants";
+import { API_URL } from "../../../config/constants";
+import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
 import CustomButton from "../../../components/customButton";
@@ -20,6 +23,7 @@ function Register({ navigation }) {
 
   const user = useAppSelector((state)=> state.user)
   const dispatch = useAppDispatch()
+  const { encryptData } = useEncryption();
 
   const {
     control,
@@ -33,6 +37,52 @@ function Register({ navigation }) {
       correo: user.correo,
     },
   });
+
+  existCedula = (value) =>{
+    const encryptedData = encryptData(JSON.stringify(value));
+
+    return axios({
+      method: 'POST',
+      url: API_URL,
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      params: {
+        url: 'app',
+        type: 'register'
+      },
+      data: {
+        idUser: encryptedData
+      }
+    }).catch(function (error) {
+
+      return'La cedula ingresada ya esta registrada en el sistema.'
+    })
+  }
+
+  existCorreo = (value) =>{
+    const encryptedData = encryptData(JSON.stringify(value));
+
+    return axios({
+      method: 'POST',
+      url: API_URL,
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      params: {
+        url: 'app',
+        type: 'register'
+      },
+      data: {
+        idUser: encryptedData
+      }
+    }).catch(function (error) {
+
+      return'El correo ingresado ya esta registrada en el sistema.'
+    })
+  }
 
   const onSubmit = (data) => {
 
@@ -67,6 +117,7 @@ function Register({ navigation }) {
               placeholder="Cedula"
               msjError="Cédula Invalida"
               control={control}
+              validate={existCedula}
               value={user.cedula}
               required={{ value: true, message: 'La cedula es requerida.' }}
               name="cedula"
@@ -111,6 +162,7 @@ function Register({ navigation }) {
               placeholder="Correo Electrónico"
               msjError="Correo Invalido"
               control={control}
+              validate={existCorreo}
               value=""
               required={{ value: true, message: 'El correo es requerido.' }}
               name="correo"
@@ -123,7 +175,6 @@ function Register({ navigation }) {
           <View style={{ marginTop: hp("1%") }}>
             <CustomButton
               text={"Continuar"}
-              screen={"MakePassword"}
               onPress={handleSubmit(onSubmit)}
             />
           </View>

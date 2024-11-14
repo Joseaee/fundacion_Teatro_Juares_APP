@@ -9,7 +9,7 @@ import Exclamation from '../../../assets/icons/modals/exclamation.svg'
 import Info from '../../../assets/icons/modals/info.svg'
 import Question from '../../../assets/icons/modals/question.svg'
 
-function CustomModal ( { title, visible, onClose, icons={
+function CustomModal ( { title, customFunctionAcceptButton, visible, onClose, icons={
   check: false,
   error: false,
   exclamation: false,
@@ -79,7 +79,7 @@ function CustomModal ( { title, visible, onClose, icons={
                 <Text style={styles.modalText}>{title}</Text>
                 <View >
                   <View style={{ width: 200, marginBottom: 10 }}>
-                  <Button color="#E31734" title="Aceptar" onPress={async () => {
+                  <Button color="#E31734" title="Aceptar" onPress={customFunctionAcceptButton ? customFunctionAcceptButton : async () => {
                       try {
                         await logout()
                       } catch (error) {

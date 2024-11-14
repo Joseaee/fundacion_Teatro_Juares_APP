@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { TextInput, View, StyleSheet } from "react-native";
+import { TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Controller } from "react-hook-form";
+import Eye from "../../../assets/icons/eye.svg"; 
+import EyeSlash from "../../../assets/icons/eye-slash.svg"; 
 
 export default function InputForm({
   Icon,
@@ -17,11 +19,13 @@ export default function InputForm({
   control,
   onChangeFunction,
   maxLength,
-  required
+  required,
+  passwordInput,
 }) {
 
   
   const [selected, setSelected] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); 
   return (
     <View
       style={[
@@ -55,15 +59,22 @@ export default function InputForm({
               onBlur;
               setSelected(false);
             }}
-            onChangeText={(e) => {onChange(e.replace(/\s+/g, ' ').trim())}}
+            onChangeText={(e) => {onChange(e.replace(/\s+/g, ' '))}}
             onChange = {onChangeFunction}
+            onEndEditing = {(e) => {onChange(e.nativeEvent.text.trim());}}
             value={value}
             maxLength={maxLength ?? maxLength} 
             keyboardType= {keyboardType}
+            secureTextEntry={ passwordInput && !showPassword }
           />
         )}
         name={name}
       />
+      {passwordInput && (
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          {showPassword ? <EyeSlash width={24} height={24} fill="#979797"/> : <Eye width={24} height={24} fill="#979797"/>}
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
