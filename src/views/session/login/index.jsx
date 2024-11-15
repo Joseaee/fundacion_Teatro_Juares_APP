@@ -120,6 +120,7 @@ function Login({ navigation }) {
                 clearErrors("session");
               }}
               maxLength={8}
+              passwordInput={true}
             />
             {errors.password && (
               <Text style={styles.error}>{errors.password.message}.</Text>

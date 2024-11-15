@@ -39,14 +39,14 @@ export default function SeleccionarAsientos() {
     const montoTotal = useAppSelector(state=> getTotalPrize(state, {idFuncion}))
     const {getItem} = useStorage()
     const lote = boletos.find(boleto=> boleto.id === selectedLote)
-    const colorSelected = (lote) ? lote.color : '#222'
+    const colorSelected = (lote) ? lote?.color : '#222'
     const secciones = [
-        {id: 1, title: 'Galería Este', width: 140, height:60, area: 'galeria', seccion: 'este'},
-        {id: 2,title: 'Galería Oeste', width: 140, height:60, area: 'galeria', seccion: 'oeste'},
-        {id: 3,title: 'Palco Este', width: 90, height:100, area: 'balcon', seccion: 'este'},
-        {id: 4, title: 'Palco Oeste', width: 90, height:100, area: 'balcon', seccion: 'oeste'},
-        {id: 5, title: 'Patio Este', width: 140, height:80, area: 'patio', seccion: 'este'},
-        {id: 6,title: 'Patio Oeste', width: 140, height:80, area: 'patio', seccion: 'oeste'},
+        {id: 1, title: 'Galería Oeste', width: 140, height:60, area: 'galeria', seccion: 'oeste'},
+        {id: 2,title: 'Galería Este', width: 140, height:60, area: 'galeria', seccion: 'este'},
+        {id: 3,title: 'Palco Oeste', width: 90, height:100, area: 'balcon', seccion: 'oeste'},
+        {id: 4, title: 'Palco Este', width: 90, height:100, area: 'balcon', seccion: 'este'},
+        {id: 5, title: 'Patio Oeste', width: 140, height:80, area: 'patio', seccion: 'oeste'},
+        {id: 6,title: 'Patio Este', width: 140, height:80, area: 'patio', seccion: 'este'},
     ]
 
     useEffect(()=>{
@@ -71,7 +71,7 @@ export default function SeleccionarAsientos() {
                 }
               });
       
-              setAsientos(response.data.data)
+              setAsientos(response?.data?.data)
             } catch (error) {
               console.error(error)
             }finally{
@@ -88,7 +88,7 @@ export default function SeleccionarAsientos() {
             <ScrollView >
                 <View style={{ marginHorizontal: 14, marginBottom: 30 }}>
                     <StyleText tag='Asientos' size={'big'} style={{ marginVertical: 14, justifyContent: 'center' }}>Seleccionar</StyleText>
-                    {boletos.map(item=>{
+                    {boletos?.map(item=>{
                         const selected = (selectedLote && selectedLote === item.id) ? true : false
                         return(
                             <CardNotification selected={selected} colorSelected={item.color} key={item.id} onPress={()=>{
@@ -179,10 +179,10 @@ export default function SeleccionarAsientos() {
                                 </View>
 
                                 <View style={styles.boleteria}>
-                                    {asientos[selectedLote][selectedArea][selectedSection].map(item=>{
-                                        const asientos = lote.asientos ?? []
+                                    {asientos[selectedLote][selectedArea][selectedSection]?.map(item=>{
+                                        const asientos = lote?.asientos ?? []
                                         return(
-                                            <Asientos selected={asientos.includes(item.boleto)} disabled={asientos.length === lote.cantidad && !asientos.includes(item.boleto)} key={item.asiento} color={colorSelected} onPress={()=>{
+                                            <Asientos selected={asientos.includes(item.boleto)} disabled={asientos.length === lote?.cantidad && !asientos.includes(item.boleto)} key={item.asiento} color={colorSelected} onPress={()=>{
                                                 if(asientos.includes(item.boleto)){
                                                     const filterAsientos = asientos.filter(i=> i != item.boleto)
                                                     setSeats({lote: selectedLote, asientos: filterAsientos})
@@ -204,7 +204,7 @@ export default function SeleccionarAsientos() {
                     }
 
 {
-                    boletos.some(item => item.asientos.length !== item.cantidad)
+                    boletos?.some(item => item.asientos.length !== item.cantidad)
                     ? null
                     : <View style={{marginHorizontal: 14, marginVertical: 14 }}>
                     <CustomButton text='Siguiente' onPress={()=>{

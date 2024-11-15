@@ -1,5 +1,5 @@
 import { useAppDispatch } from "./store";
-import { setFilterEvent, changeFilterCategory, removeTicket, addTicket, addSeat, setFactura, addFormaPago, editFormaPago, removeFormaPago, removeFactura, resetState } from "../store/boleteria/slice";
+import { setFilterEvent, changeFilterCategory, removeTicket, addTicket, addSeat, setFactura, addFormaPago, editFormaPago, removeFormaPago, removeFactura, resetCompra } from "../store/boleteria/slice";
 import { fetchEvents, fetchTasaBs } from "../store/boleteria/thunks";
 
 export const useBoleteriaActions = () => {

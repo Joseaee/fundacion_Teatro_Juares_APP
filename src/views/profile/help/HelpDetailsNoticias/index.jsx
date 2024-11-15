@@ -1,14 +1,10 @@
 import { View, Text, StyleSheet, ImageBackground, Image, FlatList, ScrollView } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp }from 'react-native-responsive-screen';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Swiper from 'react-native-swiper';
 import Navbar from "../../../../components/navbar";
 import BottomNavbar from "../../../../components/bottomNavbar";
 
-import { useNavigation } from "@react-navigation/native";
-
     function HelpDetailsNoticias({ }) {
-        const navigation = useNavigation()
         return (
             <SafeAreaView style={ {flex: 1, backgroundColor: "#fafafa"} }>
                 <Navbar
@@ -32,15 +28,9 @@ import { useNavigation } from "@react-navigation/native";
                     <Text style={styles.indice}>1-</Text> Se mostrara la sesion de noticias, se presentaran las noticias destacadas y las noticias normales establecedias por la fundación al hacer clic
                     sobre las noticias podrás conocer la informacion suministrada . {"\n"}{"\n"}
 
-                    AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
-
                     <Text style={styles.indice}>2-</Text> Se mostrara presentara de la siguiente manera suministrando la informacion, autor y fecha de la noticia establecida y imagenes.{"\n"}{"\n"}
 
-                    AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
-
                     <Text style={styles.indice}>3-</Text> De esta manera podrás mantenerte informado sobre las noticias mas relevantes de la fundación, dichas noticias son actualizadas semanalmente.{"\n"}{"\n"}
-
-                    AQUI VA UNA IMAGEN GISELITA {"\n"}{"\n"}
 
                     Ahora debes de ingresar la nueva contraseña que deseas, repite nuevamente la contraseña para confirmar que coincidan, presiona el botón de finalizar y listo ya puedes iniciar sesión con tu nueva contraseña.{"\n"}{"\n"}
                 </Text>

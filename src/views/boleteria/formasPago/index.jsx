@@ -55,10 +55,10 @@ export default function FormasPago() {
 
     const handleSubmit = async ()=>{
         const data = JSON.stringify({
-            montoTotal: factura.montoTotal,
-            tasaBs: factura.tasaBs,
-            tipoVenta: boletos[0].tipoVenta,
-            idFuncion: boletos[0].idFuncion,
+            montoTotal: factura?.montoTotal,
+            tasaBs: factura?.tasaBs,
+            tipoVenta: boletos[0]?.tipoVenta,
+            idFuncion: boletos[0]?.idFuncion,
         })
 
         const formasPago = JSON.stringify(factura.formasPago)
@@ -89,14 +89,21 @@ export default function FormasPago() {
                     lotes,
                     formasPago
                 }
-              })
-              console.log(response.data)
-              const {status, message} = response.data
+            }).then((response) =>{
 
-              if(status === 'error'){
+                if(response?.data?.data?.status != 'error'){
+                    resetCompraBoletos()
+                }
+
+                return response;
+            })
+            
+            const {status, message} = response?.data
+
+            if(status === 'error'){
                 console.error(message)
                 return;
-              }
+            }
 
             navigation.navigate("Success", {
                 title: "Boletos comprados",

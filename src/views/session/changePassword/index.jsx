@@ -109,6 +109,7 @@ function ChangePassword( {navigation} ) {
                   onChangeFunction={() => {
                     clearErrors("inputPassword2");
                   }}
+                  passwordInput={true}
                   />
                 {errors.inputPassword && (
                   <Text style={styles.error}>{errors.inputPassword.message}.</Text>
@@ -121,7 +122,8 @@ function ChangePassword( {navigation} ) {
                   control={control} 
                   value=''
                   required={{ value: true, message: 'La contraseña es requerida' }} 
-                  maxLength={8}  
+                  maxLength={8}
+                  passwordInput={true}  
                   name='inputPassword2'/>
                   {errors.inputPassword2 && (
                     <Text style={styles.error}>{errors.inputPassword2.message}.</Text>

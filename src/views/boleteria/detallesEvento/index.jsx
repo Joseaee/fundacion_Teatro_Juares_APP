@@ -37,7 +37,7 @@ export default function DetallesEvento(){
 
     return (
         <SafeAreaView style={{flex:1}}>
-            <Banner goBack={true} image={require('.:/../../assets/img/banner-cartelera.jpg')}>
+            <Banner goBack={true} image={require('../../../../assets/img/banner-cartelera.jpg')}>
                 <Image source={{uri:`${API_URL}${evento.imagen}`}} style={{width:140, height:140, borderRadius: 100}}/>
             </Banner>
             <View style={{flex:1, marginTop: 30, padding:8}}>
